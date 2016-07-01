@@ -7,6 +7,7 @@
  */
 namespace Mekras\Atom\Element\Meta;
 
+use Mekras\Atom\Atom;
 use Mekras\Atom\Node;
 
 /**
@@ -39,5 +40,23 @@ trait Id
                 );
             }
         );
+    }
+
+    /**
+     * Set permanent, universally unique identifier for an entry or feed.
+     *
+     * @param string $id IRI
+     *
+     * @since 1.0
+     */
+    public function setId($id)
+    {
+        $element = $this->query('atom:id', Node::SINGLE);
+        if (null === $element) {
+            $element = $this->getDomElement()->ownerDocument->createElementNS(Atom::NS, 'id');
+            $this->getDomElement()->appendChild($element);
+        }
+        $element->nodeValue = $id;
+        $this->setCachedProperty('id', $id);
     }
 }

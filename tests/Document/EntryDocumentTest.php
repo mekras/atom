@@ -12,15 +12,11 @@ use Mekras\Atom\Element\Entry;
 
 /**
  * Tests for Mekras\Atom\Document\EntryDocument
- *
- * @covers Mekras\Atom\Document\EntryDocument
- * @covers Mekras\Atom\Document\Document
- * @covers Mekras\Atom\Node
  */
 class EntryDocumentTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * Test importing valid feed
+     * Test importing valid entry
      */
     public function testImport()
     {
@@ -30,5 +26,22 @@ class EntryDocumentTest extends \PHPUnit_Framework_TestCase
         $document = new EntryDocument($doc);
         $entry = $document->getEntry();
         static::assertInstanceOf(Entry::class, $entry);
+    }
+
+    /**
+     * Test creating new entry
+     */
+    public function testCreate()
+    {
+        $document = new EntryDocument();
+        $entry = $document->getEntry();
+        $entry->setId('urn:foo:entry:0001');
+        $entry->addAuthor('Author 1', 'foo@example.com');
+        $entry->addAuthor('Author 2', null, 'http://example.com/');
+        $document->getDomDocument()->formatOutput = true;
+        static::assertEquals(
+            file_get_contents(__DIR__ . '/../fixtures/EntryDocument.txt'),
+            $document->getDomDocument()->saveXML()
+        );
     }
 }

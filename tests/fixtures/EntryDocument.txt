@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<entry xmlns="http://www.w3.org/2005/Atom">
+  <id>urn:foo:entry:0001</id>
+  <author>
+    <name>Author 1</name>
+    <email>foo@example.com</email>
+  </author>
+  <author>
+    <name>Author 2</name>
+    <uri>http://example.com/</uri>
+  </author>
+  <link rel="alternate" type="text/html" href="http://example.com/0001.html"/>
+  <link rel="self" type="text/xml" href="http://example.com/atom/atom/?id=0001"/>
+  <title>Entry 1 Title</title>
+  <published>2016-01-23T11:22:33Z</published>
+  <updated>2016-01-23T11:22:33Z</updated>
+  <category term="tag4"/>
+  <category term="tag5"/>
+  <content type="html">&lt;div style="text-align:center"&gt;Entry content&lt;/div&gt;</content>
+</entry>

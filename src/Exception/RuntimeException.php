@@ -8,10 +8,10 @@
 namespace Mekras\Atom\Exception;
 
 /**
- * Malformed Node exception.
+ * Runtime exception.
  *
  * @since 1.0
  */
-class MalformedNodeException extends RuntimeException
+class RuntimeException extends \RuntimeException implements AtomException
 {
 }

@@ -8,10 +8,10 @@
 namespace Mekras\Atom\Exception;
 
 /**
- * Malformed Node exception.
+ * Common interface for all Atom exceptions.
  *
  * @since 1.0
  */
-class MalformedNodeException extends RuntimeException
+interface AtomException
 {
 }
