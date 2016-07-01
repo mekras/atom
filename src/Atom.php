@@ -23,6 +23,27 @@ use Mekras\Atom\Extension\DocumentType;
 class Atom
 {
     /**
+     * Atom namespace.
+     *
+     * @since 1.0
+     */
+    const NS = 'http://www.w3.org/2005/Atom';
+
+    /**
+     * XHTML namespace.
+     *
+     * @since 1.0
+     */
+    const XHTML = 'http://www.w3.org/1999/xhtml';
+
+    /**
+     * XML namespaces.
+     *
+     * @since 1.0
+     */
+    const XMLNS = 'http://www.w3.org/2000/xmlns/';
+
+    /**
      * Additional document types.
      *
      * @var DocumentType[]

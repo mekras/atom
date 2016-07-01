@@ -7,6 +7,7 @@
  */
 namespace Mekras\Atom\Tests\Util;
 
+use Mekras\Atom\Atom;
 use Mekras\Atom\Node;
 use Mekras\Atom\Util\Xhtml;
 
@@ -32,7 +33,7 @@ class XhtmlTest extends \PHPUnit_Framework_TestCase
         );
 
         /** @var \DOMElement $element */
-        $element = $doc->documentElement->getElementsByTagNameNS(Node::XHTML, 'div')->item(0);
+        $element = $doc->documentElement->getElementsByTagNameNS(Atom::XHTML, 'div')->item(0);
         static::assertEquals('<em> &lt; </em>', Xhtml::extract($element));
     }
 }

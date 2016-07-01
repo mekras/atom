@@ -7,7 +7,7 @@
  */
 namespace Mekras\Atom\Element\Meta;
 
-use Mekras\Atom\Element\Element;
+use Mekras\Atom\Node;
 
 /**
  * Support for "app:updated".
@@ -36,7 +36,7 @@ trait Updated
             function () {
                 return new \DateTimeImmutable(
                     trim(
-                        $this->query('atom:updated', Element::SINGLE | Element::REQUIRED)->nodeValue
+                        $this->query('atom:updated', Node::SINGLE | Node::REQUIRED)->nodeValue
                     )
                 );
             }

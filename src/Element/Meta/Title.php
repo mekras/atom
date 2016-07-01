@@ -7,8 +7,8 @@
  */
 namespace Mekras\Atom\Element\Meta;
 
+use Mekras\Atom\Atom;
 use Mekras\Atom\Construct\Text;
-use Mekras\Atom\Element\Element;
 use Mekras\Atom\Node;
 
 /**
@@ -37,7 +37,7 @@ trait Title
         return $this->getCachedProperty(
             'title',
             function () {
-                return new Text($this->query('atom:title', Element::SINGLE | Element::REQUIRED));
+                return new Text($this->query('atom:title', Node::SINGLE | Node::REQUIRED));
             }
         );
     }
@@ -53,9 +53,9 @@ trait Title
      */
     public function setTitle($title)
     {
-        $element = $this->query('atom:title', Element::SINGLE);
+        $element = $this->query('atom:title', Node::SINGLE);
         if (null === $element) {
-            $element = $this->getDomElement()->ownerDocument->createElementNS(Node::ATOM, 'title');
+            $element = $this->getDomElement()->ownerDocument->createElementNS(Atom::NS, 'title');
             $this->getDomElement()->appendChild($element);
         }
         $text = new Text($element);

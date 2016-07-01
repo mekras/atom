@@ -7,7 +7,6 @@
  */
 namespace Mekras\Atom\Element;
 
-use Mekras\Atom\Exception\MalformedNodeException;
 use Mekras\Atom\Node;
 
 /**
@@ -17,16 +16,6 @@ use Mekras\Atom\Node;
  */
 abstract class Element extends Node
 {
-    /**
-     * Return only one element.
-     */
-    const SINGLE = 0x01;
-
-    /**
-     * At least one element should exists.
-     */
-    const REQUIRED = 0x02;
-
     /**
      * Create node.
      *
@@ -73,42 +62,4 @@ abstract class Element extends Node
      * @since 1.0
      */
     abstract protected function getNodeName();
-
-    /**
-     * Return child DOM element by name.
-     *
-     * @param string $xpath XPath expression.
-     * @param int    $flags Flags, see class constants.
-     *
-     * @return \DOMNodeList|\DOMElement|null
-     *
-     * @throws \Mekras\Atom\Exception\MalformedNodeException
-     *
-     * @since 1.0
-     */
-    protected function query($xpath, $flags = 0)
-    {
-        $nodes = $this->getXPath()->query($xpath, $this->getDomElement());
-        if (0 === $nodes->length && $flags & self::REQUIRED) {
-            throw new MalformedNodeException(sprintf('Required node(s) (%s) missing', $xpath));
-        }
-
-        if ($flags & self::SINGLE) {
-            if ($nodes->length > 1) {
-                throw new MalformedNodeException(
-                    sprintf(
-                        '%s must not contain more than one %s node',
-                        $this->getDomElement()->localName,
-                        $xpath
-                    )
-                );
-            } elseif ($nodes->length === 0) {
-                return null;
-            }
-
-            return $nodes->item(0);
-        }
-
-        return $nodes;
-    }
 }

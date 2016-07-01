@@ -7,6 +7,7 @@
  */
 namespace Mekras\Atom;
 
+use Mekras\Atom\Exception\MalformedNodeException;
 use Mekras\ClassHelpers\Traits\GettersCacheTrait;
 
 /**
@@ -19,25 +20,14 @@ abstract class Node
     use GettersCacheTrait;
 
     /**
-     * Atom namespace.
-     *
-     * @since 1.0
+     * Return only one element.
      */
-    const ATOM = 'http://www.w3.org/2005/Atom';
+    const SINGLE = 0x01;
 
     /**
-     * XHTML namespace.
-     *
-     * @since 1.0
+     * At least one element should exists.
      */
-    const XHTML = 'http://www.w3.org/1999/xhtml';
-
-    /**
-     * XML namespaces.
-     *
-     * @since 1.0
-     */
-    const XMLNS = 'http://www.w3.org/2000/xmlns/';
+    const REQUIRED = 0x02;
 
     /**
      * DOM Element.
@@ -97,7 +87,44 @@ abstract class Node
      */
     public function ns()
     {
-        return self::ATOM;
+        return Atom::NS;
+    }
+    /**
+     * Return child DOM element by name.
+     *
+     * @param string $xpath XPath expression.
+     * @param int    $flags Flags, see class constants.
+     *
+     * @return \DOMNodeList|\DOMElement|null
+     *
+     * @throws \Mekras\Atom\Exception\MalformedNodeException
+     *
+     * @since 1.0
+     */
+    protected function query($xpath, $flags = 0)
+    {
+        $nodes = $this->getXPath()->query($xpath, $this->getDomElement());
+        if (0 === $nodes->length && $flags & self::REQUIRED) {
+            throw new MalformedNodeException(sprintf('Required node(s) (%s) missing', $xpath));
+        }
+
+        if ($flags & self::SINGLE) {
+            if ($nodes->length > 1) {
+                throw new MalformedNodeException(
+                    sprintf(
+                        '%s must not contain more than one %s node',
+                        $this->getDomElement()->localName,
+                        $xpath
+                    )
+                );
+            } elseif ($nodes->length === 0) {
+                return null;
+            }
+
+            return $nodes->item(0);
+        }
+
+        return $nodes;
     }
 
     /**
@@ -111,8 +138,8 @@ abstract class Node
     {
         if (!$this->xpath) {
             $this->xpath = new \DOMXPath($this->getDomElement()->ownerDocument);
-            $this->xpath->registerNamespace('atom', self::ATOM);
-            $this->xpath->registerNamespace('xhtml', self::XHTML);
+            $this->xpath->registerNamespace('atom', Atom::NS);
+            $this->xpath->registerNamespace('xhtml', Atom::XHTML);
         }
 
         return $this->xpath;

@@ -7,7 +7,7 @@
  */
 namespace Mekras\Atom\Element\Meta;
 
-use Mekras\Atom\Element\Element;
+use Mekras\Atom\Node;
 
 /**
  * Support for "app:id".
@@ -35,7 +35,7 @@ trait Id
             'id',
             function () {
                 return trim(
-                    $this->query('atom:id', Element::SINGLE | Element::REQUIRED)->nodeValue
+                    $this->query('atom:id', Node::SINGLE | Node::REQUIRED)->nodeValue
                 );
             }
         );
