@@ -13,10 +13,6 @@ use Mekras\Atom\Element\Entry;
 
 /**
  * Tests for Mekras\Atom\Element\Entry
- *
- * @covers Mekras\Atom\Element\Entry
- * @covers Mekras\Atom\Element\Element
- * @covers Mekras\Atom\Node
  */
 class EntryTest extends \PHPUnit_Framework_TestCase
 {
@@ -29,6 +25,7 @@ class EntryTest extends \PHPUnit_Framework_TestCase
         $doc->load(__DIR__ . '/../fixtures/EntryDocument.xml');
 
         $entry = new Entry($doc->documentElement);
+        static::assertEquals('Author 1, Author 2', implode(', ', $entry->getAuthors()));
         static::assertEquals('urn:foo:atom1:entry:0001', $entry->getId());
         $value = $entry->getTitle();
         static::assertInstanceOf(Text::class, $value);

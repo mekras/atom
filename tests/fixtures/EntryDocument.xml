@@ -1,5 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <entry xmlns="http://www.w3.org/2005/Atom">
+    <author>
+        <name>Author 1</name>
+        <email>foo@example.com</email>
+    </author>
+    <author>
+        <name>Author 2</name>
+        <uri>http://example.com</uri>
+    </author>
     <id>urn:foo:atom1:entry:0001</id>
     <link rel="alternate" type="text/html" href="http://example.com/0001.html"/>
     <link rel="self" type="text/xml" href="http://example.com/atom/atom/?id=0001"/>

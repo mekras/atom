@@ -4,7 +4,12 @@
     <title>Feed Title</title>
     <subtitle>Feed SubTitle</subtitle>
     <author>
-        <name>Feed Author</name>
+        <name>Author 1</name>
+        <email>foo@example.com</email>
+    </author>
+    <author>
+        <name>Author 2</name>
+        <uri>http://example.com</uri>
     </author>
     <link rel="alternate" type="text/html" href="http://example.com/"/>
     <link rel="self" type="text/xml" href="http://example.com/atom"/>
@@ -12,6 +17,14 @@
     <category term="tag1"/>
     <category term="tag2"/>
     <entry>
+        <author>
+            <name>Author 1</name>
+            <email>foo@example.com</email>
+        </author>
+        <author>
+            <name>Author 2</name>
+            <uri>http://example.com</uri>
+        </author>
         <id>urn:foo:atom1:entry:0003</id>
         <link rel="alternate" type="text/html" href="http://example.com/0003.html"/>
         <link rel="self" type="text/xml" href="http://example.com/atom/atom/?id=0003"/>
@@ -24,6 +37,14 @@
         </content>
     </entry>
     <entry>
+        <author>
+            <name>Author 1</name>
+            <email>foo@example.com</email>
+        </author>
+        <author>
+            <name>Author 2</name>
+            <uri>http://example.com</uri>
+        </author>
         <id>urn:foo:atom1:entry:0002</id>
         <link rel="alternate" type="text/html" href="http://example.com/0002.html"/>
         <link rel="self" type="text/xml" href="http://example.com/atom/atom/?id=0002"/>
@@ -36,6 +57,14 @@
         </content>
     </entry>
     <entry>
+        <author>
+            <name>Author 1</name>
+            <email>foo@example.com</email>
+        </author>
+        <author>
+            <name>Author 2</name>
+            <uri>http://example.com</uri>
+        </author>
         <id>urn:foo:atom1:entry:0001</id>
         <link rel="alternate" type="text/html" href="http://example.com/0001.html"/>
         <link rel="self" type="text/xml" href="http://example.com/atom/atom/?id=0001"/>

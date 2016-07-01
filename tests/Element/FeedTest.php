@@ -13,10 +13,6 @@ use Mekras\Atom\Element\Feed;
 
 /**
  * Tests for Mekras\Atom\Element\Feed
- *
- * @covers Mekras\Atom\Element\Feed
- * @covers Mekras\Atom\Element\Element
- * @covers Mekras\Atom\Node
  */
 class FeedTest extends \PHPUnit_Framework_TestCase
 {
@@ -29,6 +25,7 @@ class FeedTest extends \PHPUnit_Framework_TestCase
         $doc->load(__DIR__ . '/../fixtures/FeedDocument.xml');
 
         $feed = new Feed($doc->documentElement);
+        static::assertEquals('Author 1, Author 2', implode(', ', $feed->getAuthors()));
         static::assertEquals('urn:foo:atom1:feed:id', $feed->getId());
         static::assertEquals('http://example.com/atom', $feed->getSelfLink());
         $value = $feed->getTitle();

@@ -11,10 +11,6 @@ use Mekras\Atom\Element\Content;
 
 /**
  * Tests for Mekras\Atom\Element\Content
- *
- * @covers Mekras\Atom\Element\Content
- * @covers Mekras\Atom\Element\Element
- * @covers Mekras\Atom\Node
  */
 class ContentTest extends \PHPUnit_Framework_TestCase
 {
