@@ -7,6 +7,7 @@
  */
 namespace Mekras\Atom\Construct;
 
+use Mekras\Atom\Exception\MalformedNodeException;
 use Mekras\Atom\Node;
 use Mekras\Atom\Util\Xhtml;
 
@@ -32,8 +33,12 @@ class Text extends Node
             'value',
             function () {
                 if ($this->getType() === 'xhtml') {
-                    /** @var \DOMElement $xhtml */
-                    $xhtml = $this->getXPath()->query('xhtml:div', $this->getDomElement())->item(0);
+                    try {
+                        /** @var \DOMElement $xhtml */
+                        $xhtml = $this->query('xhtml:div', Node::SINGLE | Node::REQUIRED);
+                    } catch (MalformedNodeException $e) {
+                        return '';
+                    }
 
                     return Xhtml::extract($xhtml);
                 }

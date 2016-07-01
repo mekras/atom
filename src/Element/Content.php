@@ -7,6 +7,8 @@
  */
 namespace Mekras\Atom\Element;
 
+use Mekras\Atom\Exception\MalformedNodeException;
+use Mekras\Atom\Node;
 use Mekras\Atom\Util\Xhtml;
 
 /**
@@ -36,12 +38,20 @@ class Content extends Element
                     return $this->getDomElement()->textContent;
                 } elseif ('xhtml' === $type) {
                     /** @var \DOMElement $xhtml */
-                    $xhtml = $this->getXPath()->query('xhtml:div', $this->getDomElement())->item(0);
+                    try {
+                        $xhtml = $this->query('xhtml:div', Node::SINGLE | Node::REQUIRED);
+                    } catch (MalformedNodeException $e) {
+                        return '';
+                    }
 
                     return Xhtml::extract($xhtml);
                 } elseif (preg_match('~^([\w-]+)/((xml.*)|(.+\+xml))$~', $type)) {
                     /** @var \DOMElement $xml */
-                    $xml = $this->getXPath()->query('*', $this->getDomElement())->item(0);
+                    try {
+                        $xml = $this->query('*', Node::SINGLE | Node::REQUIRED);
+                    } catch (MalformedNodeException $e) {
+                        return '';
+                    }
 
                     return $this->getDomElement()->ownerDocument->saveXML($xml);
                 } elseif (stripos($type, 'text/') === 0) {
