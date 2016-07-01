@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+    <id>urn:foo:atom1:feed:id</id>
+    <title>Feed Title</title>
+    <subtitle>Feed SubTitle</subtitle>
+    <author>
+        <name>Feed Author</name>
+    </author>
+    <link rel="alternate" type="text/html" href="http://example.com/"/>
+    <link rel="self" type="text/xml" href="http://example.com/atom"/>
+    <updated>2016-01-23T11:22:33Z</updated>
+    <category term="tag1"/>
+    <category term="tag2"/>
+    <entry>
+        <id>urn:foo:atom1:entry:0003</id>
+        <link rel="alternate" type="text/html" href="http://example.com/0003.html"/>
+        <link rel="self" type="text/xml" href="http://example.com/atom/atom/?id=0003"/>
+        <title>Entry 3 Title</title>
+        <published>2016-06-29T11:33:34Z</published>
+        <updated>2016-06-29T11:33:34Z</updated>
+        <category term="tag1"/>
+        <category term="tag3"/>
+        <content type="html">&lt;div style="text-align:center"&gt;Entry content&lt;/div&gt;
+        </content>
+    </entry>
+    <entry>
+        <id>urn:foo:atom1:entry:0002</id>
+        <link rel="alternate" type="text/html" href="http://example.com/0002.html"/>
+        <link rel="self" type="text/xml" href="http://example.com/atom/atom/?id=0002"/>
+        <title>Entry 2 Title</title>
+        <published>2016-06-29T11:33:34Z</published>
+        <updated>2016-06-29T11:33:34Z</updated>
+        <category term="tag2"/>
+        <category term="tag4"/>
+        <content type="html">&lt;div style="text-align:center"&gt;Entry content&lt;/div&gt;
+        </content>
+    </entry>
+    <entry>
+        <id>urn:foo:atom1:entry:0001</id>
+        <link rel="alternate" type="text/html" href="http://example.com/0001.html"/>
+        <link rel="self" type="text/xml" href="http://example.com/atom/atom/?id=0001"/>
+        <title>Entry 1 Title</title>
+        <published>2016-06-29T11:33:34Z</published>
+        <updated>2016-06-29T11:33:34Z</updated>
+        <category term="tag4"/>
+        <category term="tag5"/>
+        <content type="html">&lt;div style="text-align:center"&gt;Entry content&lt;/div&gt;
+        </content>
+    </entry>
+</feed>
