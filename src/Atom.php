@@ -50,18 +50,18 @@ class Atom
      */
     public function createDocument(\DOMDocument $document)
     {
-        switch ($document->documentElement->localName) {
-            case 'feed':
-                return new FeedDocument($document);
-            case 'entry':
-                return new EntryDocument($document);
-        }
-
         foreach ($this->extensions as $extension) {
             $doc = $extension->createDocument($document);
             if ($doc) {
                 return $doc;
             }
+        }
+
+        switch ($document->documentElement->localName) {
+            case 'feed':
+                return new FeedDocument($document);
+            case 'entry':
+                return new EntryDocument($document);
         }
 
         throw new \InvalidArgumentException(

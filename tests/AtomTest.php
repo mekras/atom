@@ -51,7 +51,7 @@ class AtomTest extends \PHPUnit_Framework_TestCase
         $extension->expects(static::once())->method('createDocument')
             ->willReturnCallback(
                 function (\DOMDocument $document) use ($doc1) {
-                    static::assertEquals('foo', $document->documentElement->localName);
+                    static::assertEquals('feed', $document->documentElement->localName);
 
                     return $doc1;
                 }
@@ -59,7 +59,7 @@ class AtomTest extends \PHPUnit_Framework_TestCase
         /** @var DocumentType $extension */
         $atom->registerDocumentType($extension);
 
-        $doc2 = $atom->parseXML(file_get_contents(__DIR__ . '/fixtures/FooDocument.xml'));
+        $doc2 = $atom->parseXML(file_get_contents(__DIR__ . '/fixtures/FeedDocument.xml'));
         static::assertSame($doc1, $doc2);
     }
 }
