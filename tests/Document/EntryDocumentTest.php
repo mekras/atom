@@ -38,6 +38,7 @@ class EntryDocumentTest extends \PHPUnit_Framework_TestCase
         $entry->setId('urn:foo:entry:0001');
         $entry->addAuthor('Author 1', 'foo@example.com');
         $entry->addAuthor('Author 2', null, 'http://example.com/');
+        $entry->getContent()->setValue('<h1>Entry content</h1>', 'html');
         $document->getDomDocument()->formatOutput = true;
         static::assertEquals(
             file_get_contents(__DIR__ . '/../fixtures/EntryDocument.txt'),

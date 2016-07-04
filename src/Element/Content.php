@@ -21,7 +21,7 @@ use Mekras\Atom\Util\Xhtml;
 class Content extends Element
 {
     /**
-     * Represent text as a string.
+     * Represent content as a string.
      *
      * @return string
      *
@@ -45,7 +45,7 @@ class Content extends Element
                     }
 
                     return Xhtml::extract($xhtml);
-                } elseif (preg_match('~^([\w-]+)/((xml.*)|(.+\+xml))$~', $type)) {
+                } elseif ($this->isXmlMimeType($type)) {
                     /** @var \DOMElement $xml */
                     try {
                         $xml = $this->query('*', Node::SINGLE | Node::REQUIRED);
@@ -101,41 +101,49 @@ class Content extends Element
         );
     }
 
-    /*
-     atomInlineTextContent =
-      element atom:content {
-         atomCommonAttributes,
-         attribute type { "text" | "html" }?,
-         (text)*
-      }
-
-   atomInlineXHTMLContent =
-      element atom:content {
-         atomCommonAttributes,
-         attribute type { "xhtml" },
-         xhtmlDiv
-      }
-
-   atomInlineOtherContent =
-      element atom:content {
-         atomCommonAttributes,
-         attribute type { atomMediaType }?,
-         (text|anyElement)*
-      }
-
-   atomOutOfLineContent =
-      element atom:content {
-         atomCommonAttributes,
-         attribute type { atomMediaType }?,
-         attribute src { atomUri },
-         empty
-      }
-
-   atomContent = atomInlineTextContent
-    | atomInlineXHTMLContent
-    | atomInlineOtherContent
-    | atomOutOfLineContent
+    /**
+     * Set new value.
+     *
+     * For "text" and "html" $type values $content should be a string.
+     *
+     * For "xhtml" and all XML-based $type values $content should be an instance of
+     * @{link DOMElement}.
+     *
+     * In all other cases $content should be a binary string and it will be base64 encoded.
+     *
+     * When $type is "xhtml" child nodes of $content will be moved to "xhtml:div" container.
+     *
+     * @param string|\DOMElement $content
+     * @param string             $type
+     *
+     * @throws \InvalidArgumentException
+     *
+     * @since 1.0
      */
+    public function setValue($content, $type = 'text')
+    {
+        $type = (string) $type;
+        $this->getDomElement()->setAttribute('type', $type);
+        $document = $this->getDomElement()->ownerDocument;
+
+        if ('text' === $type || 'html' === $type) {
+            $this->getDomElement()->nodeValue = (string) $content;
+        } elseif ('xhtml' === $type) {
+            if (!$content instanceof \DOMElement) {
+                throw new \InvalidArgumentException('Content should be an instance of DOMElement');
+            }
+            Xhtml::import($content, $this->getDomElement());
+        } elseif ($this->isXmlMimeType($type)) {
+            if (!$content instanceof \DOMElement) {
+                throw new \InvalidArgumentException('Content should be an instance of DOMElement');
+            }
+            $this->getDomElement()->appendChild($document->importNode($content, true));
+        } elseif (stripos($type, 'text/') === 0) {
+            $this->getDomElement()->nodeValue = (string) $content;
+        } else {
+            $this->getDomElement()->nodeValue = base64_encode($content);
+        }
+    }
 
     /**
      * Return node name here.
@@ -147,5 +155,17 @@ class Content extends Element
     protected function getNodeName()
     {
         return 'content';
+    }
+
+    /**
+     * Return TRUE if $type is one of the XML MIME types.
+     *
+     * @param string $type
+     *
+     * @return bool
+     */
+    private function isXmlMimeType($type)
+    {
+        return (bool) preg_match('~^([\w-]+)/((xml.*)|(.+\+xml))$~', $type);
     }
 }

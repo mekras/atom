@@ -24,7 +24,7 @@ class Entry extends Element
     /**
      * Return the preferred URI for retrieving Atom Feed Documents representing this Atom feed.
      *
-     * @return Content|null
+     * @return Content
      *
      * @since 1.0
      * @link  https://tools.ietf.org/html/rfc4287#section-4.1.1
@@ -35,6 +35,11 @@ class Entry extends Element
             'content',
             function () {
                 $element = $this->query('atom:content', self::SINGLE);
+                if (null === $element) {
+                    $element = $this->getDomElement()->ownerDocument
+                        ->createElementNS($this->ns(), 'content');
+                    $this->getDomElement()->appendChild($element);
+                }
 
                 return new Content($element);
             }
