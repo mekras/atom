@@ -55,7 +55,7 @@ $entry->setId('urn:foo:entry:0001');
 $entry->addAuthor('Author 1', 'foo@example.com');
 $entry->addAuthor('Author 2', null, 'http://example.com/');
 $entry->getContent()->setValue('<h1>Entry content</h1>', 'html');
-$entry->addCategory('tag1', 'Tag label', 'http://example.com/scheme');
+$entry->addCategory('tag1')->setLabel('Tag label')->setScheme('http://example.com/scheme');
 
 echo (string) $document;
 ```

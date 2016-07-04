@@ -7,7 +7,6 @@
  */
 namespace Mekras\Atom\Element;
 
-use Mekras\Atom\Atom;
 use Mekras\Atom\Exception\MalformedNodeException;
 
 /**
@@ -45,6 +44,24 @@ class Category extends Element
     }
 
     /**
+     * Set category name.
+     *
+     * @param string $value
+     *
+     * @return $this
+     *
+     * @since 1.0
+     * @link  https://tools.ietf.org/html/rfc4287#section-4.2.2.1
+     */
+    public function setTerm($value)
+    {
+        $this->getDomElement()->setAttribute('term', $value);
+        $this->setCachedProperty('term', $value);
+
+        return $this;
+    }
+
+    /**
      * Return human readable label.
      *
      * @return string|null
@@ -67,6 +84,24 @@ class Category extends Element
     }
 
     /**
+     * Set human readable label.
+     *
+     * @param string $value
+     *
+     * @return $this
+     *
+     * @since 1.0
+     * @link  https://tools.ietf.org/html/rfc4287#section-4.2.2.3
+     */
+    public function setLabel($value)
+    {
+        $this->getDomElement()->setAttribute('label', $value);
+        $this->setCachedProperty('label', $value);
+
+        return $this;
+    }
+
+    /**
      * Return category scheme.
      *
      * @return string IRI
@@ -86,6 +121,24 @@ class Category extends Element
                 return $this->getDomElement()->getAttribute('scheme');
             }
         );
+    }
+
+    /**
+     * Set category scheme.
+     *
+     * @param string $value
+     *
+     * @return $this
+     *
+     * @since 1.0
+     * @link  https://tools.ietf.org/html/rfc4287#section-4.2.2.2
+     */
+    public function setScheme($value)
+    {
+        $this->getDomElement()->setAttribute('scheme', $value);
+        $this->setCachedProperty('scheme', $value);
+
+        return $this;
     }
 
     /**

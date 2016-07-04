@@ -36,7 +36,7 @@ abstract class Element extends Node
             if ($this->getNodeName() !== $source->localName) {
                 throw new \InvalidArgumentException(
                     sprintf(
-                        'Unexpected element "%s", expecting "%s"',
+                        'Unexpected element name "%s", expecting "%s"',
                         $source->localName,
                         $this->getNodeName()
                     )

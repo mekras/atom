@@ -7,8 +7,8 @@
  */
 namespace Mekras\Atom\Element\Meta;
 
-use Mekras\Atom\Atom;
 use Mekras\Atom\Element\Category;
+use Mekras\Atom\Node;
 
 /**
  * Support for "app:category".
@@ -50,26 +50,20 @@ trait Categories
     /**
      * Add new entry or feed category.
      *
-     * @param string      $term
-     * @param string|null $label
-     * @param string|null $scheme IRI
+     * @param string $term
+     *
+     * @return Category
+     *
+     * @throws \InvalidArgumentException
      *
      * @since 1.0
      */
-    public function addCategory($term, $label = null, $scheme = null)
+    public function addCategory($term)
     {
-        $document = $this->getDomElement()->ownerDocument;
-        $category = $document->createElementNS(Atom::NS, 'category');
-        $this->getDomElement()->appendChild($category);
+        /** @var Node $this */
+        $category = new Category($this);
+        $category->setTerm($term);
 
-        $category->setAttribute('term', $term);
-
-        if ($label) {
-            $category->setAttribute('label', $label);
-        }
-
-        if ($scheme) {
-            $category->setAttribute('scheme', $scheme);
-        }
+        return $category;
     }
 }
