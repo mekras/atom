@@ -55,6 +55,18 @@ abstract class Document extends Node
     }
 
     /**
+     * Return document XML.
+     *
+     * @return string
+     *
+     * @since 1.0
+     */
+    public function __toString()
+    {
+        return $this->getDomDocument()->saveXML();
+    }
+
+    /**
      * Return DOM Document.
      *
      * @return \DOMDocument

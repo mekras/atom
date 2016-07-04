@@ -15,17 +15,54 @@ use Mekras\Atom\Atom;
 abstract class TestCase extends \PHPUnit_Framework_TestCase
 {
     /**
-     * Create new empty document
+     * Locate fixture and return absolute path.
      *
-     * @param string $rootNodeName
+     * @param string $path Path to fixture relative to tests root folder.
      *
      * @return \DOMDocument
      */
-    protected function createDocument($rootNodeName = 'doc')
+    protected function locateFixture($path)
+    {
+        $filename = __DIR__ . '/fixtures/' . ltrim($path, '/');
+        if (!file_exists($filename)) {
+            static::fail(sprintf('Fixture file "%s" not found', $filename));
+        }
+
+        return $filename;
+    }
+
+    /**
+     * Load fixture and return DOM document.
+     *
+     * @param string $path Path to fixture relative to tests root folder.
+     *
+     * @return \DOMDocument
+     */
+    protected function loadFixture($path)
     {
         $document = new \DOMDocument('1.0', 'utf-8');
-        $element = $document->createElementNS(Atom::NS, $rootNodeName);
-        $document->appendChild($element);
+        $document->load($this->locateFixture($path));
+
+        return $document;
+    }
+
+    /**
+     * Create new empty document
+     *
+     * @param string $contents     XML
+     * @param string $rootNodeName default "doc"
+     *
+     * @return \DOMDocument
+     */
+    protected function createDocument($contents = '', $rootNodeName = 'doc')
+    {
+        $document = new \DOMDocument();
+        $document->loadXML(
+            '<?xml version="1.0" encoding="utf-8"?>' .
+            '<' . $rootNodeName . ' xmlns="http://www.w3.org/2005/Atom">' .
+            $contents .
+            '</' . $rootNodeName . '>'
+        );
 
         return $document;
     }

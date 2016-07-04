@@ -8,6 +8,7 @@
 namespace Mekras\Atom\Tests\Construct;
 
 use Mekras\Atom\Construct\Text;
+use Mekras\Atom\Tests\TestCase;
 
 /**
  * Tests for Mekras\Atom\Construct\Text
@@ -15,19 +16,14 @@ use Mekras\Atom\Construct\Text;
  * @covers Mekras\Atom\Construct\Text
  * @covers Mekras\Atom\Node
  */
-class TextTest extends \PHPUnit_Framework_TestCase
+class TextTest extends TestCase
 {
     /**
      * Test "text" type
      */
     public function testText()
     {
-        $doc = new \DOMDocument();
-        $doc->loadXML(
-            '<?xml version="1.0" encoding="utf-8"?>' .
-            '<text xmlns="http://www.w3.org/2005/Atom">Less: &lt;</text>'
-        );
-
+        $doc = $this->createDocument('Less: &lt;');
         $text = new Text($doc->documentElement);
         static::assertEquals('text', $text->getType());
         static::assertEquals('Less: <', (string) $text);
@@ -38,13 +34,9 @@ class TextTest extends \PHPUnit_Framework_TestCase
      */
     public function testHtml()
     {
-        $doc = new \DOMDocument();
-        $doc->loadXML(
-            '<?xml version="1.0" encoding="utf-8"?>' .
-            '<text xmlns="http://www.w3.org/2005/Atom" type="html">&lt;em> &amp;lt; &lt;/em></text>'
-        );
+        $doc = $this->createDocument('<text type="html">&lt;em> &amp;lt; &lt;/em></text>');
 
-        $text = new Text($doc->documentElement);
+        $text = new Text($doc->documentElement->firstChild);
         static::assertEquals('html', $text->getType());
         static::assertEquals('<em> &lt; </em>', (string) $text);
     }
@@ -54,17 +46,27 @@ class TextTest extends \PHPUnit_Framework_TestCase
      */
     public function testXhtml()
     {
-        $doc = new \DOMDocument();
-        $doc->loadXML(
-            '<?xml version="1.0" encoding="utf-8"?>' .
-            '<text xmlns="http://www.w3.org/2005/Atom" type="xhtml" ' .
-            'xmlns:xhtml="http://www.w3.org/1999/xhtml">' .
+        $doc = $this->createDocument(
+            '<text type="xhtml" xmlns:xhtml="http://www.w3.org/1999/xhtml">' .
             '<xhtml:div><xhtml:em> &lt; </xhtml:em></xhtml:div>' .
             '</text>'
         );
 
-        $text = new Text($doc->documentElement);
+        $text = new Text($doc->documentElement->firstChild);
         static::assertEquals('xhtml', $text->getType());
         static::assertEquals('<em> &lt; </em>', (string) $text);
+    }
+
+    /**
+     * __toString should return an empty string in case of error.
+     */
+    public function testRenderError()
+    {
+        $doc = $this->createDocument(
+            '<text type="xhtml" xmlns:xhtml="http://www.w3.org/1999/xhtml"></text>'
+        );
+
+        $person = new Text($doc->documentElement->firstChild);
+        static::assertEquals('', (string) $person);
     }
 }

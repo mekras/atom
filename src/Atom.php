@@ -59,7 +59,7 @@ class Atom
     }
 
     /**
-     * Create Atom document from XML document.
+     * Create Atom document from XML DOM document.
      *
      * @param \DOMDocument $document
      *
@@ -69,7 +69,7 @@ class Atom
      *
      * @since 1.0
      */
-    public function createDocument(\DOMDocument $document)
+    public function parseDocument(\DOMDocument $document)
     {
         foreach ($this->extensions as $extension) {
             $doc = $extension->createDocument($document);
@@ -103,10 +103,10 @@ class Atom
      */
     public function parseXML($xml)
     {
-        $doc = new \DOMDocument('1.0', 'utf-8');
+        $doc = new \DOMDocument();
         $doc->loadXML($xml);
 
-        return $this->createDocument($doc);
+        return $this->parseDocument($doc);
     }
 
     /**

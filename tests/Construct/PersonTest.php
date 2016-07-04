@@ -8,6 +8,7 @@
 namespace Mekras\Atom\Tests\Construct;
 
 use Mekras\Atom\Construct\Person;
+use Mekras\Atom\Tests\TestCase;
 
 /**
  * Tests for Mekras\Atom\Construct\Person
@@ -15,19 +16,15 @@ use Mekras\Atom\Construct\Person;
  * @covers Mekras\Atom\Construct\Person
  * @covers Mekras\Atom\Node
  */
-class PersonTest extends \PHPUnit_Framework_TestCase
+class PersonTest extends TestCase
 {
     /**
      *
      */
     public function testBasics()
     {
-        $doc = new \DOMDocument();
-        $doc->loadXML(
-            '<?xml version="1.0" encoding="utf-8"?>' .
-            '<person xmlns="http://www.w3.org/2005/Atom">' .
-            '<name>Foo</name><email> foo@example.com</email><uri>http://example.com/ </uri>' .
-            '</person>'
+        $doc = $this->createDocument(
+            '<name>Foo</name><email> foo@example.com</email><uri>http://example.com/ </uri>'
         );
 
         $person = new Person($doc->documentElement);
@@ -35,5 +32,15 @@ class PersonTest extends \PHPUnit_Framework_TestCase
         static::assertEquals('Foo', (string) $person);
         static::assertEquals('foo@example.com', $person->getEmail());
         static::assertEquals('http://example.com/', $person->getUri());
+    }
+
+    /**
+     * __toString should return an empty string in case of error.
+     */
+    public function testRenderError()
+    {
+        $doc = $this->createDocument();
+        $person = new Person($doc->documentElement);
+        static::assertEquals('', (string) $person);
     }
 }

@@ -45,7 +45,7 @@ class EntryDocumentTest extends \PHPUnit_Framework_TestCase
         $document->getDomDocument()->formatOutput = true;
         static::assertEquals(
             file_get_contents(__DIR__ . '/../fixtures/EntryDocument.txt'),
-            $document->getDomDocument()->saveXML()
+            (string) $document
         );
     }
 }
