@@ -12,10 +12,6 @@ use Mekras\Atom\Element\Feed;
 
 /**
  * Tests for Mekras\Atom\Document\FeedDocument
- *
- * @covers Mekras\Atom\Document\FeedDocument
- * @covers Mekras\Atom\Document\Document
- * @covers Mekras\Atom\Node
  */
 class FeedDocumentTest extends \PHPUnit_Framework_TestCase
 {
@@ -30,5 +26,28 @@ class FeedDocumentTest extends \PHPUnit_Framework_TestCase
         $document = new FeedDocument($doc);
         $feed = $document->getFeed();
         static::assertInstanceOf(Feed::class, $feed);
+    }
+
+    /**
+     * Test creating new feed
+     */
+    public function testCreate()
+    {
+        $document = new FeedDocument();
+        $feed = $document->getFeed();
+        $feed->setId('urn:foo:feed:0001');
+        $feed->setTitle('Feed Title');
+        $feed->addAuthor('Feed Author')->setEmail('foo@example.com')->setUri('http://example.com/');
+        $feed->addCategory('tag1')->setScheme('http://example.com/scheme')->setLabel('TAG 1');
+
+        $entry = $feed->addEntry();
+        $entry->setId('urn:foo:entry:0001');
+        $entry->setTitle('Entry Title');
+
+        $document->getDomDocument()->formatOutput = true;
+        static::assertEquals(
+            file_get_contents(__DIR__ . '/../fixtures/FeedDocument.txt'),
+            (string) $document
+        );
     }
 }

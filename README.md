@@ -52,6 +52,7 @@ use Mekras\Atom\Element\Entry;
 $document = new EntryDocument();
 $entry = $document->getEntry();
 $entry->setId('urn:foo:entry:0001');
+$entry->setTitle('Entry Title');
 $entry->addAuthor('Author 1', 'foo@example.com');
 $entry->addAuthor('Author 2', null, 'http://example.com/');
 $entry->getContent()->setValue('<h1>Entry content</h1>', 'html');

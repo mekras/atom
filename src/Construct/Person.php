@@ -35,7 +35,7 @@ class Person extends Node
     }
 
     /**
-     * Return author name.
+     * Return person name.
      *
      * @return string
      *
@@ -52,6 +52,29 @@ class Person extends Node
                 return trim($this->query('atom:name', self::SINGLE | self::REQUIRED)->textContent);
             }
         );
+    }
+
+    /**
+     * Set person name.
+     *
+     * @param string $value
+     *
+     * @return $this
+     *
+     * @since 1.0
+     * @link  https://tools.ietf.org/html/rfc4287#section-3.2.1
+     */
+    public function setName($value)
+    {
+        $element = $this->query('atom:name', self::SINGLE);
+        if (null === $element) {
+            $element = $this->getDomElement()->ownerDocument->createElementNS($this->ns(), 'name');
+            $this->getDomElement()->appendChild($element);
+        }
+        $element->nodeValue = $value;
+        $this->setCachedProperty('name', $value);
+
+        return $this;
     }
 
     /**
@@ -73,6 +96,29 @@ class Person extends Node
     }
 
     /**
+     * Set IRI associated with the person.
+     *
+     * @param string $value IRI.
+     *
+     * @return $this
+     *
+     * @since 1.0
+     * @link  https://tools.ietf.org/html/rfc4287#section-3.2.2
+     */
+    public function setUri($value)
+    {
+        $element = $this->query('atom:uri', self::SINGLE);
+        if (null === $element) {
+            $element = $this->getDomElement()->ownerDocument->createElementNS($this->ns(), 'uri');
+            $this->getDomElement()->appendChild($element);
+        }
+        $element->nodeValue = $value;
+        $this->setCachedProperty('uri', $value);
+
+        return $this;
+    }
+
+    /**
      * Return e-mail address associated with the person.
      *
      * @return string|null
@@ -88,5 +134,28 @@ class Person extends Node
                 return trim($this->query('atom:email', self::SINGLE)->textContent);
             }
         );
+    }
+
+    /**
+     * Set e-mail address associated with the person.
+     *
+     * @param string $value E-mail address.
+     *
+     * @return $this
+     *
+     * @since 1.0
+     * @link  https://tools.ietf.org/html/rfc4287#section-3.2.2
+     */
+    public function setEmail($value)
+    {
+        $element = $this->query('atom:email', self::SINGLE);
+        if (null === $element) {
+            $element = $this->getDomElement()->ownerDocument->createElementNS($this->ns(), 'email');
+            $this->getDomElement()->appendChild($element);
+        }
+        $element->nodeValue = $value;
+        $this->setCachedProperty('email', $value);
+
+        return $this;
     }
 }

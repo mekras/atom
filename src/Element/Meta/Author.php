@@ -51,29 +51,22 @@ trait Author
     /**
      * Add new entry or feed author.
      *
-     * @param string      $name
-     * @param string|null $email
-     * @param string|null $uri
+     * @param string $name
+     *
+     * @return Person
+     *
+     * @throws \InvalidArgumentException
      *
      * @since 1.0
      */
-    public function addAuthor($name, $email = null, $uri = null)
+    public function addAuthor($name)
     {
         $document = $this->getDomElement()->ownerDocument;
-        $author = $document->createElementNS(Atom::NS, 'author');
-        $this->getDomElement()->appendChild($author);
+        $element = $document->createElementNS(Atom::NS, 'author');
+        $this->getDomElement()->appendChild($element);
+        $person = new Person($element);
+        $person->setName($name);
 
-        $element = $document->createElementNS(Atom::NS, 'name', $name);
-        $author->appendChild($element);
-
-        if ($email) {
-            $element = $document->createElementNS(Atom::NS, 'email', $email);
-            $author->appendChild($element);
-        }
-
-        if ($uri) {
-            $element = $document->createElementNS(Atom::NS, 'uri', $uri);
-            $author->appendChild($element);
-        }
+        return $person;
     }
 }

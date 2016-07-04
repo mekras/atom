@@ -36,8 +36,9 @@ class EntryDocumentTest extends \PHPUnit_Framework_TestCase
         $document = new EntryDocument();
         $entry = $document->getEntry();
         $entry->setId('urn:foo:entry:0001');
-        $entry->addAuthor('Author 1', 'foo@example.com');
-        $entry->addAuthor('Author 2', null, 'http://example.com/');
+        $entry->setTitle('Entry Title');
+        $entry->addAuthor('Author 1')->setEmail('foo@example.com');
+        $entry->addAuthor('Author 2')->setUri('http://example.com/');
         $entry->getContent()->setValue('<h1>Entry content</h1>', 'html');
         $entry->addCategory('tag1')->setScheme('http://example.com/scheme');
         $entry->addCategory('tag2')->setLabel('TAG 2');

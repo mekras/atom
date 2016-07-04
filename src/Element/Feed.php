@@ -17,6 +17,7 @@ namespace Mekras\Atom\Element;
 class Feed extends Element
 {
     use Meta\Author;
+    use MEta\Categories;
     use Meta\Id;
     use Meta\Title;
     use Meta\Updated;
@@ -67,6 +68,20 @@ class Feed extends Element
                 return $result;
             }
         );
+    }
+
+    /**
+     * Add new entry to feed.
+     *
+     * @return Entry
+     *
+     * @throws \InvalidArgumentException
+     *
+     * @since 1.0
+     */
+    public function addEntry()
+    {
+        return new Entry($this);
     }
 
     /**

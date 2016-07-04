@@ -21,7 +21,7 @@ class ElementTest extends TestCase
      * @expectedException \InvalidArgumentException
      * @expectedExceptionMessage Unexpected element name "foo", expecting "bar"
      */
-    public function testInvalidRootTag()
+    public function testInvalidNodeName()
     {
         $doc = $this->createDocument('', 'foo');
 
@@ -30,5 +30,14 @@ class ElementTest extends TestCase
         $element->expects(static::any())->method('getNodeName')->willReturn('bar');
         /** @var Element $element */
         $element->__construct($doc->documentElement);
+    }
+
+    /**
+     * @expectedException \InvalidArgumentException
+     * @expectedExceptionMessage 1st argument of Mekras\Atom\Element\Element::__construct should be an instance of DOMElement or Mekras\Atom\Node
+     */
+    public function testInvalidArgument()
+    {
+        $this->getMockForAbstractClass(Element::class, ['foo']);
     }
 }
