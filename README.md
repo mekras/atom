@@ -43,11 +43,10 @@ if ($document instanceof FeedDocument) {
 
 ```
 
-## Creating documents
+## Creating Entry documents
 
 ```php
 use Mekras\Atom\Document\EntryDocument;
-use Mekras\Atom\Element\Entry;
 
 $document = new EntryDocument();
 $entry = $document->getEntry();
@@ -57,6 +56,25 @@ $entry->addAuthor('Author 1', 'foo@example.com');
 $entry->addAuthor('Author 2', null, 'http://example.com/');
 $entry->getContent()->setValue('<h1>Entry content</h1>', 'html');
 $entry->addCategory('tag1')->setLabel('Tag label')->setScheme('http://example.com/scheme');
+
+echo (string) $document;
+```
+## Creating Feed documents
+
+```php
+use Mekras\Atom\Document\FeedDocument;
+
+$document = new FeedDocument();
+$feed = $document->getFeed();
+$feed->setId('urn:foo:feed:0001');
+$feed->setTitle('Feed Title');
+$feed->addAuthor('Feed Author')->setEmail('foo@example.com')->setUri('http://example.com/');
+$feed->addCategory('tag1')->setScheme('http://example.com/scheme')->setLabel('TAG 1');
+
+$entry = $feed->addEntry();
+$entry->setId('urn:foo:entry:0001');
+$entry->setTitle('Entry Title');
+//...
 
 echo (string) $document;
 ```
