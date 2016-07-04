@@ -17,6 +17,7 @@ namespace Mekras\Atom\Element;
 class Entry extends Element
 {
     use Meta\Author;
+    use Meta\Categories;
     use Meta\Id;
     use Meta\Title;
     use Meta\Updated;
@@ -47,7 +48,6 @@ class Entry extends Element
     }
 
     /*
-      & atomCategory*
       & atomContributor*
       & atomLink*
       & atomPublished?

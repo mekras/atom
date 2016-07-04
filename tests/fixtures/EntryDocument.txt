@@ -10,4 +10,6 @@
     <uri>http://example.com/</uri>
   </author>
   <content type="html">&lt;h1&gt;Entry content&lt;/h1&gt;</content>
+  <category term="tag1" scheme="http://example.com/scheme"/>
+  <category term="tag2" label="TAG 2"/>
 </entry>
