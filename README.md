@@ -12,7 +12,7 @@ an object-oriented style. It does not contain the functionality to download or d
 
 ## Parsing documents
 
-Class [Atom](src/Atom.php) is responsible for parsing documents. There is to methods:
+Class [Atom](src/Atom.php) is responsible for parsing documents. There is two methods:
 
 - `parseDocument` — takes an instance of the [DOMDocument](http://php.net/domdocument) as argument
 and return one of the [Document](src/Document/Document.php) subclasses;
