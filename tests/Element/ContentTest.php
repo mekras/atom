@@ -21,14 +21,7 @@ class ContentTest extends TestCase
      */
     public function testGetText()
     {
-        $doc = new \DOMDocument();
-        $doc->loadXML(
-            '<?xml version="1.0" encoding="utf-8"?>' .
-            '<doc xmlns="http://www.w3.org/2005/Atom">' .
-            '<content>Less: &lt;</content>' .
-            '</doc>'
-        );
-
+        $doc = $this->createDocument('<content>Less: &lt;</content>');
         $content = new Content($doc->documentElement->firstChild);
         static::assertEquals('text', $content->getType());
         static::assertEquals('Less: <', (string) $content);
@@ -55,14 +48,7 @@ class ContentTest extends TestCase
      */
     public function testGetHtml()
     {
-        $doc = new \DOMDocument();
-        $doc->loadXML(
-            '<?xml version="1.0" encoding="utf-8"?>' .
-            '<doc xmlns="http://www.w3.org/2005/Atom">' .
-            '<content type="html">&lt;em> &amp;lt; &lt;/em></content>' .
-            '</doc>'
-        );
-
+        $doc = $this->createDocument('<content type="html">&lt;em> &amp;lt; &lt;/em></content>');
         $content = new Content($doc->documentElement->firstChild);
         static::assertEquals('html', $content->getType());
         static::assertEquals('<em> &lt; </em>', (string) $content);
@@ -89,14 +75,8 @@ class ContentTest extends TestCase
      */
     public function testGetXhtml()
     {
-        $doc = new \DOMDocument();
-        $doc->loadXML(
-            '<?xml version="1.0" encoding="utf-8"?>' .
-            '<doc xmlns="http://www.w3.org/2005/Atom" xmlns:xhtml="http://www.w3.org/1999/xhtml">' .
-            '<content type="xhtml">' .
-            '<xhtml:div><xhtml:em> &lt; </xhtml:em></xhtml:div>' .
-            '</content>' .
-            '</doc>'
+        $doc = $this->createDocument(
+            '<content type="xhtml"><xhtml:div><xhtml:em> &lt; </xhtml:em></xhtml:div></content>'
         );
 
         $content = new Content($doc->documentElement->firstChild);
@@ -109,24 +89,21 @@ class ContentTest extends TestCase
      */
     public function testSetXhtml()
     {
-        $document = $this->createDocument();
-        $element = $document->createElementNS(Atom::NS, 'content');
-        $document->documentElement->appendChild($element);
-        $content = new Content($element);
+        $document = $this->createDocument('<content/>');
+        $content = new Content($document->documentElement->firstChild);
 
         $xhtml = $this->createElement('foo');
-        $xhtml->appendChild($xhtml->ownerDocument->createElement('bar', 'BAR'));
-        $xhtml->firstChild->setAttribute('a', 'b');
+        $element = $xhtml->ownerDocument->createElement('bar', 'BAR');
+        $element->setAttribute('a', 'b');
+        $xhtml->appendChild($element);
         $xhtml->appendChild($xhtml->ownerDocument->createElement('baz', 'BAZ'));
 
         $content->setValue($xhtml, 'xhtml');
         static::assertEquals(
             '<content type="xhtml">' .
-            '<xhtml:div xmlns:xhtml="http://www.w3.org/1999/xhtml">' .
-            '<xhtml:bar a="b">BAR</xhtml:bar><xhtml:baz>BAZ</xhtml:baz>' .
-            '</xhtml:div>' .
+            '<xhtml:div><xhtml:bar a="b">BAR</xhtml:bar><xhtml:baz>BAZ</xhtml:baz></xhtml:div>' .
             '</content>',
-            $document->saveXML($element)
+            $document->saveXML($document->documentElement->firstChild)
         );
     }
 
@@ -135,14 +112,10 @@ class ContentTest extends TestCase
      */
     public function testGetSvg()
     {
-        $doc = new \DOMDocument();
-        $doc->loadXML(
-            '<?xml version="1.0" encoding="utf-8"?>' .
-            '<doc xmlns="http://www.w3.org/2005/Atom" xmlns:xhtml="http://www.w3.org/1999/xhtml">' .
+        $doc = $this->createDocument(
             '<content type="image/svg+xml">' .
             '<svg xmlns="http://www.w3.org/2000/svg"><circle r="20"/></svg>' .
-            '</content>' .
-            '</doc>'
+            '</content>'
         );
 
         $content = new Content($doc->documentElement->firstChild);
@@ -180,13 +153,7 @@ class ContentTest extends TestCase
      */
     public function testGetTextFoo()
     {
-        $doc = new \DOMDocument();
-        $doc->loadXML(
-            '<?xml version="1.0" encoding="utf-8"?>' .
-            '<doc xmlns="http://www.w3.org/2005/Atom" xmlns:xhtml="http://www.w3.org/1999/xhtml">' .
-            '<content type="text/foo">Foo</content>' .
-            '</doc>'
-        );
+        $doc = $this->createDocument('<content type="text/foo">Foo</content>');
 
         $content = new Content($doc->documentElement->firstChild);
         static::assertEquals('text/foo', $content->getType());
@@ -214,14 +181,7 @@ class ContentTest extends TestCase
      */
     public function testGetBinary()
     {
-        $doc = new \DOMDocument();
-        $doc->loadXML(
-            '<?xml version="1.0" encoding="utf-8"?>' .
-            '<doc xmlns="http://www.w3.org/2005/Atom" xmlns:xhtml="http://www.w3.org/1999/xhtml">' .
-            '<content type="foo/bar">Rm9v</content>' .
-            '</doc>'
-        );
-
+        $doc = $this->createDocument('<content type="foo/bar">Rm9v</content>');
         $content = new Content($doc->documentElement->firstChild);
         static::assertEquals('foo/bar', $content->getType());
         static::assertEquals('Foo', (string) $content);
