@@ -14,7 +14,7 @@ use Mekras\Atom\Element\Entry;
  *
  * @since 1.0
  *
- * @link  @link  https://tools.ietf.org/html/rfc4287#section-2
+ * @link  https://tools.ietf.org/html/rfc4287#section-2
  */
 class EntryDocument extends Document
 {

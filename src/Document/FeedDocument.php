@@ -14,7 +14,7 @@ use Mekras\Atom\Element\Feed;
  *
  * @since 1.0
  *
- * @link  @link  https://tools.ietf.org/html/rfc4287#section-2
+ * @link  https://tools.ietf.org/html/rfc4287#section-2
  */
 class FeedDocument extends Document
 {
