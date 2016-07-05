@@ -19,30 +19,9 @@ class Feed extends Element
     use Meta\Author;
     use MEta\Categories;
     use Meta\Id;
+    use Meta\SelfLink;
     use Meta\Title;
     use Meta\Updated;
-
-    /**
-     * Return the preferred URI for retrieving Atom Feed Documents representing this Atom feed.
-     *
-     * @return string
-     *
-     * @throws \Mekras\Atom\Exception\MalformedNodeException
-     *
-     * @since 1.0
-     * @link  https://tools.ietf.org/html/rfc4287#section-4.1.1
-     */
-    public function getSelfLink()
-    {
-        return $this->getCachedProperty(
-            'selfLink',
-            function () {
-                $element = $this->query('atom:link[@rel="self"]', self::SINGLE | self::REQUIRED);
-
-                return trim($element->getAttribute('href'));
-            }
-        );
-    }
 
     /**
      * Return feed entries.

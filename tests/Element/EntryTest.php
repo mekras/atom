@@ -27,6 +27,7 @@ class EntryTest extends \PHPUnit_Framework_TestCase
         $entry = new Entry($doc->documentElement);
         static::assertEquals('Author 1, Author 2', implode(', ', $entry->getAuthors()));
         static::assertEquals('urn:foo:atom1:entry:0001', $entry->getId());
+        static::assertEquals('http://example.com/atom/atom/?id=0001', $entry->getSelfLink());
         $value = $entry->getTitle();
         static::assertInstanceOf(Text::class, $value);
         static::assertEquals('text', $value->getType());

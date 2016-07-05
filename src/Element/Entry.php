@@ -19,6 +19,7 @@ class Entry extends Element
     use Meta\Author;
     use Meta\Categories;
     use Meta\Id;
+    use Meta\SelfLink;
     use Meta\Title;
     use Meta\Updated;
 

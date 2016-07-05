@@ -12,7 +12,7 @@
         <uri>http://example.com</uri>
     </author>
     <link rel="alternate" type="text/html" href="http://example.com/"/>
-    <link rel="self" type="text/xml" href="http://example.com/atom"/>
+    <link rel="self" type="text/xml" href="http://example.com/atom/feed"/>
     <updated>2016-01-23T11:22:33Z</updated>
     <category term="tag1"/>
     <category term="tag2"/>

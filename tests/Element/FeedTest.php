@@ -27,7 +27,7 @@ class FeedTest extends \PHPUnit_Framework_TestCase
         $feed = new Feed($doc->documentElement);
         static::assertEquals('Author 1, Author 2', implode(', ', $feed->getAuthors()));
         static::assertEquals('urn:foo:atom1:feed:id', $feed->getId());
-        static::assertEquals('http://example.com/atom', $feed->getSelfLink());
+        static::assertEquals('http://example.com/atom/feed', $feed->getSelfLink());
         $value = $feed->getTitle();
         static::assertInstanceOf(Text::class, $value);
         static::assertEquals('text', $value->getType());
