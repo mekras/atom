@@ -10,7 +10,7 @@ namespace Mekras\Atom\Element;
 use Mekras\Atom\Exception\MalformedNodeException;
 
 /**
- * "app:category" construct
+ * "atom:category" construct
  *
  * @since 1.0
  *

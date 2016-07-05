@@ -10,7 +10,7 @@ namespace Mekras\Atom\Element\Meta;
 use Mekras\Atom\Node;
 
 /**
- * Support for "app:updated".
+ * Support for "atom:updated".
  *
  * @since 1.0
  *

@@ -12,7 +12,7 @@ use Mekras\Atom\Construct\Person;
 use Mekras\Atom\Node;
 
 /**
- * Support for "app:author".
+ * Support for "atom:author".
  *
  * @since 1.0
  *

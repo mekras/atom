@@ -12,7 +12,7 @@ use Mekras\Atom\Construct\Text;
 use Mekras\Atom\Node;
 
 /**
- * Support for "app:title".
+ * Support for "atom:title".
  *
  * @since 1.0
  *

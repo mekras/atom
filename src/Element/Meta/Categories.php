@@ -11,7 +11,7 @@ use Mekras\Atom\Element\Category;
 use Mekras\Atom\Node;
 
 /**
- * Support for "app:category".
+ * Support for "atom:category".
  *
  * @since 1.0
  *

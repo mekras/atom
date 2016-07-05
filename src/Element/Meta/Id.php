@@ -11,7 +11,7 @@ use Mekras\Atom\Atom;
 use Mekras\Atom\Node;
 
 /**
- * Support for "app:id".
+ * Support for "atom:id".
  *
  * @since 1.0
  *
