@@ -112,12 +112,14 @@ class Atom
     /**
      * Register new document type extension
      *
+     * New extensions are placed in top of the list.
+     *
      * @param DocumentType $extension
      *
      * @since 1.0
      */
     public function registerDocumentType(DocumentType $extension)
     {
-        $this->extensions[] = $extension;
+        array_unshift($this->extensions, $extension);
     }
 }
