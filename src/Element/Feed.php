@@ -17,7 +17,7 @@ namespace Mekras\Atom\Element;
 class Feed extends Element
 {
     use Meta\Author;
-    use MEta\Categories;
+    use Meta\Categories;
     use Meta\Id;
     use Meta\SelfLink;
     use Meta\Title;
