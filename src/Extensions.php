@@ -8,6 +8,7 @@
 namespace Mekras\Atom;
 
 use Mekras\Atom\Document\Document;
+use Mekras\Atom\Extension\DocumentExtension;
 use Mekras\Atom\Extension\Extension;
 
 /**
@@ -22,9 +23,11 @@ class Extensions
     /**
      * Additional document types.
      *
-     * @var Extension[]
+     * @var DocumentExtension[][]
      */
-    private $registry = [];
+    private $registry = [
+        DocumentExtension::class => []
+    ];
 
     /**
      * Register extension
@@ -37,7 +40,9 @@ class Extensions
      */
     public function register(Extension $extension)
     {
-        array_unshift($this->registry, $extension);
+        if ($extension instanceof DocumentExtension) {
+            array_unshift($this->registry[DocumentExtension::class], $extension);
+        }
     }
 
     /**
@@ -53,7 +58,7 @@ class Extensions
      */
     public function parseDocument(\DOMDocument $document)
     {
-        foreach ($this->registry as $extension) {
+        foreach ($this->registry[DocumentExtension::class] as $extension) {
             $doc = $extension->parseDocument($this, $document);
             if ($doc) {
                 return $doc;

@@ -10,7 +10,7 @@ namespace Mekras\Atom\Tests;
 use Mekras\Atom\Document\EntryDocument;
 use Mekras\Atom\Document\FeedDocument;
 use Mekras\Atom\DocumentFactory;
-use Mekras\Atom\Extension\Extension;
+use Mekras\Atom\Extension\DocumentExtension;
 
 /**
  * Tests for Mekras\Atom\DocumentFactory
@@ -56,10 +56,10 @@ class DocumentFactoryTest extends TestCase
     {
         $factory = new DocumentFactory();
 
-        $extension = $this->getMockForAbstractClass(Extension::class);
+        $extension = $this->getMockForAbstractClass(DocumentExtension::class);
         $doc1 = new \stdClass();
         $extension->expects(static::once())->method('parseDocument')->willReturn($doc1);
-        /** @var Extension $extension */
+        /** @var DocumentExtension $extension */
         $factory->getExtensions()->register($extension);
 
         $doc2 = $factory->parseDocument($this->loadFixture('FeedDocument.xml'));

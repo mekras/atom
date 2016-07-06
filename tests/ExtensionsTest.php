@@ -7,6 +7,7 @@
  */
 namespace Mekras\Atom\Tests;
 
+use Mekras\Atom\Extension\DocumentExtension;
 use Mekras\Atom\Extension\Extension;
 use Mekras\Atom\Extensions;
 
@@ -18,13 +19,13 @@ use Mekras\Atom\Extensions;
 class ExtensionsTest extends TestCase
 {
     /**
-     * Basics tests.
+     * Test document parsing.
      */
-    public function testBasics()
+    public function testParseDocument()
     {
         $extensions = new Extensions();
 
-        $extension = $this->getMockForAbstractClass(Extension::class);
+        $extension = $this->getMockForAbstractClass(DocumentExtension::class);
         $doc1 = new \stdClass();
         $extension->expects(static::exactly(2))->method('parseDocument')
             ->willReturnCallback(

@@ -7,9 +7,6 @@
  */
 namespace Mekras\Atom\Extension;
 
-use Mekras\Atom\Document\Document;
-use Mekras\Atom\Extensions;
-
 /**
  * Extension interface.
  *
@@ -17,15 +14,4 @@ use Mekras\Atom\Extensions;
  */
 interface Extension
 {
-    /**
-     * Create Atom document from XML DOM document.
-     *
-     * @param Extensions   $extensions Extension registry.
-     * @param \DOMDocument $document   Source document.
-     *
-     * @return Document|null
-     *
-     * @since 1.0
-     */
-    public function parseDocument(Extensions $extensions, \DOMDocument $document);
 }
