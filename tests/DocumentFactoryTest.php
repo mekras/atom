@@ -10,15 +10,14 @@ namespace Mekras\Atom\Tests;
 use Mekras\Atom\Document\EntryDocument;
 use Mekras\Atom\Document\FeedDocument;
 use Mekras\Atom\DocumentFactory;
-use Mekras\Atom\Extension\DocumentType;
-use Mekras\Atom\Extensions;
+use Mekras\Atom\Extension\Extension;
 
 /**
  * Tests for Mekras\Atom\DocumentFactory
  *
  * @covers Mekras\Atom\DocumentFactory
  */
-class DocumentFactoryTest extends \PHPUnit_Framework_TestCase
+class DocumentFactoryTest extends TestCase
 {
     /**
      * Parse Feed
@@ -41,11 +40,29 @@ class DocumentFactoryTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * Create new entry document.
+     */
+    public function testCreateEntry()
+    {
+        $factory = new DocumentFactory();
+        $doc = $factory->createDocument(EntryDocument::class);
+        static::assertInstanceOf(EntryDocument::class, $doc);
+    }
+
+    /**
      * Test extensions.
      */
     public function testExtensions()
     {
         $factory = new DocumentFactory();
-        static::assertInstanceOf(Extensions::class, $factory->getExtensions());
+
+        $extension = $this->getMockForAbstractClass(Extension::class);
+        $doc1 = new \stdClass();
+        $extension->expects(static::once())->method('parseDocument')->willReturn($doc1);
+        /** @var Extension $extension */
+        $factory->getExtensions()->register($extension);
+
+        $doc2 = $factory->parseDocument($this->loadFixture('FeedDocument.xml'));
+        static::assertSame($doc1, $doc2);
     }
 }

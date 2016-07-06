@@ -47,9 +47,13 @@ if ($document instanceof FeedDocument) {
 ## Creating Entry documents
 
 ```php
+use Mekras\Atom\DocumentFactory;
 use Mekras\Atom\Document\EntryDocument;
 
-$document = new EntryDocument();
+$factory = new DocumentFactory;
+
+$document = $factory->createDocument(EntryDocument::class);
+
 $entry = $document->getEntry();
 $entry->setId('urn:foo:entry:0001');
 $entry->setTitle('Entry Title');
@@ -63,9 +67,13 @@ echo (string) $document;
 ## Creating Feed documents
 
 ```php
+use Mekras\Atom\DocumentFactory;
 use Mekras\Atom\Document\FeedDocument;
 
-$document = new FeedDocument();
+$factory = new DocumentFactory;
+
+$document = $factory->createDocument(FeedDocument::class);
+
 $feed = $document->getFeed();
 $feed->setId('urn:foo:feed:0001');
 $feed->setTitle('Feed Title');

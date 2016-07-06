@@ -85,6 +85,28 @@ class DocumentFactory
     }
 
     /**
+     * Create new Atom document.
+     *
+     * @param string $documentClass Document class name.
+     *
+     * @return Document
+     *
+     * @throws \InvalidArgumentException
+     *
+     * @since 1.0
+     */
+    public function createDocument($documentClass)
+    {
+        if (!is_subclass_of($documentClass, Document::class)) {
+            throw new \InvalidArgumentException(
+                sprintf('Class %s should be a descendant of %s', $documentClass, Document::class)
+            );
+        }
+
+        return new $documentClass();
+    }
+
+    /**
      * Return extension registry.
      *
      * @return Extensions
