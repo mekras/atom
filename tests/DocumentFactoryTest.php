@@ -11,6 +11,7 @@ use Mekras\Atom\Document\EntryDocument;
 use Mekras\Atom\Document\FeedDocument;
 use Mekras\Atom\DocumentFactory;
 use Mekras\Atom\Extension\DocumentType;
+use Mekras\Atom\Extensions;
 
 /**
  * Tests for Mekras\Atom\DocumentFactory
@@ -45,21 +46,6 @@ class DocumentFactoryTest extends \PHPUnit_Framework_TestCase
     public function testExtensions()
     {
         $factory = new DocumentFactory();
-
-        $extension = $this->getMockForAbstractClass(DocumentType::class);
-        $doc1 = new \stdClass();
-        $extension->expects(static::once())->method('createDocument')
-            ->willReturnCallback(
-                function (\DOMDocument $document) use ($doc1) {
-                    static::assertEquals('feed', $document->documentElement->localName);
-
-                    return $doc1;
-                }
-            );
-        /** @var DocumentType $extension */
-        $factory->registerDocumentType($extension);
-
-        $doc2 = $factory->parseXML(file_get_contents(__DIR__ . '/fixtures/FeedDocument.xml'));
-        static::assertSame($doc1, $doc2);
+        static::assertInstanceOf(Extensions::class, $factory->getExtensions());
     }
 }

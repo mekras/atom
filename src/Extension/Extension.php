@@ -10,14 +10,14 @@ namespace Mekras\Atom\Extension;
 use Mekras\Atom\Document\Document;
 
 /**
- * New document type extension.
+ * Extension interface.
  *
  * @since 1.0
  */
-interface DocumentType
+interface Extension
 {
     /**
-     * Create Atom document from XML document.
+     * Create Atom document from XML DOM document.
      *
      * @param \DOMDocument $document
      *
@@ -25,5 +25,5 @@ interface DocumentType
      *
      * @since 1.0
      */
-    public function createDocument(\DOMDocument $document);
+    public function parseDocument(\DOMDocument $document);
 }

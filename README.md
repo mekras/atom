@@ -82,17 +82,17 @@ echo (string) $document;
 
 ## Extending
 
-Atom parsing can be extended via `DocumentFactory::registerDocumentType()`.
+Atom parsing can be extended via `DocumentFactory::getExtensions()->register()`.
 
-**FooDocuments.php**
+**FooExtension.php**
 
 ```php
 use Mekras\Atom\Document\Document;
-use Mekras\Atom\Extension\DocumentType;
+use Mekras\Atom\Extension\Extension;
 
-class FooDocuments implements DocumentType
+class FooExtension implements Extension
 {
-    public function createDocument(\DOMDocument $document)
+    public function parseDocument(\DOMDocument $document)
     {
         if ('Foo NS' === $document->documentElement->namespaceURI) {
             switch ($document->documentElement->localName) {
@@ -112,6 +112,6 @@ class FooDocuments implements DocumentType
 use Mekras\Atom\DocumentFactory;
 
 $factory = new DocumentFactory;
-$factory->registerDocumentType(new FooDocuments());
+$factory->getExtensions()->register(new FooExtension());
 //...
 ```

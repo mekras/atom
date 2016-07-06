@@ -10,7 +10,6 @@ namespace Mekras\Atom;
 use Mekras\Atom\Document\Document;
 use Mekras\Atom\Document\EntryDocument;
 use Mekras\Atom\Document\FeedDocument;
-use Mekras\Atom\Extension\DocumentType;
 
 /**
  * Atom Document factory.
@@ -22,18 +21,18 @@ use Mekras\Atom\Extension\DocumentType;
 class DocumentFactory
 {
     /**
-     * Additional document types.
+     * Extensions.
      *
-     * @var DocumentType[]
+     * @var Extensions
      */
-    private $extensions = [];
+    private $extensions;
 
     /**
-     * Atom constructor.
+     * Create new factory
      */
     public function __construct()
     {
-        // NOP
+        $this->extensions = new Extensions();
     }
 
     /**
@@ -49,11 +48,9 @@ class DocumentFactory
      */
     public function parseDocument(\DOMDocument $document)
     {
-        foreach ($this->extensions as $extension) {
-            $doc = $extension->createDocument($document);
-            if ($doc) {
-                return $doc;
-            }
+        $doc = $this->extensions->parseDocument($document);
+        if ($doc) {
+            return $doc;
         }
 
         switch ($document->documentElement->localName) {
@@ -88,16 +85,14 @@ class DocumentFactory
     }
 
     /**
-     * Register new document type extension
+     * Return extension registry.
      *
-     * New extensions are placed in top of the list.
-     *
-     * @param DocumentType $extension
+     * @return Extensions
      *
      * @since 1.0
      */
-    public function registerDocumentType(DocumentType $extension)
+    public function getExtensions()
     {
-        array_unshift($this->extensions, $extension);
+        return $this->extensions;
     }
 }
