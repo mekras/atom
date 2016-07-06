@@ -89,6 +89,7 @@ abstract class Node
     {
         return Atom::NS;
     }
+
     /**
      * Return child DOM element by name.
      *

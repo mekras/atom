@@ -7,7 +7,8 @@
  */
 namespace Mekras\Atom\Document;
 
-use Mekras\Atom\Node;
+use Mekras\Atom\Atom;
+use Mekras\ClassHelpers\Traits\GettersCacheTrait;
 
 /**
  * Abstract Atom Document.
@@ -16,8 +17,10 @@ use Mekras\Atom\Node;
  *
  * @link  https://tools.ietf.org/html/rfc4287#section-2
  */
-abstract class Document extends Node
+abstract class Document
 {
+    use GettersCacheTrait;
+
     /**
      * DOM document.
      *
@@ -51,7 +54,6 @@ abstract class Document extends Node
         }
 
         $this->document = $document;
-        parent::__construct($document->documentElement);
     }
 
     /**
@@ -76,6 +78,18 @@ abstract class Document extends Node
     public function getDomDocument()
     {
         return $this->document;
+    }
+
+    /**
+     * Return node main namespace.
+     *
+     * @return string
+     *
+     * @since 1.0
+     */
+    public function ns()
+    {
+        return Atom::NS;
     }
 
     /**
