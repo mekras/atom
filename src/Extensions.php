@@ -8,7 +8,9 @@
 namespace Mekras\Atom;
 
 use Mekras\Atom\Document\Document;
+use Mekras\Atom\Element\Element;
 use Mekras\Atom\Extension\DocumentExtension;
+use Mekras\Atom\Extension\ElementExtension;
 use Mekras\Atom\Extension\Extension;
 
 /**
@@ -23,10 +25,11 @@ class Extensions
     /**
      * Additional document types.
      *
-     * @var DocumentExtension[][]
+     * @var DocumentExtension[][]|ElementExtension[][]
      */
     private $registry = [
-        DocumentExtension::class => []
+        DocumentExtension::class => [],
+        ElementExtension::class => []
     ];
 
     /**
@@ -43,6 +46,9 @@ class Extensions
         if ($extension instanceof DocumentExtension) {
             array_unshift($this->registry[DocumentExtension::class], $extension);
         }
+        if ($extension instanceof ElementExtension) {
+            array_unshift($this->registry[ElementExtension::class], $extension);
+        }
     }
 
     /**
@@ -50,7 +56,7 @@ class Extensions
      *
      * @param \DOMDocument $document
      *
-     * @return Document
+     * @return Document|null
      *
      * @throws \InvalidArgumentException
      *
@@ -62,6 +68,29 @@ class Extensions
             $doc = $extension->parseDocument($this, $document);
             if ($doc) {
                 return $doc;
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     * Create Atom node from XML DOM element.
+     *
+     * @param \DOMElement $element
+     *
+     * @return Element|null
+     *
+     * @throws \InvalidArgumentException
+     *
+     * @since 1.0
+     */
+    public function parseElement(\DOMElement $element)
+    {
+        foreach ($this->registry[ElementExtension::class] as $extension) {
+            $node = $extension->parseElement($this, $element);
+            if ($node) {
+                return $node;
             }
         }
 

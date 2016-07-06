@@ -8,6 +8,7 @@
 namespace Mekras\Atom\Tests;
 
 use Mekras\Atom\Extension\DocumentExtension;
+use Mekras\Atom\Extension\ElementExtension;
 use Mekras\Atom\Extension\Extension;
 use Mekras\Atom\Extensions;
 
@@ -39,5 +40,30 @@ class ExtensionsTest extends TestCase
         $doc2 = $extensions->parseDocument($this->loadFixture('FeedDocument.xml'));
         static::assertSame($doc1, $doc2);
         static::assertNull($extensions->parseDocument($this->loadFixture('EntryDocument.xml')));
+    }
+
+    /**
+     * Test element parsing.
+     */
+    public function testParseElement()
+    {
+        $extensions = new Extensions();
+
+        $extension = $this->getMockForAbstractClass(ElementExtension::class);
+        $node1 = new \stdClass();
+        $extension->expects(static::exactly(2))->method('parseElement')
+            ->willReturnCallback(
+                function ($extensions, \DOMElement $element) use ($node1) {
+                    return 'feed' === $element->localName ? $node1 : null;
+                }
+            );
+        /** @var Extension $extension */
+        $extensions->register($extension);
+
+        $node2 = $extensions->parseElement($this->loadFixture('FeedDocument.xml')->documentElement);
+        static::assertSame($node1, $node2);
+        static::assertNull(
+            $extensions->parseElement($this->loadFixture('EntryDocument.xml')->documentElement)
+        );
     }
 }
