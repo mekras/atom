@@ -8,6 +8,7 @@
 namespace Mekras\Atom\Document;
 
 use Mekras\Atom\Atom;
+use Mekras\Atom\Extensions;
 use Mekras\ClassHelpers\Traits\GettersCacheTrait;
 
 /**
@@ -22,6 +23,13 @@ abstract class Document
     use GettersCacheTrait;
 
     /**
+     * Extensions.
+     *
+     * @var Extensions
+     */
+    private $extensions;
+
+    /**
      * DOM document.
      *
      * @var \DOMDocument
@@ -31,14 +39,17 @@ abstract class Document
     /**
      * Create document.
      *
-     * @param \DOMDocument|null $document
+     * @param Extensions        $extensions Extension registry.
+     * @param \DOMDocument|null $document   Source document.
      *
      * @throws \InvalidArgumentException
      *
      * @since 1.0
      */
-    public function __construct(\DOMDocument $document = null)
+    public function __construct(Extensions $extensions, \DOMDocument $document = null)
     {
+        $this->extensions = $extensions;
+
         if (null === $document) {
             $document = new \DOMDocument('1.0', 'utf-8');
             $element = $document->createElementNS($this->ns(), $this->getRootNodeName());
@@ -100,4 +111,16 @@ abstract class Document
      * @since 1.0
      */
     abstract protected function getRootNodeName();
+
+    /**
+     * Return extensions.
+     *
+     * @return Extensions
+     *
+     * @since 1.0
+     */
+    protected function getExtensions()
+    {
+        return $this->extensions;
+    }
 }

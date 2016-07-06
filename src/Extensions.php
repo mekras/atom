@@ -54,7 +54,7 @@ class Extensions
     public function parseDocument(\DOMDocument $document)
     {
         foreach ($this->registry as $extension) {
-            $doc = $extension->parseDocument($document);
+            $doc = $extension->parseDocument($this, $document);
             if ($doc) {
                 return $doc;
             }

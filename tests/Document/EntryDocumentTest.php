@@ -9,6 +9,7 @@ namespace Mekras\Atom\Tests\Document;
 
 use Mekras\Atom\Document\EntryDocument;
 use Mekras\Atom\Element\Entry;
+use Mekras\Atom\Extensions;
 
 /**
  * Tests for Mekras\Atom\Document\EntryDocument
@@ -23,7 +24,7 @@ class EntryDocumentTest extends \PHPUnit_Framework_TestCase
         $doc = new \DOMDocument();
         $doc->load(__DIR__ . '/../fixtures/EntryDocument.xml');
 
-        $document = new EntryDocument($doc);
+        $document = new EntryDocument(new Extensions(), $doc);
         $entry = $document->getEntry();
         static::assertInstanceOf(Entry::class, $entry);
     }
@@ -33,7 +34,7 @@ class EntryDocumentTest extends \PHPUnit_Framework_TestCase
      */
     public function testCreate()
     {
-        $document = new EntryDocument();
+        $document = new EntryDocument(new Extensions());
         $entry = $document->getEntry();
         $entry->setId('urn:foo:entry:0001');
         $entry->setTitle('Entry Title');

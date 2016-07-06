@@ -55,9 +55,9 @@ class DocumentFactory
 
         switch ($document->documentElement->localName) {
             case 'feed':
-                return new FeedDocument($document);
+                return new FeedDocument($this->getExtensions(), $document);
             case 'entry':
-                return new EntryDocument($document);
+                return new EntryDocument($this->getExtensions(), $document);
         }
 
         throw new \InvalidArgumentException(
@@ -103,7 +103,7 @@ class DocumentFactory
             );
         }
 
-        return new $documentClass();
+        return new $documentClass($this->getExtensions());
     }
 
     /**

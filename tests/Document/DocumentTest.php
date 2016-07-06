@@ -8,6 +8,7 @@
 namespace Mekras\Atom\Tests\Document;
 
 use Mekras\Atom\Document\Document;
+use Mekras\Atom\Extensions;
 use Mekras\Atom\Tests\TestCase;
 
 /**
@@ -29,6 +30,6 @@ class DocumentTest extends TestCase
             ->disableOriginalConstructor()->getMock();
         $document->expects(static::any())->method('getRootNodeName')->willReturn('bar');
         /** @var Document $document */
-        $document->__construct($doc);
+        $document->__construct(new Extensions(), $doc);
     }
 }

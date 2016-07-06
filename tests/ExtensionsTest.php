@@ -28,7 +28,7 @@ class ExtensionsTest extends TestCase
         $doc1 = new \stdClass();
         $extension->expects(static::exactly(2))->method('parseDocument')
             ->willReturnCallback(
-                function (\DOMDocument $document) use ($doc1) {
+                function ($extensions, \DOMDocument $document) use ($doc1) {
                     return 'feed' === $document->documentElement->localName ? $doc1 : null;
                 }
             );
