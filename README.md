@@ -12,23 +12,24 @@ an object-oriented style. It does not contain the functionality to download or d
 
 ## Parsing documents
 
-Class [Atom](src/Atom.php) is responsible for parsing documents. There is two methods:
+[DocumentFactory](src/DocumentFactory.php) class is responsible for parsing documents. There are two
+methods:
 
 - `parseDocument` — takes an instance of the [DOMDocument](http://php.net/domdocument) as argument
 and return one of the [Document](src/Document/Document.php) subclasses;
 - `parseXML` — takes string with XML as argument then uses `parseDocument`.
 
 ```php
-use Mekras\Atom\Atom;
+use Mekras\Atom\DocumentFactory;
 use Mekras\Atom\Document\EntryDocument;
 use Mekras\Atom\Document\FeedDocument;
 use Mekras\Atom\Exception\AtomException;
 
-$atom = new Atom;
+$factory = new DocumentFactory;
 
 $xml = file_get_contents('http://example.com/atom');
 try {
-    $document = $atom->parseXML($xml);
+    $document = $factory->parseXML($xml);
 } catch (AtomException $e) {
     die($e->getMessage());
 }
@@ -81,7 +82,7 @@ echo (string) $document;
 
 ## Extending
 
-Atom parsing can be extended via `Atom::registerDocumentType()`.
+Atom parsing can be extended via `DocumentFactory::registerDocumentType()`.
 
 **FooDocuments.php**
 
@@ -108,9 +109,9 @@ class FooDocuments implements DocumentType
 **main.php**
 
 ```php
-use Mekras\Atom\Atom;
+use Mekras\Atom\DocumentFactory;
 
-$atom = new Atom;
-$atom->registerDocumentType(new FooDocuments());
+$factory = new DocumentFactory;
+$factory->registerDocumentType(new FooDocuments());
 //...
 ```

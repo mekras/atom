@@ -7,25 +7,25 @@
  */
 namespace Mekras\Atom\Tests;
 
-use Mekras\Atom\Atom;
 use Mekras\Atom\Document\EntryDocument;
 use Mekras\Atom\Document\FeedDocument;
+use Mekras\Atom\DocumentFactory;
 use Mekras\Atom\Extension\DocumentType;
 
 /**
- * Tests for Mekras\Atom\Atom
+ * Tests for Mekras\Atom\DocumentFactory
  *
- * @covers Mekras\Atom\Atom
+ * @covers Mekras\Atom\DocumentFactory
  */
-class AtomTest extends \PHPUnit_Framework_TestCase
+class DocumentFactoryTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * Parse Feed
      */
     public function testParseFeed()
     {
-        $atom = new Atom();
-        $doc = $atom->parseXML(file_get_contents(__DIR__ . '/fixtures/FeedDocument.xml'));
+        $factory = new DocumentFactory();
+        $doc = $factory->parseXML(file_get_contents(__DIR__ . '/fixtures/FeedDocument.xml'));
         static::assertInstanceOf(FeedDocument::class, $doc);
     }
 
@@ -34,8 +34,8 @@ class AtomTest extends \PHPUnit_Framework_TestCase
      */
     public function testParseEntry()
     {
-        $atom = new Atom();
-        $doc = $atom->parseXML(file_get_contents(__DIR__ . '/fixtures/EntryDocument.xml'));
+        $factory = new DocumentFactory();
+        $doc = $factory->parseXML(file_get_contents(__DIR__ . '/fixtures/EntryDocument.xml'));
         static::assertInstanceOf(EntryDocument::class, $doc);
     }
 
@@ -44,7 +44,7 @@ class AtomTest extends \PHPUnit_Framework_TestCase
      */
     public function testExtensions()
     {
-        $atom = new Atom();
+        $factory = new DocumentFactory();
 
         $extension = $this->getMockForAbstractClass(DocumentType::class);
         $doc1 = new \stdClass();
@@ -57,9 +57,9 @@ class AtomTest extends \PHPUnit_Framework_TestCase
                 }
             );
         /** @var DocumentType $extension */
-        $atom->registerDocumentType($extension);
+        $factory->registerDocumentType($extension);
 
-        $doc2 = $atom->parseXML(file_get_contents(__DIR__ . '/fixtures/FeedDocument.xml'));
+        $doc2 = $factory->parseXML(file_get_contents(__DIR__ . '/fixtures/FeedDocument.xml'));
         static::assertSame($doc1, $doc2);
     }
 }
