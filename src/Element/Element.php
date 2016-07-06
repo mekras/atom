@@ -7,6 +7,7 @@
  */
 namespace Mekras\Atom\Element;
 
+use Mekras\Atom\Extensions;
 use Mekras\Atom\Node;
 
 /**
@@ -17,16 +18,26 @@ use Mekras\Atom\Node;
 abstract class Element extends Node
 {
     /**
+     * Extensions.
+     *
+     * @var Extensions
+     */
+    private $extensions;
+
+    /**
      * Create node.
      *
-     * @param \DOMElement|Node $source DOM element or parent Atom node.
+     * @param Extensions       $extensions Extension registry.
+     * @param \DOMElement|Node $source     DOM element or parent Atom node.
      *
      * @since 1.0
      *
      * @throws \InvalidArgumentException
      */
-    public function __construct($source)
+    public function __construct(Extensions $extensions, $source)
     {
+        $this->extensions = $extensions;
+
         if ($source instanceof Node) {
             $owner = $source->getDomElement();
             $element = $owner->ownerDocument->createElementNS($this->ns(), $this->getNodeName());
@@ -62,4 +73,16 @@ abstract class Element extends Node
      * @since 1.0
      */
     abstract protected function getNodeName();
+
+    /**
+     * Return extensions.
+     *
+     * @return Extensions
+     *
+     * @since 1.0
+     */
+    protected function getExtensions()
+    {
+        return $this->extensions;
+    }
 }

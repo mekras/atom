@@ -9,22 +9,21 @@ namespace Mekras\Atom\Tests\Document;
 
 use Mekras\Atom\Document\EntryDocument;
 use Mekras\Atom\Element\Entry;
-use Mekras\Atom\Extensions;
+use Mekras\Atom\Tests\TestCase;
 
 /**
  * Tests for Mekras\Atom\Document\EntryDocument
  */
-class EntryDocumentTest extends \PHPUnit_Framework_TestCase
+class EntryDocumentTest extends TestCase
 {
     /**
      * Test importing valid entry
      */
     public function testImport()
     {
-        $doc = new \DOMDocument();
-        $doc->load(__DIR__ . '/../fixtures/EntryDocument.xml');
+        $doc = $this->loadFixture('EntryDocument.xml');
 
-        $document = new EntryDocument(new Extensions(), $doc);
+        $document = new EntryDocument($this->createExtensions(), $doc);
         $entry = $document->getEntry();
         static::assertInstanceOf(Entry::class, $entry);
     }
@@ -34,7 +33,7 @@ class EntryDocumentTest extends \PHPUnit_Framework_TestCase
      */
     public function testCreate()
     {
-        $document = new EntryDocument(new Extensions());
+        $document = new EntryDocument($this->createExtensions());
         $entry = $document->getEntry();
         $entry->setId('urn:foo:entry:0001');
         $entry->setTitle('Entry Title');
@@ -46,7 +45,7 @@ class EntryDocumentTest extends \PHPUnit_Framework_TestCase
 
         $document->getDomDocument()->formatOutput = true;
         static::assertEquals(
-            file_get_contents(__DIR__ . '/../fixtures/EntryDocument.txt'),
+            file_get_contents($this->locateFixture('EntryDocument.txt')),
             (string) $document
         );
     }

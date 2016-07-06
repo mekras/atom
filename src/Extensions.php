@@ -96,4 +96,28 @@ class Extensions
 
         return null;
     }
+
+    /**
+     * Create Atom node from XML DOM element.
+     *
+     * @param Node   $parent Parent node.
+     * @param string $name   Element name.
+     *
+     * @return Element|null
+     *
+     * @throws \InvalidArgumentException
+     *
+     * @since 1.0
+     */
+    public function createElement(Node $parent, $name)
+    {
+        foreach ($this->registry[ElementExtension::class] as $extension) {
+            $node = $extension->createElement($this, $parent, $name);
+            if ($node) {
+                return $node;
+            }
+        }
+
+        return null;
+    }
 }

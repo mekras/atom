@@ -29,7 +29,7 @@ class ElementTest extends TestCase
             ->disableOriginalConstructor()->getMock();
         $element->expects(static::any())->method('getNodeName')->willReturn('bar');
         /** @var Element $element */
-        $element->__construct($doc->documentElement);
+        $element->__construct($this->createExtensions(), $doc->documentElement);
     }
 
     /**
@@ -38,6 +38,6 @@ class ElementTest extends TestCase
      */
     public function testInvalidArgument()
     {
-        $this->getMockForAbstractClass(Element::class, ['foo']);
+        $this->getMockForAbstractClass(Element::class, [$this->createExtensions(), 'foo']);
     }
 }

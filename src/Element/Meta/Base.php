@@ -7,6 +7,8 @@
  */
 namespace Mekras\Atom\Element\Meta;
 
+use Mekras\Atom\Extensions;
+
 /**
  * Base trait with abstract methods.
  *
@@ -60,4 +62,13 @@ trait Base
      * @since 1.0
      */
     abstract protected function query($xpath, $flags = 0);
+
+    /**
+     * Return extensions.
+     *
+     * @return Extensions
+     *
+     * @since 1.0
+     */
+    abstract protected function getExtensions();
 }

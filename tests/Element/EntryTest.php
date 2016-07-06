@@ -10,11 +10,12 @@ namespace Mekras\Atom\Tests\Element;
 use Mekras\Atom\Construct\Text;
 use Mekras\Atom\Element\Content;
 use Mekras\Atom\Element\Entry;
+use Mekras\Atom\Tests\TestCase;
 
 /**
  * Tests for Mekras\Atom\Element\Entry
  */
-class EntryTest extends \PHPUnit_Framework_TestCase
+class EntryTest extends TestCase
 {
     /**
      * Test importing valid entry
@@ -24,7 +25,7 @@ class EntryTest extends \PHPUnit_Framework_TestCase
         $doc = new \DOMDocument();
         $doc->load(__DIR__ . '/../fixtures/EntryDocument.xml');
 
-        $entry = new Entry($doc->documentElement);
+        $entry = new Entry($this->createExtensions(), $doc->documentElement);
         static::assertEquals('Author 1, Author 2', implode(', ', $entry->getAuthors()));
         static::assertEquals('urn:foo:atom1:entry:0001', $entry->getId());
         static::assertEquals('http://example.com/atom/atom/?id=0001', $entry->getSelfLink());

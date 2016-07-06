@@ -32,7 +32,8 @@ class FeedDocument extends Document
         return $this->getCachedProperty(
             'feed',
             function () {
-                return new Feed($this->getDomDocument()->documentElement);
+                return $this->getExtensions()
+                    ->parseElement($this->getDomDocument()->documentElement);
             }
         );
     }

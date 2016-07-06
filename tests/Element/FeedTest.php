@@ -10,11 +10,12 @@ namespace Mekras\Atom\Tests\Element;
 use Mekras\Atom\Construct\Text;
 use Mekras\Atom\Element\Entry;
 use Mekras\Atom\Element\Feed;
+use Mekras\Atom\Tests\TestCase;
 
 /**
  * Tests for Mekras\Atom\Element\Feed
  */
-class FeedTest extends \PHPUnit_Framework_TestCase
+class FeedTest extends TestCase
 {
     /**
      * Test importing valid feed
@@ -24,7 +25,7 @@ class FeedTest extends \PHPUnit_Framework_TestCase
         $doc = new \DOMDocument();
         $doc->load(__DIR__ . '/../fixtures/FeedDocument.xml');
 
-        $feed = new Feed($doc->documentElement);
+        $feed = new Feed($this->createExtensions(), $doc->documentElement);
         static::assertEquals('Author 1, Author 2', implode(', ', $feed->getAuthors()));
         static::assertEquals('urn:foo:atom1:feed:id', $feed->getId());
         static::assertEquals('http://example.com/atom/feed', $feed->getSelfLink());

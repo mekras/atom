@@ -43,7 +43,7 @@ class Entry extends Element
                     $this->getDomElement()->appendChild($element);
                 }
 
-                return new Content($element);
+                return new Content($this->getExtensions(), $element);
             }
         );
     }

@@ -9,22 +9,21 @@ namespace Mekras\Atom\Tests\Document;
 
 use Mekras\Atom\Document\FeedDocument;
 use Mekras\Atom\Element\Feed;
-use Mekras\Atom\Extensions;
+use Mekras\Atom\Tests\TestCase;
 
 /**
  * Tests for Mekras\Atom\Document\FeedDocument
  */
-class FeedDocumentTest extends \PHPUnit_Framework_TestCase
+class FeedDocumentTest extends TestCase
 {
     /**
      * Test importing valid feed
      */
     public function testImport()
     {
-        $doc = new \DOMDocument();
-        $doc->load(__DIR__ . '/../fixtures/FeedDocument.xml');
+        $doc = $this->loadFixture('FeedDocument.xml');
 
-        $document = new FeedDocument(new Extensions(), $doc);
+        $document = new FeedDocument($this->createExtensions(), $doc);
         $feed = $document->getFeed();
         static::assertInstanceOf(Feed::class, $feed);
     }
@@ -34,7 +33,7 @@ class FeedDocumentTest extends \PHPUnit_Framework_TestCase
      */
     public function testCreate()
     {
-        $document = new FeedDocument(new Extensions());
+        $document = new FeedDocument($this->createExtensions());
         $feed = $document->getFeed();
         $feed->setId('urn:foo:feed:0001');
         $feed->setTitle('Feed Title');
@@ -47,7 +46,7 @@ class FeedDocumentTest extends \PHPUnit_Framework_TestCase
 
         $document->getDomDocument()->formatOutput = true;
         static::assertEquals(
-            file_get_contents(__DIR__ . '/../fixtures/FeedDocument.txt'),
+            file_get_contents($this->locateFixture('FeedDocument.txt')),
             (string) $document
         );
     }

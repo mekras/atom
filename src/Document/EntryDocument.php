@@ -32,7 +32,8 @@ class EntryDocument extends Document
         return $this->getCachedProperty(
             'entry',
             function () {
-                return new Entry($this->getDomDocument()->documentElement);
+                return $this->getExtensions()
+                    ->parseElement($this->getDomDocument()->documentElement);
             }
         );
     }

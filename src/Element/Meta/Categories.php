@@ -8,7 +8,6 @@
 namespace Mekras\Atom\Element\Meta;
 
 use Mekras\Atom\Element\Category;
-use Mekras\Atom\Node;
 
 /**
  * Support for "atom:category".
@@ -39,7 +38,7 @@ trait Categories
                 $result = [];
                 $nodes = $this->query('atom:category');
                 foreach ($nodes as $node) {
-                    $result[] = new Category($node);
+                    $result[] = new Category($this->getExtensions(), $node);
                 }
 
                 return $result;
@@ -60,8 +59,7 @@ trait Categories
      */
     public function addCategory($term)
     {
-        /** @var Node $this */
-        $category = new Category($this);
+        $category = new Category($this->getExtensions(), $this);
         $category->setTerm($term);
 
         return $category;
