@@ -35,18 +35,7 @@ trait Text
         $string = $this->getCachedProperty(
             'value',
             function () {
-                if ($this->getType() === 'xhtml') {
-                    try {
-                        /** @var \DOMElement $xhtml */
-                        $xhtml = $this->query('xhtml:div', Node::SINGLE | Node::REQUIRED);
-                    } catch (MalformedNodeException $e) {
-                        return '';
-                    }
-
-                    return Xhtml::extract($xhtml);
-                }
-
-                return $this->getDomElement()->textContent;
+                return $this->getStringValue();
             }
         );
 
@@ -83,5 +72,27 @@ trait Text
     {
         $this->getDomElement()->setAttribute('type', $type);
         $this->getDomElement()->nodeValue = $text;
+        $this->setCachedProperty('value', $this->getStringValue());
+    }
+
+    /**
+     * Return string value.
+     *
+     * @return string
+     */
+    private function getStringValue()
+    {
+        if ($this->getType() === 'xhtml') {
+            try {
+                /** @var \DOMElement $xhtml */
+                $xhtml = $this->query('xhtml:div', Node::SINGLE | Node::REQUIRED);
+            } catch (MalformedNodeException $e) {
+                return '';
+            }
+
+            return Xhtml::extract($xhtml);
+        }
+
+        return $this->getDomElement()->textContent;
     }
 }
