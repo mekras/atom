@@ -94,7 +94,7 @@ abstract class TestCase extends \PHPUnit_Framework_TestCase
         $document = new \DOMDocument();
         $document->loadXML(
             '<?xml version="1.0" encoding="utf-8"?>' .
-            '<' . $rootNodeName . ' xmlns="http://www.w3.org/2005/Atom" ' .
+            '<' . $rootNodeName . ' xmlns="' . Atom::NS . '" ' .
             'xmlns:xhtml="' . Atom::XHTML . '">' .
             $contents .
             '</' . $rootNodeName . '>'
