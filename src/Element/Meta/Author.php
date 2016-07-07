@@ -40,7 +40,7 @@ trait Author
                 $result = [];
                 $nodes = $this->query('atom:author', Node::REQUIRED);
                 foreach ($nodes as $node) {
-                    $result[] = new Person($node);
+                    $result[] = $this->getExtensions()->parseElement($node);
                 }
 
                 return $result;
@@ -64,7 +64,8 @@ trait Author
         $document = $this->getDomElement()->ownerDocument;
         $element = $document->createElementNS(Atom::NS, 'author');
         $this->getDomElement()->appendChild($element);
-        $person = new Person($element);
+        /** @var Person $person */
+        $person = $this->getExtensions()->parseElement($element);
         $person->setName($name);
 
         return $person;

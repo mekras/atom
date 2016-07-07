@@ -7,9 +7,8 @@
  */
 namespace Mekras\Atom\Document;
 
-use Mekras\Atom\Atom;
 use Mekras\Atom\Extensions;
-use Mekras\ClassHelpers\Traits\GettersCacheTrait;
+use Mekras\Atom\Node;
 
 /**
  * Abstract Atom Document.
@@ -18,24 +17,8 @@ use Mekras\ClassHelpers\Traits\GettersCacheTrait;
  *
  * @link  https://tools.ietf.org/html/rfc4287#section-2
  */
-abstract class Document
+abstract class Document extends Node
 {
-    use GettersCacheTrait;
-
-    /**
-     * Extensions.
-     *
-     * @var Extensions
-     */
-    private $extensions;
-
-    /**
-     * DOM document.
-     *
-     * @var \DOMDocument
-     */
-    private $document;
-
     /**
      * Create document.
      *
@@ -48,8 +31,6 @@ abstract class Document
      */
     public function __construct(Extensions $extensions, \DOMDocument $document = null)
     {
-        $this->extensions = $extensions;
-
         if (null === $document) {
             $document = new \DOMDocument('1.0', 'utf-8');
             $element = $document->createElementNS($this->ns(), $this->getRootNodeName());
@@ -64,7 +45,7 @@ abstract class Document
             );
         }
 
-        $this->document = $document;
+        parent::__construct($extensions, $document->documentElement);
     }
 
     /**
@@ -88,19 +69,7 @@ abstract class Document
      */
     public function getDomDocument()
     {
-        return $this->document;
-    }
-
-    /**
-     * Return node main namespace.
-     *
-     * @return string
-     *
-     * @since 1.0
-     */
-    public function ns()
-    {
-        return Atom::NS;
+        return $this->getDomElement()->ownerDocument;
     }
 
     /**
@@ -111,16 +80,4 @@ abstract class Document
      * @since 1.0
      */
     abstract protected function getRootNodeName();
-
-    /**
-     * Return extensions.
-     *
-     * @return Extensions
-     *
-     * @since 1.0
-     */
-    protected function getExtensions()
-    {
-        return $this->extensions;
-    }
 }

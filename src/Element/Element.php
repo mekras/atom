@@ -18,13 +18,6 @@ use Mekras\Atom\Node;
 abstract class Element extends Node
 {
     /**
-     * Extensions.
-     *
-     * @var Extensions
-     */
-    private $extensions;
-
-    /**
      * Create node.
      *
      * @param Extensions       $extensions Extension registry.
@@ -36,13 +29,11 @@ abstract class Element extends Node
      */
     public function __construct(Extensions $extensions, $source)
     {
-        $this->extensions = $extensions;
-
         if ($source instanceof Node) {
             $owner = $source->getDomElement();
             $element = $owner->ownerDocument->createElementNS($this->ns(), $this->getNodeName());
             $owner->appendChild($element);
-            parent::__construct($element);
+            parent::__construct($extensions, $element);
         } elseif ($source instanceof \DOMElement) {
             if ($this->getNodeName() !== $source->localName) {
                 throw new \InvalidArgumentException(
@@ -53,7 +44,7 @@ abstract class Element extends Node
                     )
                 );
             }
-            parent::__construct($source);
+            parent::__construct($extensions, $source);
         } else {
             throw new \InvalidArgumentException(
                 sprintf(
@@ -73,16 +64,4 @@ abstract class Element extends Node
      * @since 1.0
      */
     abstract protected function getNodeName();
-
-    /**
-     * Return extensions.
-     *
-     * @return Extensions
-     *
-     * @since 1.0
-     */
-    protected function getExtensions()
-    {
-        return $this->extensions;
-    }
 }

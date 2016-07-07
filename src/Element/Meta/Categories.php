@@ -38,7 +38,7 @@ trait Categories
                 $result = [];
                 $nodes = $this->query('atom:category');
                 foreach ($nodes as $node) {
-                    $result[] = new Category($this->getExtensions(), $node);
+                    $result[] = $this->getExtensions()->parseElement($node);
                 }
 
                 return $result;
@@ -59,7 +59,8 @@ trait Categories
      */
     public function addCategory($term)
     {
-        $category = new Category($this->getExtensions(), $this);
+        /** @var Category $category */
+        $category = $this->getExtensions()->createElement($this, 'category');
         $category->setTerm($term);
 
         return $category;

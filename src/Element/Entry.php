@@ -27,9 +27,11 @@ class Entry extends Element
      * Return the preferred URI for retrieving Atom Feed Documents representing this Atom feed.
      *
      * @return Content
+     * @throws \InvalidArgumentException
+     *
+     * @link  https://tools.ietf.org/html/rfc4287#section-4.1.1
      *
      * @since 1.0
-     * @link  https://tools.ietf.org/html/rfc4287#section-4.1.1
      */
     public function getContent()
     {
@@ -43,7 +45,7 @@ class Entry extends Element
                     $this->getDomElement()->appendChild($element);
                 }
 
-                return new Content($this->getExtensions(), $element);
+                return $this->getExtensions()->parseElement($element);
             }
         );
     }

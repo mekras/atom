@@ -37,7 +37,8 @@ trait Title
         return $this->getCachedProperty(
             'title',
             function () {
-                return new Text($this->query('atom:title', Node::SINGLE | Node::REQUIRED));
+                return $this->getExtensions()
+                    ->parseElement($this->query('atom:title', Node::SINGLE | Node::REQUIRED));
             }
         );
     }
@@ -58,7 +59,8 @@ trait Title
             $element = $this->getDomElement()->ownerDocument->createElementNS(Atom::NS, 'title');
             $this->getDomElement()->appendChild($element);
         }
-        $text = new Text($element);
+        /** @var Text $text */
+        $text = $this->getExtensions()->parseElement($element);
         $text->setValue($title);
         $this->setCachedProperty('title', $text);
     }

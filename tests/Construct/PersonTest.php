@@ -27,7 +27,7 @@ class PersonTest extends TestCase
             '<name>Foo</name><email> foo@example.com</email><uri>http://example.com/ </uri>'
         );
 
-        $person = new Person($doc->documentElement);
+        $person = new Person($this->createExtensions(), $doc->documentElement);
         static::assertEquals('Foo', $person->getName());
         static::assertEquals('Foo', (string) $person);
         static::assertEquals('foo@example.com', $person->getEmail());
@@ -40,7 +40,7 @@ class PersonTest extends TestCase
     public function testRenderError()
     {
         $doc = $this->createDocument();
-        $person = new Person($doc->documentElement);
+        $person = new Person($this->createExtensions(), $doc->documentElement);
         static::assertEquals('', (string) $person);
     }
 }

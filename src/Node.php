@@ -37,6 +37,13 @@ abstract class Node
     private $element;
 
     /**
+     * Extensions.
+     *
+     * @var Extensions
+     */
+    private $extensions;
+
+    /**
      * XPath object
      *
      * @var \DOMXPath
@@ -46,14 +53,17 @@ abstract class Node
     /**
      * Create node.
      *
-     * @param \DOMElement $element DOM element.
+     * @param Extensions  $extensions Extension registry.
+     * @param \DOMElement $element    DOM element.
      *
      * @since 1.0
      *
      * @throws \InvalidArgumentException
      */
-    public function __construct($element)
+    public function __construct(Extensions $extensions, $element)
     {
+        $this->extensions = $extensions;
+
         if ($this->ns() !== $element->namespaceURI) {
             throw new \InvalidArgumentException(
                 sprintf(
@@ -144,5 +154,17 @@ abstract class Node
         }
 
         return $this->xpath;
+    }
+
+    /**
+     * Return extensions.
+     *
+     * @return Extensions
+     *
+     * @since 1.0
+     */
+    protected function getExtensions()
+    {
+        return $this->extensions;
     }
 }

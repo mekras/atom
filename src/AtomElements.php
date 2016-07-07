@@ -7,6 +7,10 @@
  */
 namespace Mekras\Atom;
 
+use Mekras\Atom\Construct\Person;
+use Mekras\Atom\Construct\Text;
+use Mekras\Atom\Element\Category;
+use Mekras\Atom\Element\Content;
 use Mekras\Atom\Element\Element;
 use Mekras\Atom\Element\Entry;
 use Mekras\Atom\Element\Feed;
@@ -37,11 +41,23 @@ class AtomElements implements ElementExtension
         }
 
         switch ($source->localName) {
+            case 'author':
+                return new Person($extensions, $source);
+                break;
+            case 'category':
+                return new Category($extensions, $source);
+                break;
+            case 'content':
+                return new Content($extensions, $source);
+                break;
             case 'entry':
                 return new Entry($extensions, $source);
                 break;
             case 'feed':
                 return new Feed($extensions, $source);
+                break;
+            case 'title':
+                return new Text($extensions, $source);
                 break;
         }
 
@@ -63,6 +79,12 @@ class AtomElements implements ElementExtension
     public function createElement(Extensions $extensions, Node $parent, $name)
     {
         switch ($name) {
+            case 'category':
+                return new Category($extensions, $parent);
+                break;
+            case 'content':
+                return new Content($extensions, $parent);
+                break;
             case 'entry':
                 return new Entry($extensions, $parent);
                 break;

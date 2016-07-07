@@ -24,7 +24,7 @@ class TextTest extends TestCase
     public function testText()
     {
         $doc = $this->createDocument('Less: &lt;');
-        $text = new Text($doc->documentElement);
+        $text = new Text($this->createExtensions(), $doc->documentElement);
         static::assertEquals('text', $text->getType());
         static::assertEquals('Less: <', (string) $text);
     }
@@ -36,7 +36,7 @@ class TextTest extends TestCase
     {
         $doc = $this->createDocument('<text type="html">&lt;em> &amp;lt; &lt;/em></text>');
 
-        $text = new Text($doc->documentElement->firstChild);
+        $text = new Text($this->createExtensions(), $doc->documentElement->firstChild);
         static::assertEquals('html', $text->getType());
         static::assertEquals('<em> &lt; </em>', (string) $text);
     }
@@ -52,7 +52,7 @@ class TextTest extends TestCase
             '</text>'
         );
 
-        $text = new Text($doc->documentElement->firstChild);
+        $text = new Text($this->createExtensions(), $doc->documentElement->firstChild);
         static::assertEquals('xhtml', $text->getType());
         static::assertEquals('<em> &lt; </em>', (string) $text);
     }
@@ -66,7 +66,7 @@ class TextTest extends TestCase
             '<text type="xhtml" xmlns:xhtml="http://www.w3.org/1999/xhtml"></text>'
         );
 
-        $person = new Text($doc->documentElement->firstChild);
+        $person = new Text($this->createExtensions(), $doc->documentElement->firstChild);
         static::assertEquals('', (string) $person);
     }
 }
