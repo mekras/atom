@@ -8,17 +8,18 @@
 namespace Mekras\Atom\Element\Meta;
 
 use Mekras\Atom\Node;
+use Mekras\Atom\NodeInterfaceTrait;
 
 /**
- * Support for "atom:updated".
+ * Element has an "updated" node.
  *
  * @since 1.0
  *
  * @link  https://tools.ietf.org/html/rfc4287#section-4.2.15
  */
-trait Updated
+trait HasUpdated
 {
-    use Base;
+    use NodeInterfaceTrait;
 
     /**
      * Return the most recent instant in time when an entry or feed was modified

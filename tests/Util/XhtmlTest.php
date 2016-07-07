@@ -8,13 +8,10 @@
 namespace Mekras\Atom\Tests\Util;
 
 use Mekras\Atom\Atom;
-use Mekras\Atom\Node;
 use Mekras\Atom\Util\Xhtml;
 
 /**
  * Tests for Mekras\Atom\Util\Xhtml
- *
- * @covers Mekras\Atom\Util\Xhtml
  */
 class XhtmlTest extends \PHPUnit_Framework_TestCase
 {

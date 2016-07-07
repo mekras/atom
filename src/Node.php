@@ -30,18 +30,18 @@ abstract class Node
     const REQUIRED = 0x02;
 
     /**
+     * Parent node.
+     *
+     * @var Node|null
+     */
+    private $parent;
+
+    /**
      * DOM Element.
      *
      * @var \DOMElement
      */
     private $element;
-
-    /**
-     * Extensions.
-     *
-     * @var Extensions
-     */
-    private $extensions;
 
     /**
      * XPath object
@@ -53,17 +53,15 @@ abstract class Node
     /**
      * Create node.
      *
-     * @param Extensions  $extensions Extension registry.
-     * @param \DOMElement $element    DOM element.
+     * @param \DOMElement $element DOM element.
+     * @param  Node|null  $parent  Parent node.
      *
      * @since 1.0
      *
      * @throws \InvalidArgumentException
      */
-    public function __construct(Extensions $extensions, $element)
+    public function __construct(\DOMElement $element, Node $parent = null)
     {
-        $this->extensions = $extensions;
-
         if ($this->ns() !== $element->namespaceURI) {
             throw new \InvalidArgumentException(
                 sprintf(
@@ -74,6 +72,19 @@ abstract class Node
             );
         }
         $this->element = $element;
+        $this->parent = $parent;
+    }
+
+    /**
+     * Return parent node.
+     *
+     * @return Node
+     *
+     * @since 1.0
+     */
+    public function getParent()
+    {
+        return $this->parent;
     }
 
     /**
@@ -99,6 +110,15 @@ abstract class Node
     {
         return Atom::NS;
     }
+
+    /**
+     * Return extensions.
+     *
+     * @return Extensions
+     *
+     * @since 1.0
+     */
+    abstract public function getExtensions();
 
     /**
      * Return child DOM element by name.
@@ -149,22 +169,12 @@ abstract class Node
     {
         if (!$this->xpath) {
             $this->xpath = new \DOMXPath($this->getDomElement()->ownerDocument);
-            $this->xpath->registerNamespace('atom', Atom::NS);
-            $this->xpath->registerNamespace('xhtml', Atom::XHTML);
+            $namespaces = $this->getExtensions()->getNamespaces();
+            foreach ($namespaces as $prefix => $namespace) {
+                $this->xpath->registerNamespace($prefix, $namespace);
+            }
         }
 
         return $this->xpath;
-    }
-
-    /**
-     * Return extensions.
-     *
-     * @return Extensions
-     *
-     * @since 1.0
-     */
-    protected function getExtensions()
-    {
-        return $this->extensions;
     }
 }

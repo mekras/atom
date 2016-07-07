@@ -31,8 +31,7 @@ class DocumentFactory
     public function __construct()
     {
         $this->extensions = new Extensions();
-        $this->extensions->register(new AtomDocuments());
-        $this->extensions->register(new AtomElements());
+        $this->extensions->register(new AtomExtension());
     }
 
     /**

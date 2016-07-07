@@ -8,11 +8,12 @@
 namespace Mekras\Atom\Tests;
 
 use Mekras\Atom\Atom;
-use Mekras\Atom\AtomElements;
+use Mekras\Atom\AtomExtension;
 use Mekras\Atom\Extensions;
+use Mekras\Atom\Node;
 
 /**
- * Base test case.
+ * NodeInterfaceTrait test case.
  */
 abstract class TestCase extends \PHPUnit_Framework_TestCase
 {
@@ -24,9 +25,28 @@ abstract class TestCase extends \PHPUnit_Framework_TestCase
     protected function createExtensions()
     {
         $extensions = new Extensions();
-        $extensions->register(new AtomElements());
+        $extensions->register(new AtomExtension());
 
         return $extensions;
+    }
+
+    /**
+     * Return new fake Node instance.
+     *
+     * @return \PHPUnit_Framework_MockObject_MockObject|Node
+     */
+    protected function createFakeNode()
+    {
+        $doc = $this->createDocument();
+
+        $node = $this->getMockBuilder(Node::class)->disableOriginalConstructor()
+            ->setMethods(['getDomElement', 'getExtensions'])->getMock();
+        $node->expects(static::any())->method('getDomElement')
+            ->willReturn($doc->documentElement);
+        $node->expects(static::any())->method('getExtensions')
+            ->willReturn($this->createExtensions());
+
+        return $node;
     }
 
     /**

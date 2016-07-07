@@ -7,9 +7,9 @@
  */
 namespace Mekras\Atom\Tests\Element;
 
-use Mekras\Atom\Construct\Text;
 use Mekras\Atom\Element\Content;
 use Mekras\Atom\Element\Entry;
+use Mekras\Atom\Element\Title;
 use Mekras\Atom\Tests\TestCase;
 
 /**
@@ -22,15 +22,14 @@ class EntryTest extends TestCase
      */
     public function testImport()
     {
-        $doc = new \DOMDocument();
-        $doc->load(__DIR__ . '/../fixtures/EntryDocument.xml');
+        $doc = $this->loadFixture('EntryDocument.xml');
 
-        $entry = new Entry($this->createExtensions(), $doc->documentElement);
+        $entry = new Entry($this->createFakeNode(), $doc->documentElement);
         static::assertEquals('Author 1, Author 2', implode(', ', $entry->getAuthors()));
         static::assertEquals('urn:foo:atom1:entry:0001', $entry->getId());
         static::assertEquals('http://example.com/atom/atom/?id=0001', $entry->getSelfLink());
         $value = $entry->getTitle();
-        static::assertInstanceOf(Text::class, $value);
+        static::assertInstanceOf(Title::class, $value);
         static::assertEquals('text', $value->getType());
         static::assertEquals('Entry 1 Title', (string) $value);
         static::assertEquals('2016-01-23 11:22:33', $entry->getUpdated()->format('Y-m-d H:i:s'));

@@ -5,10 +5,11 @@
  * @author  Михаил Красильников <m.krasilnikov@yandex.ru>
  * @license MIT
  */
-namespace Mekras\Atom\Construct;
+namespace Mekras\Atom\Element\Construct;
 
 use Mekras\Atom\Exception\MalformedNodeException;
 use Mekras\Atom\Node;
+use Mekras\Atom\NodeInterfaceTrait;
 use Mekras\Atom\Util\Xhtml;
 
 /**
@@ -17,8 +18,10 @@ use Mekras\Atom\Util\Xhtml;
  * @since 1.0
  * @link  https://tools.ietf.org/html/rfc4287#section-3.1
  */
-class Text extends Node
+trait Text
 {
+    use NodeInterfaceTrait;
+
     /**
      * Represent text as a string.
      *

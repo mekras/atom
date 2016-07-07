@@ -7,25 +7,26 @@
  */
 namespace Mekras\Atom\Element\Meta;
 
-use Mekras\Atom\Atom;
-use Mekras\Atom\Construct\Person;
+use Mekras\Atom\Element\Author;
+use Mekras\Atom\Element\Element;
 use Mekras\Atom\Node;
+use Mekras\Atom\NodeInterfaceTrait;
 
 /**
- * Support for "atom:author".
+ * Element has authors.
  *
  * @since 1.0
  *
  * @link  https://tools.ietf.org/html/rfc4287#section-4.2.1
  */
-trait Author
+trait HasAuthors
 {
-    use Base;
+    use NodeInterfaceTrait;
 
     /**
      * Return authors.
      *
-     * @return Person[]
+     * @return Author[]
      *
      * @throws \InvalidArgumentException
      * @throws \Mekras\Atom\Exception\MalformedNodeException
@@ -40,7 +41,8 @@ trait Author
                 $result = [];
                 $nodes = $this->query('atom:author', Node::REQUIRED);
                 foreach ($nodes as $node) {
-                    $result[] = $this->getExtensions()->parseElement($node);
+                    /** @var Element $this */
+                    $result[] = $this->getExtensions()->parseElement($this, $node);
                 }
 
                 return $result;
@@ -53,7 +55,7 @@ trait Author
      *
      * @param string $name
      *
-     * @return Person
+     * @return Author
      *
      * @throws \InvalidArgumentException
      *
@@ -61,13 +63,11 @@ trait Author
      */
     public function addAuthor($name)
     {
-        $document = $this->getDomElement()->ownerDocument;
-        $element = $document->createElementNS(Atom::NS, 'author');
-        $this->getDomElement()->appendChild($element);
-        /** @var Person $person */
-        $person = $this->getExtensions()->parseElement($element);
-        $person->setName($name);
+        /** @var Element $this */
+        /** @var Author $author */
+        $author = $this->getExtensions()->createElement($this, 'atom:author');
+        $author->setName($name);
 
-        return $person;
+        return $author;
     }
 }

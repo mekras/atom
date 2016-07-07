@@ -14,8 +14,6 @@ use Mekras\Atom\Extensions;
 
 /**
  * Tests for Mekras\Atom\Extensions
- *
- * @covers Mekras\Atom\Extensions
  */
 class ExtensionsTest extends TestCase
 {
@@ -59,11 +57,18 @@ class ExtensionsTest extends TestCase
             );
         /** @var Extension $extension */
         $extensions->register($extension);
+        $parent = $this->createFakeNode();
 
-        $node2 = $extensions->parseElement($this->loadFixture('FeedDocument.xml')->documentElement);
+        $node2 = $extensions->parseElement(
+            $parent,
+            $this->loadFixture('FeedDocument.xml')->documentElement
+        );
         static::assertSame($node1, $node2);
         static::assertNull(
-            $extensions->parseElement($this->loadFixture('EntryDocument.xml')->documentElement)
+            $extensions->parseElement(
+                $parent,
+                $this->loadFixture('EntryDocument.xml')->documentElement
+            )
         );
     }
 }

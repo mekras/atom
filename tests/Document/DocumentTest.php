@@ -13,8 +13,6 @@ use Mekras\Atom\Tests\TestCase;
 
 /**
  * Tests for Mekras\Atom\Document\Document
- *
- * @covers Mekras\Atom\Document\Document
  */
 class DocumentTest extends TestCase
 {

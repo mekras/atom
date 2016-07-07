@@ -8,17 +8,19 @@
 namespace Mekras\Atom\Element\Meta;
 
 use Mekras\Atom\Element\Category;
+use Mekras\Atom\Element\Element;
+use Mekras\Atom\NodeInterfaceTrait;
 
 /**
- * Support for "atom:category".
+ * Element has categories.
  *
  * @since 1.0
  *
  * @link  https://tools.ietf.org/html/rfc4287#section-4.2.2
  */
-trait Categories
+trait HasCategories
 {
-    use Base;
+    use NodeInterfaceTrait;
 
     /**
      * Return categories.
@@ -38,7 +40,8 @@ trait Categories
                 $result = [];
                 $nodes = $this->query('atom:category');
                 foreach ($nodes as $node) {
-                    $result[] = $this->getExtensions()->parseElement($node);
+                    /** @var Element $this */
+                    $result[] = $this->getExtensions()->parseElement($this, $node);
                 }
 
                 return $result;
@@ -60,7 +63,7 @@ trait Categories
     public function addCategory($term)
     {
         /** @var Category $category */
-        $category = $this->getExtensions()->createElement($this, 'category');
+        $category = $this->getExtensions()->createElement($this, 'atom:category');
         $category->setTerm($term);
 
         return $category;

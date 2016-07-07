@@ -5,16 +5,14 @@
  * @author  Михаил Красильников <m.krasilnikov@yandex.ru>
  * @license MIT
  */
-namespace Mekras\Atom\Element\Meta;
-
-use Mekras\Atom\Extensions;
+namespace Mekras\Atom;
 
 /**
- * Base trait with abstract methods.
+ * Node interface for traits.
  *
  * @since 1.0
  */
-trait Base
+trait NodeInterfaceTrait
 {
     /**
      * Return DOM Element.
@@ -24,6 +22,15 @@ trait Base
      * @since 1.0
      */
     abstract public function getDomElement();
+
+    /**
+     * Return extensions.
+     *
+     * @return Extensions
+     *
+     * @since 1.0
+     */
+    abstract public function getExtensions();
 
     /**
      * Return cached value for $name or call $factory to get new value
@@ -62,13 +69,4 @@ trait Base
      * @since 1.0
      */
     abstract protected function query($xpath, $flags = 0);
-
-    /**
-     * Return extensions.
-     *
-     * @return Extensions
-     *
-     * @since 1.0
-     */
-    abstract protected function getExtensions();
 }

@@ -16,12 +16,12 @@ namespace Mekras\Atom\Element;
  */
 class Entry extends Element
 {
-    use Meta\Author;
-    use Meta\Categories;
-    use Meta\Id;
-    use Meta\SelfLink;
-    use Meta\Title;
-    use Meta\Updated;
+    use Meta\HasAuthors;
+    use Meta\HasCategories;
+    use Meta\HasId;
+    use Meta\HasSelfLink;
+    use Meta\HasTitle;
+    use Meta\HasUpdated;
 
     /**
      * Return the preferred URI for retrieving Atom Feed Documents representing this Atom feed.
@@ -40,12 +40,10 @@ class Entry extends Element
             function () {
                 $element = $this->query('atom:content', self::SINGLE);
                 if (null === $element) {
-                    $element = $this->getDomElement()->ownerDocument
-                        ->createElementNS($this->ns(), 'content');
-                    $this->getDomElement()->appendChild($element);
+                    return $this->getExtensions()->createElement($this, 'atom:content');
                 }
 
-                return $this->getExtensions()->parseElement($element);
+                return $this->getExtensions()->parseElement($this, $element);
             }
         );
     }

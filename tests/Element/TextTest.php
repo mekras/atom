@@ -5,16 +5,13 @@
  * @author  Михаил Красильников <m.krasilnikov@yandex.ru>
  * @license MIT
  */
-namespace Mekras\Atom\Tests\Construct;
+namespace Mekras\Atom\Tests\Element;
 
-use Mekras\Atom\Construct\Text;
+use Mekras\Atom\Element\Content;
 use Mekras\Atom\Tests\TestCase;
 
 /**
- * Tests for Mekras\Atom\Construct\Text
- *
- * @covers Mekras\Atom\Construct\Text
- * @covers Mekras\Atom\Node
+ * Tests for Mekras\Atom\Element\Content
  */
 class TextTest extends TestCase
 {
@@ -24,7 +21,7 @@ class TextTest extends TestCase
     public function testText()
     {
         $doc = $this->createDocument('Less: &lt;');
-        $text = new Text($this->createExtensions(), $doc->documentElement);
+        $text = new Content($this->createFakeNode(), $doc->documentElement);
         static::assertEquals('text', $text->getType());
         static::assertEquals('Less: <', (string) $text);
     }
@@ -36,7 +33,7 @@ class TextTest extends TestCase
     {
         $doc = $this->createDocument('<text type="html">&lt;em> &amp;lt; &lt;/em></text>');
 
-        $text = new Text($this->createExtensions(), $doc->documentElement->firstChild);
+        $text = new Content($this->createFakeNode(), $doc->documentElement->firstChild);
         static::assertEquals('html', $text->getType());
         static::assertEquals('<em> &lt; </em>', (string) $text);
     }
@@ -52,7 +49,7 @@ class TextTest extends TestCase
             '</text>'
         );
 
-        $text = new Text($this->createExtensions(), $doc->documentElement->firstChild);
+        $text = new Content($this->createFakeNode(), $doc->documentElement->firstChild);
         static::assertEquals('xhtml', $text->getType());
         static::assertEquals('<em> &lt; </em>', (string) $text);
     }
@@ -66,7 +63,7 @@ class TextTest extends TestCase
             '<text type="xhtml" xmlns:xhtml="http://www.w3.org/1999/xhtml"></text>'
         );
 
-        $person = new Text($this->createExtensions(), $doc->documentElement->firstChild);
+        $person = new Content($this->createFakeNode(), $doc->documentElement->firstChild);
         static::assertEquals('', (string) $person);
     }
 }

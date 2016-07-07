@@ -9,17 +9,18 @@ namespace Mekras\Atom\Element\Meta;
 
 use Mekras\Atom\Atom;
 use Mekras\Atom\Node;
+use Mekras\Atom\NodeInterfaceTrait;
 
 /**
- * Support for "atom:id".
+ * Element has an ID.
  *
  * @since 1.0
  *
  * @link  https://tools.ietf.org/html/rfc4287#section-4.2.6
  */
-trait Id
+trait HasId
 {
-    use Base;
+    use NodeInterfaceTrait;
 
     /**
      * Return permanent, universally unique identifier for an entry or feed.

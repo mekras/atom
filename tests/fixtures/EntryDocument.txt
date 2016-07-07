@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<entry xmlns="http://www.w3.org/2005/Atom">
+<entry xmlns="http://www.w3.org/2005/Atom" xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <id>urn:foo:entry:0001</id>
   <title type="text">Entry Title</title>
   <author>

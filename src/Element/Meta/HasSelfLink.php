@@ -9,17 +9,18 @@ namespace Mekras\Atom\Element\Meta;
 
 use Mekras\Atom\Atom;
 use Mekras\Atom\Node;
+use Mekras\Atom\NodeInterfaceTrait;
 
 /**
- * Support for "atom:link[rel=self]".
+ * Element has a link[rel=self].
  *
  * @since 1.0
  *
  * @link  https://tools.ietf.org/html/rfc4287#section-4.2.7.2
  */
-trait SelfLink
+trait HasSelfLink
 {
-    use Base;
+    use NodeInterfaceTrait;
 
     /**
      * Return IRI in that identifies a resource equivalent to the containing element.

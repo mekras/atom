@@ -44,7 +44,15 @@ if ($document instanceof FeedDocument) {
 
 ```
 
-## Creating Entry documents
+## Creating documents
+
+With `DocumentFactory::createDocument()` — you can create new documents from scratch. Supported
+document types are:
+
+- `atom:entry` — entry document;
+- `atom:feed` — feed document.
+
+### Creating Entry documents
 
 ```php
 use Mekras\Atom\DocumentFactory;
@@ -52,7 +60,7 @@ use Mekras\Atom\Document\EntryDocument;
 
 $factory = new DocumentFactory;
 
-$document = $factory->createDocument(EntryDocument::class);
+$document = $factory->createDocument('atom::entry');
 
 $entry = $document->getEntry();
 $entry->setId('urn:foo:entry:0001');
@@ -64,7 +72,7 @@ $entry->addCategory('tag1')->setLabel('Tag label')->setScheme('http://example.co
 
 echo (string) $document;
 ```
-## Creating Feed documents
+### Creating Feed documents
 
 ```php
 use Mekras\Atom\DocumentFactory;
@@ -72,7 +80,7 @@ use Mekras\Atom\Document\FeedDocument;
 
 $factory = new DocumentFactory;
 
-$document = $factory->createDocument(FeedDocument::class);
+$document = $factory->createDocument('atom:feed');
 
 $feed = $document->getFeed();
 $feed->setId('urn:foo:feed:0001');
@@ -92,20 +100,40 @@ echo (string) $document;
 
 Atom parsing can be extended via `DocumentFactory::getExtensions()->register()`.
 
-**FooExtension.php**
+```php
+use Mekras\Atom\DocumentFactory;
+
+$factory = new DocumentFactory;
+$factory->getExtensions()->register(new FooExtension());
+//...
+```
+
+### New document types
+
+**FooDocumentExtension.php**
 
 ```php
-use Mekras\Atom\Document\Document;
-use Mekras\Atom\Extension\Extension;
+use Mekras\Atom\Extension\DocumentExtension;
 
-class FooExtension implements Extension
+class FooDocumentExtension implements Extension
 {
-    public function parseDocument(\DOMDocument $document)
+    public function parseDocument(Extensions $extensions, \DOMDocument $document)
     {
         if ('Foo NS' === $document->documentElement->namespaceURI) {
             switch ($document->documentElement->localName) {
                 case 'foo':
-                    return new FooDocument($document);
+                    return new FooDocument($extensions, $document);
+            }
+        }
+
+        return null;
+    }
+
+    public function createDocument(Extensions $extensions, $name)
+    {
+            switch ($name) {
+                case 'foo:document':
+                    return new FooDocument($extensions);
             }
         }
 
@@ -114,12 +142,3 @@ class FooExtension implements Extension
 }
 ```
 
-**main.php**
-
-```php
-use Mekras\Atom\DocumentFactory;
-
-$factory = new DocumentFactory;
-$factory->getExtensions()->register(new FooExtension());
-//...
-```

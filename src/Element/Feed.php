@@ -16,12 +16,12 @@ namespace Mekras\Atom\Element;
  */
 class Feed extends Element
 {
-    use Meta\Author;
-    use Meta\Categories;
-    use Meta\Id;
-    use Meta\SelfLink;
-    use Meta\Title;
-    use Meta\Updated;
+    use Meta\HasAuthors;
+    use Meta\HasCategories;
+    use Meta\HasId;
+    use Meta\HasSelfLink;
+    use Meta\HasTitle;
+    use Meta\HasUpdated;
 
     /**
      * Return feed entries.
@@ -41,7 +41,7 @@ class Feed extends Element
                 /** @var \DOMNodeList $items */
                 $items = $this->query('atom:entry');
                 foreach ($items as $item) {
-                    $result[] = $this->getExtensions()->parseElement($item);
+                    $result[] = $this->getExtensions()->parseElement($this, $item);
                 }
 
                 return $result;
@@ -60,7 +60,7 @@ class Feed extends Element
      */
     public function addEntry()
     {
-        return $this->getExtensions()->createElement($this, 'entry');
+        return $this->getExtensions()->createElement($this, 'atom:entry');
     }
 
     /**

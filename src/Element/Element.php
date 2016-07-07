@@ -20,40 +20,34 @@ abstract class Element extends Node
     /**
      * Create node.
      *
-     * @param Extensions       $extensions Extension registry.
-     * @param \DOMElement|Node $source     DOM element or parent Atom node.
+     * @param  Node            $parent  Parent node.
+     * @param \DOMElement|null $element DOM element.
      *
      * @since 1.0
      *
      * @throws \InvalidArgumentException
      */
-    public function __construct(Extensions $extensions, $source)
+    public function __construct(Node $parent, \DOMElement $element = null)
     {
-        if ($source instanceof Node) {
-            $owner = $source->getDomElement();
-            $element = $owner->ownerDocument->createElementNS($this->ns(), $this->getNodeName());
+        if (null === $element) {
+            $owner = $parent->getDomElement();
+            $ns = $this->ns();
+            $element = $owner->ownerDocument->createElementNS($ns, $this->getNodeName());
             $owner->appendChild($element);
-            parent::__construct($extensions, $element);
-        } elseif ($source instanceof \DOMElement) {
-            if ($this->getNodeName() !== $source->localName) {
-                throw new \InvalidArgumentException(
-                    sprintf(
-                        'Unexpected element name "%s", expecting "%s"',
-                        $source->localName,
-                        $this->getNodeName()
-                    )
-                );
-            }
-            parent::__construct($extensions, $source);
-        } else {
-            throw new \InvalidArgumentException(
-                sprintf(
-                    '1st argument of %s should be an instance of DOMElement or %s',
-                    __METHOD__,
-                    Node::class
-                )
-            );
         }
+        parent::__construct($element, $parent);
+    }
+
+    /**
+     * Return extensions.
+     *
+     * @return Extensions
+     *
+     * @since 1.0
+     */
+    public function getExtensions()
+    {
+        return $this->getParent()->getExtensions();
     }
 
     /**

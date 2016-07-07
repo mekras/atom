@@ -33,7 +33,7 @@ class DocumentFactoryTest extends TestCase
     public function testCreateFeed()
     {
         $factory = new DocumentFactory();
-        $doc = $factory->createDocument('feed');
+        $doc = $factory->createDocument('atom:feed');
         static::assertInstanceOf(FeedDocument::class, $doc);
     }
 
@@ -53,7 +53,7 @@ class DocumentFactoryTest extends TestCase
     public function testCreateEntry()
     {
         $factory = new DocumentFactory();
-        $doc = $factory->createDocument('entry');
+        $doc = $factory->createDocument('atom:entry');
         static::assertInstanceOf(EntryDocument::class, $doc);
     }
 
