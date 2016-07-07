@@ -14,8 +14,6 @@ use Mekras\Atom\Extension\DocumentExtension;
 
 /**
  * Tests for Mekras\Atom\DocumentFactory
- *
- * @covers Mekras\Atom\DocumentFactory
  */
 class DocumentFactoryTest extends TestCase
 {
@@ -25,7 +23,17 @@ class DocumentFactoryTest extends TestCase
     public function testParseFeed()
     {
         $factory = new DocumentFactory();
-        $doc = $factory->parseXML(file_get_contents(__DIR__ . '/fixtures/FeedDocument.xml'));
+        $doc = $factory->parseXML(file_get_contents($this->locateFixture('FeedDocument.xml')));
+        static::assertInstanceOf(FeedDocument::class, $doc);
+    }
+
+    /**
+     * Create new feed document.
+     */
+    public function testCreateFeed()
+    {
+        $factory = new DocumentFactory();
+        $doc = $factory->createDocument('feed');
         static::assertInstanceOf(FeedDocument::class, $doc);
     }
 
@@ -35,7 +43,7 @@ class DocumentFactoryTest extends TestCase
     public function testParseEntry()
     {
         $factory = new DocumentFactory();
-        $doc = $factory->parseXML(file_get_contents(__DIR__ . '/fixtures/EntryDocument.xml'));
+        $doc = $factory->parseXML(file_get_contents($this->locateFixture('EntryDocument.xml')));
         static::assertInstanceOf(EntryDocument::class, $doc);
     }
 
@@ -45,7 +53,7 @@ class DocumentFactoryTest extends TestCase
     public function testCreateEntry()
     {
         $factory = new DocumentFactory();
-        $doc = $factory->createDocument(EntryDocument::class);
+        $doc = $factory->createDocument('entry');
         static::assertInstanceOf(EntryDocument::class, $doc);
     }
 

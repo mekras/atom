@@ -98,14 +98,33 @@ class Extensions
     }
 
     /**
+     * Create new Atom document.
+     *
+     * @param string $name Element name.
+     *
+     * @return Document|null
+     *
+     * @since 1.0
+     */
+    public function createDocument($name)
+    {
+        foreach ($this->registry[DocumentExtension::class] as $extension) {
+            $node = $extension->createDocument($this, $name);
+            if ($node) {
+                return $node;
+            }
+        }
+
+        return null;
+    }
+
+    /**
      * Create Atom node from XML DOM element.
      *
      * @param Node   $parent Parent node.
      * @param string $name   Element name.
      *
      * @return Element|null
-     *
-     * @throws \InvalidArgumentException
      *
      * @since 1.0
      */

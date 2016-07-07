@@ -28,4 +28,16 @@ interface DocumentExtension extends Extension
      * @since 1.0
      */
     public function parseDocument(Extensions $extensions, \DOMDocument $document);
+
+    /**
+     * Create new Atom document.
+     *
+     * @param Extensions $extensions Extension registry.
+     * @param string     $name       Element name.
+     *
+     * @return Document|null
+     *
+     * @since 1.0
+     */
+    public function createDocument(Extensions $extensions, $name);
 }

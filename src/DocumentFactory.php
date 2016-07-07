@@ -8,8 +8,6 @@
 namespace Mekras\Atom;
 
 use Mekras\Atom\Document\Document;
-use Mekras\Atom\Document\EntryDocument;
-use Mekras\Atom\Document\FeedDocument;
 
 /**
  * Atom Document factory.
@@ -33,6 +31,7 @@ class DocumentFactory
     public function __construct()
     {
         $this->extensions = new Extensions();
+        $this->extensions->register(new AtomDocuments());
         $this->extensions->register(new AtomElements());
     }
 
@@ -52,13 +51,6 @@ class DocumentFactory
         $doc = $this->extensions->parseDocument($document);
         if ($doc) {
             return $doc;
-        }
-
-        switch ($document->documentElement->localName) {
-            case 'feed':
-                return new FeedDocument($this->getExtensions(), $document);
-            case 'entry':
-                return new EntryDocument($this->getExtensions(), $document);
         }
 
         throw new \InvalidArgumentException(
@@ -88,7 +80,7 @@ class DocumentFactory
     /**
      * Create new Atom document.
      *
-     * @param string $documentClass Document class name.
+     * @param string $name Document name ("entry", "feed").
      *
      * @return Document
      *
@@ -96,15 +88,14 @@ class DocumentFactory
      *
      * @since 1.0
      */
-    public function createDocument($documentClass)
+    public function createDocument($name)
     {
-        if (!is_subclass_of($documentClass, Document::class)) {
-            throw new \InvalidArgumentException(
-                sprintf('Class %s should be a descendant of %s', $documentClass, Document::class)
-            );
+        $doc = $this->extensions->createDocument($name);
+        if ($doc) {
+            return $doc;
         }
 
-        return new $documentClass($this->getExtensions());
+        throw new \InvalidArgumentException(sprintf('Unknown document "%s"', $name));
     }
 
     /**
