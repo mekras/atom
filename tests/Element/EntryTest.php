@@ -26,8 +26,20 @@ class EntryTest extends TestCase
 
         $entry = new Entry($this->createFakeNode(), $doc->documentElement);
         static::assertEquals('Author 1, Author 2', implode(', ', $entry->getAuthors()));
+        static::assertEquals('Author 3', implode(', ', $entry->getContributors()));
         static::assertEquals('urn:foo:atom1:entry:0001', $entry->getId());
-        static::assertEquals('http://example.com/atom/atom/?id=0001', $entry->getSelfLink());
+
+        static::assertCount(2, $entry->getLinks());
+        static::assertEquals(
+            'http://example.com/atom/atom/?id=0001',
+            (string) $entry->getLink('self')
+        );
+        static::assertEquals('text/xml', $entry->getLink('self')->getType());
+        $alternates = $entry->getLinks('alternate');
+        static::assertCount(1, $alternates);
+        static::assertEquals('http://example.com/0001.html', (string) $alternates[0]);
+        static::assertNull($entry->getLink('foo'));
+
         $value = $entry->getTitle();
         static::assertInstanceOf(Title::class, $value);
         static::assertEquals('text', $value->getType());

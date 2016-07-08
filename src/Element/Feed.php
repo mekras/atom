@@ -8,7 +8,7 @@
 namespace Mekras\Atom\Element;
 
 /**
- * Atom Feed.
+ * "atom:feed" element.
  *
  * @since 1.0
  *
@@ -19,7 +19,7 @@ class Feed extends Element
     use Meta\HasAuthors;
     use Meta\HasCategories;
     use Meta\HasId;
-    use Meta\HasSelfLink;
+    use Meta\HasLinks;
     use Meta\HasTitle;
     use Meta\HasUpdated;
 
@@ -60,7 +60,7 @@ class Feed extends Element
      */
     public function addEntry()
     {
-        return $this->getExtensions()->createElement($this, 'atom:entry');
+        return $this->addChild('atom:entry', 'entries');
     }
 
     /**

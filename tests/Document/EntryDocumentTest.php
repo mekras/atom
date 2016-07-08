@@ -39,7 +39,8 @@ class EntryDocumentTest extends TestCase
         $entry->setTitle('Entry Title');
         $entry->addAuthor('Author 1')->setEmail('foo@example.com');
         $entry->addAuthor('Author 2')->setUri('http://example.com/');
-        $entry->getContent()->setValue('<h1>Entry content</h1>', 'html');
+        $entry->addContributor('Author 3');
+        $entry->getContent()->setContent('<h1>Entry content</h1>', 'html');
         $entry->addCategory('tag1')->setScheme('http://example.com/scheme');
         $entry->addCategory('tag2')->setLabel('TAG 2');
 

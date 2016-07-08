@@ -7,37 +7,37 @@
  */
 namespace Mekras\Atom\Element\Meta;
 
-use Mekras\Atom\Element\Author;
+use Mekras\Atom\Element\Contributor;
 use Mekras\Atom\Element\Element;
 use Mekras\Atom\NodeInterfaceTrait;
 
 /**
- * Element has authors.
+ * Element has contributors.
  *
  * @since 1.0
  *
- * @link  https://tools.ietf.org/html/rfc4287#section-4.2.1
+ * @link  https://tools.ietf.org/html/rfc4287#section-4.2.3
  */
-trait HasAuthors
+trait HasContributors
 {
     use NodeInterfaceTrait;
 
     /**
-     * Return authors.
+     * Return contributors.
      *
-     * @return Author[]
+     * @return Contributor[]
      *
      * @throws \InvalidArgumentException
      *
      * @since 1.0
      */
-    public function getAuthors()
+    public function getContributors()
     {
         return $this->getCachedProperty(
-            'authors',
+            'contributors',
             function () {
                 $result = [];
-                $nodes = $this->query('atom:author');
+                $nodes = $this->query('atom:contributor');
                 foreach ($nodes as $node) {
                     /** @var Element $this */
                     $result[] = $this->getExtensions()->parseElement($this, $node);
@@ -49,22 +49,22 @@ trait HasAuthors
     }
 
     /**
-     * Add new entry or feed author.
+     * Add new contributor.
      *
      * @param string $name
      *
-     * @return Author
+     * @return Contributor
      *
      * @throws \InvalidArgumentException
      *
      * @since 1.0
      */
-    public function addAuthor($name)
+    public function addContributor($name)
     {
-        /** @var Author $author */
-        $author = $this->addChild('atom:author', 'authors');
-        $author->setName($name);
+        /** @var Contributor $contributor */
+        $contributor = $this->addChild('atom:contributor', 'contributors');
+        $contributor->setName($name);
 
-        return $author;
+        return $contributor;
     }
 }

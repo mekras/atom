@@ -8,7 +8,7 @@
 namespace Mekras\Atom\Element;
 
 /**
- * Atom Entry.
+ * "atom:entry" element.
  *
  * @since 1.0
  *
@@ -18,8 +18,9 @@ class Entry extends Element
 {
     use Meta\HasAuthors;
     use Meta\HasCategories;
+    use Meta\HasContributors;
     use Meta\HasId;
-    use Meta\HasSelfLink;
+    use Meta\HasLinks;
     use Meta\HasTitle;
     use Meta\HasUpdated;
 

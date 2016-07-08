@@ -114,11 +114,11 @@ abstract class TestCase extends \PHPUnit_Framework_TestCase
      */
     protected function createElement($name, $ns = null, $content = null)
     {
-        $doc = new \DOMDocument('1.0', 'utf-8');
+        $document = $this->createDocument();
         if ($ns) {
-            return $doc->createElementNS($ns, $name, $content);
+            return $document->createElementNS($ns, $name, $content);
         }
 
-        return $doc->createElement($name, $content);
+        return $document->createElement($name, $content);
     }
 }

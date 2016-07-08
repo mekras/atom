@@ -10,7 +10,7 @@ namespace Mekras\Atom\Element;
 use Mekras\Atom\Exception\MalformedNodeException;
 
 /**
- * "atom:category" construct
+ * "atom:category" element
  *
  * @since 1.0
  *
@@ -19,11 +19,26 @@ use Mekras\Atom\Exception\MalformedNodeException;
 class Category extends Element
 {
     /**
+     * Return category as a string.
+     *
+     * @return string
+     *
+     * @since 1.1
+     */
+    public function __toString()
+    {
+        try {
+            return $this->getTerm();
+        } catch (MalformedNodeException $e) {
+            return '(empty)';
+        }
+    }
+
+    /**
      * Return category name.
      *
      * @return string
      *
-     * @throws \InvalidArgumentException
      * @throws \Mekras\Atom\Exception\MalformedNodeException
      *
      * @since 1.0

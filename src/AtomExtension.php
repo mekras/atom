@@ -13,9 +13,14 @@ use Mekras\Atom\Document\FeedDocument;
 use Mekras\Atom\Element\Author;
 use Mekras\Atom\Element\Category;
 use Mekras\Atom\Element\Content;
+use Mekras\Atom\Element\Contributor;
 use Mekras\Atom\Element\Element;
 use Mekras\Atom\Element\Entry;
 use Mekras\Atom\Element\Feed;
+use Mekras\Atom\Element\Generator;
+use Mekras\Atom\Element\Icon;
+use Mekras\Atom\Element\Id;
+use Mekras\Atom\Element\Link;
 use Mekras\Atom\Element\Title;
 use Mekras\Atom\Extension\DocumentExtension;
 use Mekras\Atom\Extension\ElementExtension;
@@ -112,11 +117,26 @@ class AtomExtension implements DocumentExtension, ElementExtension, NamespaceExt
             case 'content':
                 return new Content($parent, $element);
                 break;
+            case 'contributor':
+                return new Contributor($parent, $element);
+                break;
             case 'entry':
                 return new Entry($parent, $element);
                 break;
             case 'feed':
                 return new Feed($parent, $element);
+                break;
+            case 'generator':
+                return new Generator($parent, $element);
+                break;
+            case 'icon':
+                return new Icon($parent, $element);
+                break;
+            case 'id':
+                return new Id($parent, $element);
+                break;
+            case 'link':
+                return new Link($parent, $element);
                 break;
             case 'title':
                 return new Title($parent, $element);
@@ -150,11 +170,26 @@ class AtomExtension implements DocumentExtension, ElementExtension, NamespaceExt
             case 'atom:content':
                 return new Content($parent);
                 break;
+            case 'atom:contributor':
+                return new Contributor($parent);
+                break;
             case 'atom:entry':
                 return new Entry($parent);
                 break;
             case 'atom:feed':
                 return new Feed($parent);
+                break;
+            case 'generator':
+                return new Generator($parent);
+                break;
+            case 'icon':
+                return new Icon($parent);
+                break;
+            case 'id':
+                return new Id($parent);
+                break;
+            case 'link':
+                return new Link($parent);
                 break;
             case 'atom:title':
                 return new Title($parent);

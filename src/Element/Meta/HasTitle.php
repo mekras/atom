@@ -66,7 +66,7 @@ trait HasTitle
             /** @var Title $title */
             $title = $this->getExtensions()->createElement($this, 'atom:title');
         }
-        $title->setValue($value, $type);
+        $title->setContent($value, $type);
         $this->setCachedProperty('title', $title);
     }
 }

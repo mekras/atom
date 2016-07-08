@@ -31,15 +31,39 @@ trait Text
      */
     public function __toString()
     {
-        /** @var string $string */
-        $string = $this->getCachedProperty(
-            'value',
+        return $this->getContent();
+    }
+
+    /**
+     * Return text content.
+     *
+     * @return string
+     *
+     * @since 1.0
+     */
+    public function getContent()
+    {
+        return $this->getCachedProperty(
+            'content',
             function () {
-                return $this->getStringValue();
+                return $this->parseContent();
             }
         );
+    }
 
-        return $string;
+    /**
+     * Set new text.
+     *
+     * @param string $text Text.
+     * @param string $type Content type: "text", "html", or "xhtml"
+     *
+     * @since 1.0
+     */
+    public function setContent($text, $type = 'text')
+    {
+        $this->getDomElement()->setAttribute('type', $type);
+        $this->getDomElement()->nodeValue = $text;
+        $this->setCachedProperty('content', $this->parseContent());
     }
 
     /**
@@ -47,8 +71,8 @@ trait Text
      *
      * @return string "text", "html", or "xhtml"
      *
+     * @link setContent()
      * @since 1.0
-     * @link  https://tools.ietf.org/html/rfc4287#section-3.1.1
      */
     public function getType()
     {
@@ -61,26 +85,11 @@ trait Text
     }
 
     /**
-     * Set new value
-     *
-     * @param string $text
-     * @param string $type
-     *
-     * @since 1.0
-     */
-    public function setValue($text, $type = 'text')
-    {
-        $this->getDomElement()->setAttribute('type', $type);
-        $this->getDomElement()->nodeValue = $text;
-        $this->setCachedProperty('value', $this->getStringValue());
-    }
-
-    /**
      * Return string value.
      *
      * @return string
      */
-    private function getStringValue()
+    private function parseContent()
     {
         if ($this->getType() === 'xhtml') {
             try {

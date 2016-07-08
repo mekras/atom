@@ -8,13 +8,13 @@
 namespace Mekras\Atom\Element;
 
 /**
- * "atom:author" elements.
+ * "atom:contributor" element.
  *
  * @since 1.0
  *
- * @link  https://tools.ietf.org/html/rfc4287#section-4.2.1
+ * @link  https://tools.ietf.org/html/rfc4287#section-4.2.3
  */
-class Author extends Element
+class Contributor extends Element
 {
     use Construct\Person;
 
@@ -27,6 +27,6 @@ class Author extends Element
      */
     protected function getNodeName()
     {
-        return 'author';
+        return 'contributor';
     }
 }

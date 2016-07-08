@@ -36,7 +36,7 @@ class ContentTest extends TestCase
         $element = $document->createElementNS(Atom::NS, 'content');
         $document->documentElement->appendChild($element);
         $content = new Content($this->createFakeNode(), $element);
-        $content->setValue('Less: <', 'text');
+        $content->setContent('Less: <', 'text');
         static::assertEquals(
             '<content type="text">Less: &lt;</content>',
             $document->saveXML($element)
@@ -63,7 +63,7 @@ class ContentTest extends TestCase
         $element = $document->createElementNS(Atom::NS, 'content');
         $document->documentElement->appendChild($element);
         $content = new Content($this->createFakeNode(), $element);
-        $content->setValue('<em> &lt; </em>', 'html');
+        $content->setContent('<em> &lt; </em>', 'html');
         static::assertEquals(
             '<content type="html">&lt;em&gt; &lt; &lt;/em&gt;</content>',
             $document->saveXML($element)
@@ -98,7 +98,7 @@ class ContentTest extends TestCase
         $xhtml->appendChild($element);
         $xhtml->appendChild($xhtml->ownerDocument->createElement('baz', 'BAZ'));
 
-        $content->setValue($xhtml, 'xhtml');
+        $content->setContent($xhtml, 'xhtml');
         static::assertEquals(
             '<content type="xhtml">' .
             '<xhtml:div><xhtml:bar a="b">BAR</xhtml:bar><xhtml:baz>BAZ</xhtml:baz></xhtml:div>' .
@@ -139,7 +139,7 @@ class ContentTest extends TestCase
         $svg = new \DOMDocument('1.0', 'utf-8');
         $svg->loadXML('<svg xmlns="http://www.w3.org/2000/svg"><circle r="20"/></svg>');
 
-        $content->setValue($svg->documentElement, 'image/svg+xml');
+        $content->setContent($svg->documentElement, 'image/svg+xml');
         static::assertEquals(
             '<content type="image/svg+xml">' .
             '<svg xmlns="http://www.w3.org/2000/svg"><circle r="20"/></svg>' .
@@ -169,7 +169,7 @@ class ContentTest extends TestCase
         $element = $document->createElementNS(Atom::NS, 'content');
         $document->documentElement->appendChild($element);
         $content = new Content($this->createFakeNode(), $element);
-        $content->setValue('Less: <', 'text/foo');
+        $content->setContent('Less: <', 'text/foo');
         static::assertEquals(
             '<content type="text/foo">Less: &lt;</content>',
             $document->saveXML($element)
@@ -196,7 +196,7 @@ class ContentTest extends TestCase
         $element = $document->createElementNS(Atom::NS, 'content');
         $document->documentElement->appendChild($element);
         $content = new Content($this->createFakeNode(), $element);
-        $content->setValue('Foo', 'foo/bar');
+        $content->setContent('Foo', 'foo/bar');
         static::assertEquals(
             '<content type="foo/bar">Rm9v</content>',
             $document->saveXML($element)

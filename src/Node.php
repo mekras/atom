@@ -7,6 +7,7 @@
  */
 namespace Mekras\Atom;
 
+use Mekras\Atom\Element\Element;
 use Mekras\Atom\Exception\MalformedNodeException;
 use Mekras\ClassHelpers\Traits\GettersCacheTrait;
 
@@ -157,6 +158,24 @@ abstract class Node
      * @since 1.0
      */
     abstract public function getExtensions();
+
+    /**
+     * Add new child element
+     *
+     * @param $name
+     * @param $cacheId
+     *
+     * @return Element|null
+     *
+     * @since 1.0
+     */
+    protected function addChild($name, $cacheId)
+    {
+        $child = $this->getExtensions()->createElement($this, $name);
+        $this->dropCachedProperty($cacheId);
+
+        return $child;
+    }
 
     /**
      * Get the XPath query object

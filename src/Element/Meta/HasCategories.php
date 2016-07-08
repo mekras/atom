@@ -63,7 +63,7 @@ trait HasCategories
     public function addCategory($term)
     {
         /** @var Category $category */
-        $category = $this->getExtensions()->createElement($this, 'atom:category');
+        $category = $this->addChild('atom:category', 'categories');
         $category->setTerm($term);
 
         return $category;

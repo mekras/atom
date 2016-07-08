@@ -28,7 +28,7 @@ class FeedTest extends TestCase
         $feed = new Feed($this->createFakeNode(), $doc->documentElement);
         static::assertEquals('Author 1, Author 2', implode(', ', $feed->getAuthors()));
         static::assertEquals('urn:foo:atom1:feed:id', $feed->getId());
-        static::assertEquals('http://example.com/atom/feed', $feed->getSelfLink());
+        static::assertEquals('http://example.com/atom/feed', $feed->getLink('self'));
         $value = $feed->getTitle();
         static::assertInstanceOf(Title::class, $value);
         static::assertEquals('text', $value->getType());

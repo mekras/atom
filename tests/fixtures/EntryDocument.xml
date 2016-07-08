@@ -8,8 +8,11 @@
         <name>Author 2</name>
         <uri>http://example.com</uri>
     </author>
+    <contributor>
+        <name>Author 3</name>
+    </contributor>
     <id>urn:foo:atom1:entry:0001</id>
-    <link rel="alternate" type="text/html" href="http://example.com/0001.html"/>
+    <link type="text/html" href="http://example.com/0001.html"/>
     <link rel="self" type="text/xml" href="http://example.com/atom/atom/?id=0001"/>
     <title>Entry 1 Title</title>
     <published>2016-01-23T11:22:33Z</published>

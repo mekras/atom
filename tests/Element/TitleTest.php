@@ -75,7 +75,7 @@ class TitleTest extends TestCase
         $doc = $this->createDocument('foo');
         $title = new Title($this->createFakeNode(), $doc->documentElement);
         static::assertEquals('foo', (string) $title);
-        $title->setValue('bar');
+        $title->setContent('bar');
         static::assertEquals('bar', (string) $title);
     }
 }

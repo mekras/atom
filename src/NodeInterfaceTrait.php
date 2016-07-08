@@ -7,6 +7,8 @@
  */
 namespace Mekras\Atom;
 
+use Mekras\Atom\Element\Element;
+
 /**
  * Node interface for traits.
  *
@@ -14,6 +16,20 @@ namespace Mekras\Atom;
  */
 trait NodeInterfaceTrait
 {
+    /**
+     * Return child DOM element by name.
+     *
+     * @param string $xpath XPath expression.
+     * @param int    $flags Flags, see class constants.
+     *
+     * @return \DOMNodeList|\DOMElement|null
+     *
+     * @throws \Mekras\Atom\Exception\MalformedNodeException
+     *
+     * @since 1.0
+     */
+    abstract public function query($xpath, $flags = 0);
+
     /**
      * Return DOM Element.
      *
@@ -31,6 +47,18 @@ trait NodeInterfaceTrait
      * @since 1.0
      */
     abstract public function getExtensions();
+
+    /**
+     * Add new child element
+     *
+     * @param $name
+     * @param $cacheId
+     *
+     * @return Element|null
+     *
+     * @since 1.0
+     */
+    abstract protected function addChild($name, $cacheId);
 
     /**
      * Return cached value for $name or call $factory to get new value
@@ -55,18 +83,4 @@ trait NodeInterfaceTrait
      * @since 1.0
      */
     abstract protected function setCachedProperty($name, $value);
-
-    /**
-     * Return child DOM element by name.
-     *
-     * @param string $xpath XPath expression.
-     * @param int    $flags Flags, see class constants.
-     *
-     * @return \DOMNodeList|\DOMElement|null
-     *
-     * @throws \Mekras\Atom\Exception\MalformedNodeException
-     *
-     * @since 1.0
-     */
-    abstract protected function query($xpath, $flags = 0);
 }
