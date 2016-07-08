@@ -76,51 +76,6 @@ abstract class Node
     }
 
     /**
-     * Return parent node.
-     *
-     * @return Node
-     *
-     * @since 1.0
-     */
-    public function getParent()
-    {
-        return $this->parent;
-    }
-
-    /**
-     * Return DOM Element.
-     *
-     * @return \DOMElement
-     *
-     * @since 1.0
-     */
-    public function getDomElement()
-    {
-        return $this->element;
-    }
-
-    /**
-     * Return node main namespace.
-     *
-     * @return string
-     *
-     * @since 1.0
-     */
-    public function ns()
-    {
-        return Atom::NS;
-    }
-
-    /**
-     * Return extensions.
-     *
-     * @return Extensions
-     *
-     * @since 1.0
-     */
-    abstract public function getExtensions();
-
-    /**
      * Return child DOM element by name.
      *
      * @param string $xpath XPath expression.
@@ -132,7 +87,7 @@ abstract class Node
      *
      * @since 1.0
      */
-    protected function query($xpath, $flags = 0)
+    public function query($xpath, $flags = 0)
     {
         $nodes = $this->getXPath()->query($xpath, $this->getDomElement());
         if (0 === $nodes->length && $flags & self::REQUIRED) {
@@ -157,6 +112,51 @@ abstract class Node
 
         return $nodes;
     }
+
+    /**
+     * Return DOM Element.
+     *
+     * @return \DOMElement
+     *
+     * @since 1.0
+     */
+    public function getDomElement()
+    {
+        return $this->element;
+    }
+
+    /**
+     * Return parent node.
+     *
+     * @return Node
+     *
+     * @since 1.0
+     */
+    public function getParent()
+    {
+        return $this->parent;
+    }
+
+    /**
+     * Return node main namespace.
+     *
+     * @return string
+     *
+     * @since 1.0
+     */
+    public function ns()
+    {
+        return Atom::NS;
+    }
+
+    /**
+     * Return extensions.
+     *
+     * @return Extensions
+     *
+     * @since 1.0
+     */
+    abstract public function getExtensions();
 
     /**
      * Get the XPath query object

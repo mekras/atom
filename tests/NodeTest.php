@@ -54,12 +54,8 @@ class NodeTest extends TestCase
         $node = $this->getMockForAbstractClass(Node::class, [$doc->documentElement, $parent]);
         $node->expects(static::any())->method('getExtensions')
             ->willReturn($parent->getExtensions());
-
-        $query = new \ReflectionMethod(Node::class, 'query');
-        $query->setAccessible(true);
-
-        /** @var \DOMNodeList $nodes */
-        $nodes = $query->invoke($node, 'atom:a');
+        /** @var Node $node */
+        $nodes = $node->query('atom:a');
         static::assertEquals(2, $nodes->length);
     }
 
@@ -74,12 +70,8 @@ class NodeTest extends TestCase
         $node = $this->getMockForAbstractClass(Node::class, [$doc->documentElement, $parent]);
         $node->expects(static::any())->method('getExtensions')
             ->willReturn($parent->getExtensions());
-
-        $query = new \ReflectionMethod(Node::class, 'query');
-        $query->setAccessible(true);
-
-        /** @var \DOMNodeList $nodes */
-        $nodes = $query->invoke($node, 'atom:c');
+        /** @var Node $node */
+        $nodes = $node->query('atom:c');
         static::assertEquals(0, $nodes->length);
     }
 
@@ -94,11 +86,8 @@ class NodeTest extends TestCase
         $node = $this->getMockForAbstractClass(Node::class, [$doc->documentElement, $parent]);
         $node->expects(static::any())->method('getExtensions')
             ->willReturn($parent->getExtensions());
-
-        $query = new \ReflectionMethod(Node::class, 'query');
-        $query->setAccessible(true);
-
-        $query->invoke($node, 'atom:c', Node::REQUIRED);
+        /** @var Node $node */
+        $node->query('atom:c', Node::REQUIRED);
     }
 
     /**
@@ -112,11 +101,8 @@ class NodeTest extends TestCase
         $node = $this->getMockForAbstractClass(Node::class, [$doc->documentElement, $parent]);
         $node->expects(static::any())->method('getExtensions')
             ->willReturn($parent->getExtensions());
-
-        $query = new \ReflectionMethod(Node::class, 'query');
-        $query->setAccessible(true);
-
-        $element = $query->invoke($node, 'atom:b', Node::SINGLE);
+        /** @var Node $node */
+        $element = $node->query('atom:b', Node::SINGLE);
         static::assertInstanceOf(\DOMElement::class, $element);
     }
 
@@ -131,11 +117,8 @@ class NodeTest extends TestCase
         $node = $this->getMockForAbstractClass(Node::class, [$doc->documentElement, $parent]);
         $node->expects(static::any())->method('getExtensions')
             ->willReturn($parent->getExtensions());
-
-        $query = new \ReflectionMethod(Node::class, 'query');
-        $query->setAccessible(true);
-
-        $element = $query->invoke($node, 'atom:c', Node::SINGLE);
+        /** @var Node $node */
+        $element = $node->query('atom:c', Node::SINGLE);
         static::assertNull($element);
     }
 
@@ -150,11 +133,8 @@ class NodeTest extends TestCase
         $node = $this->getMockForAbstractClass(Node::class, [$doc->documentElement, $parent]);
         $node->expects(static::any())->method('getExtensions')
             ->willReturn($parent->getExtensions());
-
-        $query = new \ReflectionMethod(Node::class, 'query');
-        $query->setAccessible(true);
-
-        $element = $query->invoke($node, 'atom:a', Node::SINGLE);
+        /** @var Node $node */
+        $element = $node->query('atom:a', Node::SINGLE);
         static::assertNull($element);
     }
 
@@ -169,10 +149,7 @@ class NodeTest extends TestCase
         $node = $this->getMockForAbstractClass(Node::class, [$doc->documentElement, $parent]);
         $node->expects(static::any())->method('getExtensions')
             ->willReturn($parent->getExtensions());
-
-        $query = new \ReflectionMethod(Node::class, 'query');
-        $query->setAccessible(true);
-
-        $query->invoke($node, 'atom:c', Node::SINGLE | Node::REQUIRED);
+        /** @var Node $node */
+        $node->query('atom:c', Node::SINGLE | Node::REQUIRED);
     }
 }
