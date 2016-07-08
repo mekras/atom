@@ -9,7 +9,6 @@ namespace Mekras\Atom\Element\Meta;
 
 use Mekras\Atom\Element\Author;
 use Mekras\Atom\Element\Element;
-use Mekras\Atom\Node;
 use Mekras\Atom\NodeInterfaceTrait;
 
 /**
@@ -29,7 +28,6 @@ trait HasAuthors
      * @return Author[]
      *
      * @throws \InvalidArgumentException
-     * @throws \Mekras\Atom\Exception\MalformedNodeException
      *
      * @since 1.0
      */
@@ -39,7 +37,7 @@ trait HasAuthors
             'authors',
             function () {
                 $result = [];
-                $nodes = $this->query('atom:author', Node::REQUIRED);
+                $nodes = $this->query('atom:author');
                 foreach ($nodes as $node) {
                     /** @var Element $this */
                     $result[] = $this->getExtensions()->parseElement($this, $node);
