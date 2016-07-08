@@ -8,6 +8,7 @@
 namespace Mekras\Atom;
 
 use Mekras\Atom\Document\Document;
+use Mekras\Atom\Exception\RuntimeException;
 
 /**
  * Atom Document factory.
@@ -65,15 +66,38 @@ class DocumentFactory
      * @return Document
      *
      * @throws \InvalidArgumentException
+     * @throws \Mekras\Atom\Exception\RuntimeException In case of XML errors.
      *
      * @since 1.0
      */
     public function parseXML($xml)
     {
-        $doc = new \DOMDocument();
-        $doc->loadXML($xml);
+        $document = new \DOMDocument();
 
-        return $this->parseDocument($doc);
+        $previousValue = libxml_use_internal_errors(true);
+        libxml_clear_errors();
+        $result = $document->loadXML($xml);
+        /** @var \libXMLError[] $errors */
+        $errors = libxml_get_errors();
+        libxml_clear_errors();
+        libxml_use_internal_errors($previousValue);
+
+        if (true !== $result) {
+            $message = [];
+            foreach ($errors as $error) {
+                $message[] = sprintf(
+                    '%d. [%s] %s in on line %d in position %d',
+                    count($message) + 1,
+                    $error->code,
+                    str_replace(["\n", "\r"], '', $error->message),
+                    $error->line,
+                    $error->column
+                );
+            }
+            throw new RuntimeException('Can not parse XML: ' . implode('; ', $message));
+        }
+
+        return $this->parseDocument($document);
     }
 
     /**
