@@ -10,24 +10,24 @@
 This library is designed to work with the [Atom](https://tools.ietf.org/html/rfc4287) documents in
 an object-oriented style. It does not contain the functionality to download or display documents.
 
-## Parsing documents
+## Documentation
 
-[DocumentFactory](src/DocumentFactory.php) class is responsible for parsing documents. There are two
-methods:
+- [Parsing documents](docs/02-parsing_documents.md)
+- [Creating documents](docs/03-creating_documents.md)
+- [Extending (custom elements)](docs/06-extending.md)
+- [Atom reader example](docs/example.php)
 
-- `parseDocument` — takes an instance of the [DOMDocument](http://php.net/domdocument) as argument
-and return one of the [Document](src/Document/Document.php) subclasses;
-- `parseXML` — takes string with XML as argument then uses `parseDocument`.
+## Example
 
 ```php
-use Mekras\Atom\DocumentFactory;
-use Mekras\Atom\Document\EntryDocument;
 use Mekras\Atom\Document\FeedDocument;
+use Mekras\Atom\DocumentFactory;
 use Mekras\Atom\Exception\AtomException;
 
-$factory = new DocumentFactory;
-
 $xml = file_get_contents('http://example.com/atom');
+
+$factory = new DocumentFactory();
+
 try {
     $document = $factory->parseXML($xml);
 } catch (AtomException $e) {
@@ -36,109 +36,19 @@ try {
 
 if ($document instanceof FeedDocument) {
     $feed = $document->getFeed();
-    //...
-} elseif ($document instanceof EntryDocument) {
-    $entry = $document->getEntry();
-    //...
-}
-
-```
-
-## Creating documents
-
-With `DocumentFactory::createDocument()` — you can create new documents from scratch. Supported
-document types are:
-
-- `atom:entry` — entry document;
-- `atom:feed` — feed document.
-
-### Creating Entry documents
-
-```php
-use Mekras\Atom\DocumentFactory;
-use Mekras\Atom\Document\EntryDocument;
-
-$factory = new DocumentFactory;
-
-$document = $factory->createDocument('atom::entry');
-
-$entry = $document->getEntry();
-$entry->setId('urn:foo:entry:0001');
-$entry->setTitle('Entry Title');
-$entry->addAuthor('Author 1', 'foo@example.com');
-$entry->addAuthor('Author 2', null, 'http://example.com/');
-$entry->getContent()->setValue('<h1>Entry content</h1>', 'html');
-$entry->addCategory('tag1')->setLabel('Tag label')->setScheme('http://example.com/scheme');
-
-echo (string) $document;
-```
-### Creating Feed documents
-
-```php
-use Mekras\Atom\DocumentFactory;
-use Mekras\Atom\Document\FeedDocument;
-
-$factory = new DocumentFactory;
-
-$document = $factory->createDocument('atom:feed');
-
-$feed = $document->getFeed();
-$feed->setId('urn:foo:feed:0001');
-$feed->setTitle('Feed Title');
-$feed->addAuthor('Feed Author')->setEmail('foo@example.com')->setUri('http://example.com/');
-$feed->addCategory('tag1')->setScheme('http://example.com/scheme')->setLabel('TAG 1');
-
-$entry = $feed->addEntry();
-$entry->setId('urn:foo:entry:0001');
-$entry->setTitle('Entry Title');
-//...
-
-echo (string) $document;
-```
-
-## Extending
-
-Atom parsing can be extended via `DocumentFactory::getExtensions()->register()`.
-
-```php
-use Mekras\Atom\DocumentFactory;
-
-$factory = new DocumentFactory;
-$factory->getExtensions()->register(new FooExtension());
-//...
-```
-
-### New document types
-
-**FooDocumentExtension.php**
-
-```php
-use Mekras\Atom\Extension\DocumentExtension;
-
-class FooDocumentExtension implements Extension
-{
-    public function parseDocument(Extensions $extensions, \DOMDocument $document)
-    {
-        if ('Foo NS' === $document->documentElement->namespaceURI) {
-            switch ($document->documentElement->localName) {
-                case 'foo':
-                    return new FooDocument($extensions, $document);
-            }
-        }
-
-        return null;
+    echo 'Feed: ', $feed->getTitle(), PHP_EOL;
+    echo 'Updated: ', $feed->getUpdated()->format('d.m.Y H:i:s'), PHP_EOL;
+    foreach ($feed->getAuthors() as $author) {
+        echo 'Author: ', $author->getName(), PHP_EOL;
     }
-
-    public function createDocument(Extensions $extensions, $name)
-    {
-            switch ($name) {
-                case 'foo:document':
-                    return new FooDocument($extensions);
-            }
+    foreach ($feed->getEntries() as $entry) {
+        echo PHP_EOL;
+        echo '  Entry: ', $entry->getTitle(), PHP_EOL;
+        if ($entry->getSelfLink()) {
+            echo '  URL: ', $entry->getSelfLink(), PHP_EOL;
+        } else {
+            echo PHP_EOL, (string) $entry->getContent(), PHP_EOL;
         }
-
-        return null;
     }
 }
 ```
-
