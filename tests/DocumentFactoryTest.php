@@ -73,4 +73,41 @@ class DocumentFactoryTest extends TestCase
         $doc2 = $factory->parseDocument($this->loadFixture('FeedDocument.xml'));
         static::assertSame($doc1, $doc2);
     }
+
+    /**
+     * Test invalid XML.
+     *
+     * @expectedException \Mekras\Atom\Exception\RuntimeException
+     * @expectedExceptionMessage Can not parse XML
+     */
+    public function testInvalidXML()
+    {
+        $factory = new DocumentFactory();
+        $factory->parseXML('foo');
+    }
+
+    /**
+     * Test create invalid document.
+     *
+     * @expectedException \InvalidArgumentException
+     * @expectedExceptionMessage Unknown document "foo"
+     */
+    public function testCreateInvalidDocument()
+    {
+        $factory = new DocumentFactory();
+        $factory->createDocument('foo');
+    }
+
+    /**
+     * Test parse invalid document.
+     *
+     * @expectedException \InvalidArgumentException
+     * @expectedExceptionMessage Unexpected root element "doc"
+     */
+    public function testParseInvalidDocument()
+    {
+        $factory = new DocumentFactory();
+        $document = $this->createDocument();
+        $factory->parseDocument($document);
+    }
 }

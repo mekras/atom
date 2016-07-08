@@ -202,4 +202,16 @@ class ContentTest extends TestCase
             $document->saveXML($element)
         );
     }
+
+    /**
+     * Test src
+     */
+    public function testSrc()
+    {
+        $doc = $this->createDocument('<content src="http://example.com/"/>');
+        $content = new Content($this->createFakeNode(), $doc->documentElement->firstChild);
+        static::assertEquals('http://example.com/', $content->getSrc());
+        $content->setSrc('http://example.org/');
+        static::assertEquals('http://example.org/', $content->getSrc());
+    }
 }

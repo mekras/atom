@@ -29,13 +29,19 @@ class Content extends Element
      */
     public function __toString()
     {
-        return $this->getContent();
+        try {
+            return $this->getContent();
+        } catch (MalformedNodeException $e) {
+            return '(' . $e->getMessage() . ')';
+        }
     }
 
     /**
      * Return content
      *
      * @return string
+     *
+     * @throws \Mekras\Atom\Exception\MalformedNodeException
      *
      * @since 1.0
      *
@@ -51,20 +57,12 @@ class Content extends Element
                     return $this->getDomElement()->textContent;
                 } elseif ('xhtml' === $type) {
                     /** @var \DOMElement $xhtml */
-                    try {
-                        $xhtml = $this->query('xhtml:div', Node::SINGLE | Node::REQUIRED);
-                    } catch (MalformedNodeException $e) {
-                        return '';
-                    }
+                    $xhtml = $this->query('xhtml:div', Node::SINGLE | Node::REQUIRED);
 
                     return Xhtml::extract($xhtml);
                 } elseif ($this->isXmlMimeType($type)) {
                     /** @var \DOMElement $xml */
-                    try {
-                        $xml = $this->query('*', Node::SINGLE | Node::REQUIRED);
-                    } catch (MalformedNodeException $e) {
-                        return '';
-                    }
+                    $xml = $this->query('*', Node::SINGLE | Node::REQUIRED);
 
                     return $this->getDomElement()->ownerDocument->saveXML($xml);
                 } elseif (stripos($type, 'text/') === 0) {
