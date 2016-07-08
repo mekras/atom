@@ -13,6 +13,8 @@
     </author>
     <link rel="alternate" type="text/html" href="http://example.com/"/>
     <link rel="self" type="text/xml" href="http://example.com/atom/feed"/>
+    <icon>http://example.com/feed.png</icon>
+    <generator href="http://example.com/generator" version="1.0">Generator</generator>
     <updated>2016-01-23T11:22:33Z</updated>
     <category term="tag1"/>
     <category term="tag2"/>

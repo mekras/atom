@@ -7,7 +7,8 @@
  */
 namespace Mekras\Atom\Element\Meta;
 
-use Mekras\Atom\Atom;
+use Mekras\Atom\Element\Element;
+use Mekras\Atom\Element\Id;
 use Mekras\Atom\Node;
 use Mekras\Atom\NodeInterfaceTrait;
 
@@ -25,7 +26,7 @@ trait HasId
     /**
      * Return permanent, universally unique identifier for an entry or feed.
      *
-     * @return string IRI
+     * @return Id
      *
      * @throws \Mekras\Atom\Exception\MalformedNodeException
      *
@@ -36,8 +37,10 @@ trait HasId
         return $this->getCachedProperty(
             'id',
             function () {
-                return trim(
-                    $this->query('atom:id', Node::SINGLE | Node::REQUIRED)->nodeValue
+                /** @var Element $this */
+                return $this->getExtensions()->parseElement(
+                    $this,
+                    $this->query('atom:id', Node::SINGLE | Node::REQUIRED)
                 );
             }
         );
@@ -48,16 +51,16 @@ trait HasId
      *
      * @param string $id IRI
      *
+     * @return Id
+     *
      * @since 1.0
      */
-    public function setId($id)
+    public function addId($id)
     {
-        $element = $this->query('atom:id', Node::SINGLE);
-        if (null === $element) {
-            $element = $this->getDomElement()->ownerDocument->createElementNS(Atom::NS, 'id');
-            $this->getDomElement()->appendChild($element);
-        }
-        $element->nodeValue = $id;
-        $this->setCachedProperty('id', $id);
+        /** @var Id $element */
+        $element = $this->addChild('atom:id', 'id');
+        $element->setContent($id);
+
+        return $element;
     }
 }

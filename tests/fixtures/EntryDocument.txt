@@ -13,6 +13,7 @@
   <contributor>
     <name>Author 3</name>
   </contributor>
+  <link href="http://example.com/0001.html" rel="alternate" type="text/html" hreflang="ru" title="Foo" length="1024"/>
   <content type="html">&lt;h1&gt;Entry content&lt;/h1&gt;</content>
   <category term="tag1" scheme="http://example.com/scheme"/>
   <category term="tag2" label="TAG 2"/>

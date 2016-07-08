@@ -25,7 +25,7 @@ class Id extends Element
      */
     public function __toString()
     {
-        return $this->getUri();
+        return $this->getContent();
     }
 
     /**
@@ -35,7 +35,7 @@ class Id extends Element
      *
      * @since 1.0
      */
-    public function getUri()
+    public function getContent()
     {
         return $this->getCachedProperty(
             'content',
@@ -52,7 +52,7 @@ class Id extends Element
      *
      * @since 1.0
      */
-    public function setUri($content)
+    public function setContent($content)
     {
         $this->getDomElement()->nodeValue = $content;
         $this->setCachedProperty('content', $content);

@@ -68,9 +68,9 @@ class Generator extends Element
     public function getUri()
     {
         return $this->getCachedProperty(
-            'uri',
+            'href',
             function () {
-                return $this->getDomElement()->getAttribute('uri');
+                return $this->getDomElement()->getAttribute('href');
             }
         );
     }
@@ -86,8 +86,8 @@ class Generator extends Element
      */
     public function setUri($iri)
     {
-        $this->getDomElement()->setAttribute('uri', $iri);
-        $this->setCachedProperty('uri', $iri);
+        $this->getDomElement()->setAttribute('href', $iri);
+        $this->setCachedProperty('href', $iri);
 
         return $this;
     }

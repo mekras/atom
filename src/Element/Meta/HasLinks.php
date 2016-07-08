@@ -52,7 +52,7 @@ trait HasLinks
      * @param string      $uri      Link IRI.
      * @param string|null $relation Optional relation type.
      *
-     * @return $this
+     * @return Link
      *
      * @since 1.0
      */

@@ -9,6 +9,7 @@ namespace Mekras\Atom\Tests\Element;
 
 use Mekras\Atom\Element\Entry;
 use Mekras\Atom\Element\Feed;
+use Mekras\Atom\Element\Generator;
 use Mekras\Atom\Element\Title;
 use Mekras\Atom\Tests\TestCase;
 
@@ -22,10 +23,9 @@ class FeedTest extends TestCase
      */
     public function testImport()
     {
-        $doc = new \DOMDocument();
-        $doc->load(__DIR__ . '/../fixtures/FeedDocument.xml');
+        $document = $this->loadFixture('FeedDocument.xml');
 
-        $feed = new Feed($this->createFakeNode(), $doc->documentElement);
+        $feed = new Feed($this->createFakeNode(), $document->documentElement);
         static::assertEquals('Author 1, Author 2', implode(', ', $feed->getAuthors()));
         static::assertEquals('urn:foo:atom1:feed:id', $feed->getId());
         static::assertEquals('http://example.com/atom/feed', $feed->getLink('self'));
@@ -33,6 +33,14 @@ class FeedTest extends TestCase
         static::assertInstanceOf(Title::class, $value);
         static::assertEquals('text', $value->getType());
         static::assertEquals('Feed Title', $value);
+        static::assertEquals('http://example.com/feed.png', (string) $feed->getIcon());
+
+        $value = $feed->getGenerator();
+        static::assertInstanceOf(Generator::class, $value);
+        static::assertEquals('Generator', (string )$value);
+        static::assertEquals('http://example.com/generator', $value->getUri());
+        static::assertEquals('1.0', $value->getVersion());
+
         static::assertEquals('2016-01-23 11:22:33', $feed->getUpdated()->format('Y-m-d H:i:s'));
         $entries = $feed->getEntries();
         static::assertCount(3, $entries);

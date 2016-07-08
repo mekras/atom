@@ -18,6 +18,8 @@ class Feed extends Element
 {
     use Meta\HasAuthors;
     use Meta\HasCategories;
+    use Meta\HasGenerator;
+    use Meta\HasIcon;
     use Meta\HasId;
     use Meta\HasLinks;
     use Meta\HasTitle;

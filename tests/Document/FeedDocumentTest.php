@@ -35,14 +35,16 @@ class FeedDocumentTest extends TestCase
     {
         $document = new FeedDocument($this->createExtensions());
         $feed = $document->getFeed();
-        $feed->setId('urn:foo:feed:0001');
-        $feed->setTitle('Feed Title');
+        $feed->addId('urn:foo:feed:0001');
+        $feed->addTitle('Feed Title');
         $feed->addAuthor('Feed Author')->setEmail('foo@example.com')->setUri('http://example.com/');
         $feed->addCategory('tag1')->setScheme('http://example.com/scheme')->setLabel('TAG 1');
+        $feed->addIcon('http://example.com/feed.png');
+        $feed->addGenerator('Generator')->setUri('http://example.com/generator')->setVersion('1.0');
 
         $entry = $feed->addEntry();
-        $entry->setId('urn:foo:entry:0001');
-        $entry->setTitle('Entry Title');
+        $entry->addId('urn:foo:entry:0001');
+        $entry->addTitle('Entry Title');
 
         $document->getDomDocument()->formatOutput = true;
         static::assertEquals(

@@ -48,25 +48,23 @@ trait HasTitle
     }
 
     /**
-     * Set title.
+     * Add title.
      *
      * @param string $value
      * @param string $type
      *
-     * @since 1.0
+     * @return Title
      *
      * @throws \InvalidArgumentException
+     *
+     * @since 1.0
      */
-    public function setTitle($value, $type = 'text')
+    public function addTitle($value, $type = 'text')
     {
-        try {
-            $title = $this->getTitle();
-        } catch (MalformedNodeException $e) {
-            /** @var Element $this */
-            /** @var Title $title */
-            $title = $this->getExtensions()->createElement($this, 'atom:title');
-        }
-        $title->setContent($value, $type);
-        $this->setCachedProperty('title', $title);
+        /** @var Title $element */
+        $element = $this->addChild('atom:title', 'title');
+        $element->setContent($value, $type);
+
+        return $element;
     }
 }

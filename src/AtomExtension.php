@@ -179,16 +179,16 @@ class AtomExtension implements DocumentExtension, ElementExtension, NamespaceExt
             case 'atom:feed':
                 return new Feed($parent);
                 break;
-            case 'generator':
+            case 'atom:generator':
                 return new Generator($parent);
                 break;
-            case 'icon':
+            case 'atom:icon':
                 return new Icon($parent);
                 break;
-            case 'id':
+            case 'atom:id':
                 return new Id($parent);
                 break;
-            case 'link':
+            case 'atom:link':
                 return new Link($parent);
                 break;
             case 'atom:title':

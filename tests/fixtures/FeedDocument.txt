@@ -8,6 +8,8 @@
     <uri>http://example.com/</uri>
   </author>
   <category term="tag1" scheme="http://example.com/scheme" label="TAG 1"/>
+  <icon>http://example.com/feed.png</icon>
+  <generator href="http://example.com/generator" version="1.0">Generator</generator>
   <entry>
     <id>urn:foo:entry:0001</id>
     <title type="text">Entry Title</title>
