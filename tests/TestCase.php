@@ -18,19 +18,6 @@ use Mekras\Atom\Node;
 abstract class TestCase extends \PHPUnit_Framework_TestCase
 {
     /**
-     * Create and fill Extensions instance.
-     *
-     * @return Extensions
-     */
-    protected function createExtensions()
-    {
-        $extensions = new Extensions();
-        $extensions->register(new AtomExtension());
-
-        return $extensions;
-    }
-
-    /**
      * Return new fake Node instance.
      *
      * @return \PHPUnit_Framework_MockObject_MockObject|Node
@@ -73,7 +60,7 @@ abstract class TestCase extends \PHPUnit_Framework_TestCase
      *
      * @return \DOMDocument
      */
-    protected function loadFixture($path)
+    protected function loadXML($path)
     {
         $document = new \DOMDocument('1.0', 'utf-8');
         $document->load($this->locateFixture($path));
@@ -92,9 +79,13 @@ abstract class TestCase extends \PHPUnit_Framework_TestCase
     protected function createDocument($contents = '', $rootNodeName = 'doc')
     {
         $document = new \DOMDocument();
+
+        $prefix = explode(':', $rootNodeName);
+        $prefix = count($prefix) === 2 ? $prefix[0] . ':' : '';
+
         $document->loadXML(
             '<?xml version="1.0" encoding="utf-8"?>' .
-            '<' . $rootNodeName . ' xmlns="' . Atom::NS . '" ' .
+            '<' . $rootNodeName . ' xmlns="' . $prefix . Atom::NS . '" ' .
             'xmlns:xhtml="' . Atom::XHTML . '">' .
             $contents .
             '</' . $rootNodeName . '>'
@@ -120,5 +111,18 @@ abstract class TestCase extends \PHPUnit_Framework_TestCase
         }
 
         return $document->createElement($name, $content);
+    }
+
+    /**
+     * Create and fill Extensions instance.
+     *
+     * @return Extensions
+     */
+    protected function createExtensions()
+    {
+        $extensions = new Extensions();
+        $extensions->register(new AtomExtension());
+
+        return $extensions;
     }
 }

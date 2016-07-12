@@ -21,7 +21,7 @@ class EntryDocumentTest extends TestCase
      */
     public function testImport()
     {
-        $doc = $this->loadFixture('EntryDocument.xml');
+        $doc = $this->loadXML('EntryDocument.xml');
 
         $document = new EntryDocument($this->createExtensions(), $doc);
         $entry = $document->getEntry();

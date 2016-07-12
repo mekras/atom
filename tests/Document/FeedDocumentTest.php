@@ -21,7 +21,7 @@ class FeedDocumentTest extends TestCase
      */
     public function testImport()
     {
-        $doc = $this->loadFixture('FeedDocument.xml');
+        $doc = $this->loadXML('FeedDocument.xml');
 
         $document = new FeedDocument($this->createExtensions(), $doc);
         $feed = $document->getFeed();

@@ -23,7 +23,7 @@ class FeedTest extends TestCase
      */
     public function testImport()
     {
-        $document = $this->loadFixture('FeedDocument.xml');
+        $document = $this->loadXML('FeedDocument.xml');
 
         $feed = new Feed($this->createFakeNode(), $document->documentElement);
         static::assertEquals('Author 1, Author 2', implode(', ', $feed->getAuthors()));

@@ -20,13 +20,12 @@ class NodeTest extends TestCase
      */
     public function testBasics()
     {
-        $doc = new \DOMDocument('1.0', 'utf-8');
-        $doc->loadXML('<doc xmlns="' . Atom::NS . '"/>');
+        $document = $this->createDocument();
         $parent = $this->createFakeNode();
         /** @var Node $node */
-        $node = $this->getMockForAbstractClass(Node::class, [$doc->documentElement, $parent]);
+        $node = $this->getMockForAbstractClass(Node::class, [$document->documentElement, $parent]);
 
-        static::assertSame($doc->documentElement, $node->getDomElement());
+        static::assertSame($document->documentElement, $node->getDomElement());
         static::assertSame($parent, $node->getParent());
         static::assertSame(Atom::NS, $node->ns());
     }
@@ -37,10 +36,10 @@ class NodeTest extends TestCase
      */
     public function testInvalidNS()
     {
-        $doc = new \DOMDocument('1.0', 'utf-8');
-        $doc->loadXML('<doc xmlns="http://example.org"/>');
+        $document = new \DOMDocument('1.0', 'utf-8');
+        $document->loadXML('<doc xmlns="http://example.org"/>');
         $parent = $this->createFakeNode();
-        $this->getMockForAbstractClass(Node::class, [$doc->documentElement, $parent]);
+        $this->getMockForAbstractClass(Node::class, [$document->documentElement, $parent]);
     }
 
     /**
@@ -48,13 +47,8 @@ class NodeTest extends TestCase
      */
     public function testQueryMultiple()
     {
-        $doc = new \DOMDocument('1.0', 'utf-8');
-        $doc->loadXML('<doc xmlns="' . Atom::NS . '"><a/><b/><a/></doc>');
-        $parent = $this->createFakeNode();
-        $node = $this->getMockForAbstractClass(Node::class, [$doc->documentElement, $parent]);
-        $node->expects(static::any())->method('getExtensions')
-            ->willReturn($parent->getExtensions());
-        /** @var Node $node */
+        $document = $this->createDocument('<a/><b/><a/>');
+        $node = $this->createInstance($document);
         $nodes = $node->query('atom:a');
         static::assertEquals(2, $nodes->length);
     }
@@ -64,13 +58,8 @@ class NodeTest extends TestCase
      */
     public function testQueryMultipleNone()
     {
-        $doc = new \DOMDocument('1.0', 'utf-8');
-        $doc->loadXML('<doc xmlns="' . Atom::NS . '"><a/><b/><a/></doc>');
-        $parent = $this->createFakeNode();
-        $node = $this->getMockForAbstractClass(Node::class, [$doc->documentElement, $parent]);
-        $node->expects(static::any())->method('getExtensions')
-            ->willReturn($parent->getExtensions());
-        /** @var Node $node */
+        $document = $this->createDocument('<a/><b/><a/>');
+        $node = $this->createInstance($document);
         $nodes = $node->query('atom:c');
         static::assertEquals(0, $nodes->length);
     }
@@ -80,13 +69,8 @@ class NodeTest extends TestCase
      */
     public function testQueryMultipleRequired()
     {
-        $doc = new \DOMDocument('1.0', 'utf-8');
-        $doc->loadXML('<doc xmlns="' . Atom::NS . '"><a/><b/><a/></doc>');
-        $parent = $this->createFakeNode();
-        $node = $this->getMockForAbstractClass(Node::class, [$doc->documentElement, $parent]);
-        $node->expects(static::any())->method('getExtensions')
-            ->willReturn($parent->getExtensions());
-        /** @var Node $node */
+        $document = $this->createDocument('<a/><b/><a/>');
+        $node = $this->createInstance($document);
         $node->query('atom:c', Node::REQUIRED);
     }
 
@@ -95,13 +79,8 @@ class NodeTest extends TestCase
      */
     public function testQuerySingle()
     {
-        $doc = new \DOMDocument('1.0', 'utf-8');
-        $doc->loadXML('<doc xmlns="' . Atom::NS . '"><a/><b/><a/></doc>');
-        $parent = $this->createFakeNode();
-        $node = $this->getMockForAbstractClass(Node::class, [$doc->documentElement, $parent]);
-        $node->expects(static::any())->method('getExtensions')
-            ->willReturn($parent->getExtensions());
-        /** @var Node $node */
+        $document = $this->createDocument('<a/><b/><a/>');
+        $node = $this->createInstance($document);
         $element = $node->query('atom:b', Node::SINGLE);
         static::assertInstanceOf(\DOMElement::class, $element);
     }
@@ -111,13 +90,8 @@ class NodeTest extends TestCase
      */
     public function testQuerySingleNone()
     {
-        $doc = new \DOMDocument('1.0', 'utf-8');
-        $doc->loadXML('<doc xmlns="' . Atom::NS . '"><a/><b/><a/></doc>');
-        $parent = $this->createFakeNode();
-        $node = $this->getMockForAbstractClass(Node::class, [$doc->documentElement, $parent]);
-        $node->expects(static::any())->method('getExtensions')
-            ->willReturn($parent->getExtensions());
-        /** @var Node $node */
+        $document = $this->createDocument('<a/><b/><a/>');
+        $node = $this->createInstance($document);
         $element = $node->query('atom:c', Node::SINGLE);
         static::assertNull($element);
     }
@@ -127,13 +101,8 @@ class NodeTest extends TestCase
      */
     public function testQuerySingleMultiple()
     {
-        $doc = new \DOMDocument('1.0', 'utf-8');
-        $doc->loadXML('<doc xmlns="' . Atom::NS . '"><a/><b/><a/></doc>');
-        $parent = $this->createFakeNode();
-        $node = $this->getMockForAbstractClass(Node::class, [$doc->documentElement, $parent]);
-        $node->expects(static::any())->method('getExtensions')
-            ->willReturn($parent->getExtensions());
-        /** @var Node $node */
+        $document = $this->createDocument('<a/><b/><a/>');
+        $node = $this->createInstance($document);
         $element = $node->query('atom:a', Node::SINGLE);
         static::assertNull($element);
     }
@@ -143,13 +112,25 @@ class NodeTest extends TestCase
      */
     public function testQuerySingleRequired()
     {
-        $doc = new \DOMDocument('1.0', 'utf-8');
-        $doc->loadXML('<doc xmlns="' . Atom::NS . '"><a/><b/><a/></doc>');
+        $document = $this->createDocument('<a/><b/><a/>');
+        $node = $this->createInstance($document);
+        $node->query('atom:c', Node::SINGLE | Node::REQUIRED);
+    }
+
+    /**
+     * Create new test Node instance.
+     *
+     * @param \DOMDocument $document
+     *
+     * @return \PHPUnit_Framework_MockObject_MockObject|Node
+     */
+    private function createInstance($document)
+    {
         $parent = $this->createFakeNode();
-        $node = $this->getMockForAbstractClass(Node::class, [$doc->documentElement, $parent]);
+        $node = $this->getMockForAbstractClass(Node::class, [$document->documentElement, $parent]);
         $node->expects(static::any())->method('getExtensions')
             ->willReturn($parent->getExtensions());
-        /** @var Node $node */
-        $node->query('atom:c', Node::SINGLE | Node::REQUIRED);
+
+        return $node;
     }
 }

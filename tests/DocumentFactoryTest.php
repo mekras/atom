@@ -70,7 +70,7 @@ class DocumentFactoryTest extends TestCase
         /** @var DocumentExtension $extension */
         $factory->getExtensions()->register($extension);
 
-        $doc2 = $factory->parseDocument($this->loadFixture('FeedDocument.xml'));
+        $doc2 = $factory->parseDocument($this->loadXML('FeedDocument.xml'));
         static::assertSame($doc1, $doc2);
     }
 

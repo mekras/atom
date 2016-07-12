@@ -22,7 +22,7 @@ class EntryTest extends TestCase
      */
     public function testImport()
     {
-        $doc = $this->loadFixture('EntryDocument.xml');
+        $doc = $this->loadXML('EntryDocument.xml');
 
         $entry = new Entry($this->createFakeNode(), $doc->documentElement);
         static::assertEquals('Author 1, Author 2', implode(', ', $entry->getAuthors()));

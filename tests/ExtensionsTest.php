@@ -35,9 +35,9 @@ class ExtensionsTest extends TestCase
         /** @var Extension $extension */
         $extensions->register($extension);
 
-        $doc2 = $extensions->parseDocument($this->loadFixture('FeedDocument.xml'));
+        $doc2 = $extensions->parseDocument($this->loadXML('FeedDocument.xml'));
         static::assertSame($doc1, $doc2);
-        static::assertNull($extensions->parseDocument($this->loadFixture('EntryDocument.xml')));
+        static::assertNull($extensions->parseDocument($this->loadXML('EntryDocument.xml')));
     }
 
     /**
@@ -61,13 +61,13 @@ class ExtensionsTest extends TestCase
 
         $node2 = $extensions->parseElement(
             $parent,
-            $this->loadFixture('FeedDocument.xml')->documentElement
+            $this->loadXML('FeedDocument.xml')->documentElement
         );
         static::assertSame($node1, $node2);
         static::assertNull(
             $extensions->parseElement(
                 $parent,
-                $this->loadFixture('EntryDocument.xml')->documentElement
+                $this->loadXML('EntryDocument.xml')->documentElement
             )
         );
     }
