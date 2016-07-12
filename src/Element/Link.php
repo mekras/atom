@@ -50,7 +50,7 @@ class Link extends Element
         return $this->getCachedProperty(
             'href',
             function () {
-                $value = $this->getAttribute('atom:href');
+                $value = $this->getAttribute('href');
                 if (null === $value) {
                     throw new MalformedNodeException('There is no attribute "href"');
                 }
@@ -74,7 +74,7 @@ class Link extends Element
      */
     public function setUri($uri)
     {
-        $this->setAttribute('atom:href', $uri);
+        $this->setAttribute('href', $uri);
         $this->setCachedProperty('href', $uri);
 
         return $this;
@@ -95,7 +95,7 @@ class Link extends Element
         return $this->getCachedProperty(
             'rel',
             function () {
-                return $this->getAttribute('atom:rel') ?: 'alternate';
+                return $this->getAttribute('rel') ?: 'alternate';
             }
         );
     }
@@ -114,7 +114,7 @@ class Link extends Element
      */
     public function setRelation($type)
     {
-        $this->setAttribute('atom:rel', $type);
+        $this->setAttribute('rel', $type);
         $this->setCachedProperty('rel', $type);
 
         return $this;
@@ -135,7 +135,7 @@ class Link extends Element
         return $this->getCachedProperty(
             'type',
             function () {
-                return $this->getAttribute('atom:type');
+                return $this->getAttribute('type');
             }
         );
     }
@@ -154,7 +154,7 @@ class Link extends Element
      */
     public function setType($type)
     {
-        $this->setAttribute('atom:type', $type);
+        $this->setAttribute('type', $type);
         $this->setCachedProperty('type', $type);
 
         return $this;
@@ -175,7 +175,7 @@ class Link extends Element
         return $this->getCachedProperty(
             'hreflang',
             function () {
-                return $this->getAttribute('atom:hreflang');
+                return $this->getAttribute('hreflang');
             }
         );
     }
@@ -194,7 +194,7 @@ class Link extends Element
      */
     public function setLanguage($language)
     {
-        $this->setAttribute('atom:hreflang', $language);
+        $this->setAttribute('hreflang', $language);
         $this->setCachedProperty('hreflang', $language);
 
         return $this;
@@ -215,7 +215,7 @@ class Link extends Element
         return $this->getCachedProperty(
             'title',
             function () {
-                return $this->getAttribute('atom:title');
+                return $this->getAttribute('title');
             }
         );
     }
@@ -234,7 +234,7 @@ class Link extends Element
      */
     public function setTitle($title)
     {
-        $this->setAttribute('atom:title', $title);
+        $this->setAttribute('title', $title);
         $this->setCachedProperty('title', $title);
 
         return $this;
@@ -255,7 +255,7 @@ class Link extends Element
         return $this->getCachedProperty(
             'length',
             function () {
-                return ((int) $this->getAttribute('atom:length')) ?: null;
+                return ((int) $this->getAttribute('length')) ?: null;
             }
         );
     }
@@ -274,7 +274,7 @@ class Link extends Element
      */
     public function setLength($length)
     {
-        $this->setAttribute('atom:length', $length);
+        $this->setAttribute('length', $length);
         $this->setCachedProperty('length', $length);
 
         return $this;

@@ -132,8 +132,9 @@ class NodeTest extends TestCase
             ->willReturn($parent->getExtensions());
         /** @var Node $node */
 
-        static::assertEquals('baz', $node->getAttribute('atom:bar'));
-        static::assertNull($node->getAttribute('atom:foo'));
+        static::assertEquals('baz', $node->getAttribute('bar'));
+        static::assertNull($node->getAttribute('foo'));
+        static::assertNull($node->getAttribute('atom:bar'));
     }
 
     /**
@@ -141,7 +142,7 @@ class NodeTest extends TestCase
      */
     public function testGetAttributeCustomPrefix()
     {
-        $document = $this->createDocument('<a:foo a:bar="baz"/>', 'a:doc');
+        $document = $this->createDocument('<a:foo a:a1="bar" a2="baz"/>', 'a:doc');
         $parent = $this->createFakeNode($document);
         $node = $this->getMockForAbstractClass(
             Node::class,
@@ -151,8 +152,9 @@ class NodeTest extends TestCase
             ->willReturn($parent->getExtensions());
         /** @var Node $node */
 
-        static::assertEquals('baz', $node->getAttribute('atom:bar'));
-        static::assertNull($node->getAttribute('atom:foo'));
+        static::assertEquals('bar', $node->getAttribute('atom:a1'));
+        static::assertEquals('baz', $node->getAttribute('a2'));
+        static::assertNull($node->getAttribute('atom:a2'));
     }
 
     /**
@@ -162,7 +164,7 @@ class NodeTest extends TestCase
     {
         $document = $this->createDocument();
         $node = $this->createInstance($document);
-        $node->setAttribute('atom:bar', 'baz');
+        $node->setAttribute('bar', 'baz');
         static::assertEquals(
             '<doc xmlns="http://www.w3.org/2005/Atom" xmlns:xhtml="http://www.w3.org/1999/xhtml" ' .
             'bar="baz"/>',

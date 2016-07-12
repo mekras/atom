@@ -72,7 +72,7 @@ class Generator extends Element
         return $this->getCachedProperty(
             'href',
             function () {
-                return $this->getAttribute('atom:href');
+                return $this->getAttribute('href');
             }
         );
     }
@@ -90,7 +90,7 @@ class Generator extends Element
      */
     public function setUri($iri)
     {
-        $this->setAttribute('atom:href', $iri);
+        $this->setAttribute('href', $iri);
         $this->setCachedProperty('href', $iri);
 
         return $this;
@@ -110,7 +110,7 @@ class Generator extends Element
         return $this->getCachedProperty(
             'version',
             function () {
-                return $this->getAttribute('atom:version');
+                return $this->getAttribute('version');
             }
         );
     }
@@ -128,7 +128,7 @@ class Generator extends Element
      */
     public function setVersion($version)
     {
-        $this->setAttribute('atom:version', $version);
+        $this->setAttribute('version', $version);
         $this->setCachedProperty('version', $version);
 
         return $this;

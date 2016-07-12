@@ -134,7 +134,7 @@ class Content extends Element
         return $this->getCachedProperty(
             'type',
             function () {
-                return $this->getAttribute('atom:type') ?: 'text';
+                return $this->getAttribute('type') ?: 'text';
             }
         );
     }
@@ -153,7 +153,7 @@ class Content extends Element
      */
     public function setType($type)
     {
-        $this->setAttribute('atom:type', $type);
+        $this->setAttribute('type', $type);
         $this->setCachedProperty('type', $type);
 
         return $this;
@@ -174,7 +174,7 @@ class Content extends Element
         return $this->getCachedProperty(
             'src',
             function () {
-                return $this->getAttribute('atom:src');
+                return $this->getAttribute('src');
             }
         );
     }
@@ -191,7 +191,7 @@ class Content extends Element
      */
     public function setSrc($iri)
     {
-        $this->setAttribute('atom:src', $iri);
+        $this->setAttribute('src', $iri);
         $this->setCachedProperty('src', $iri);
     }
 

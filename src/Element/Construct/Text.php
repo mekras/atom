@@ -82,7 +82,7 @@ trait Text
         return $this->getCachedProperty(
             'type',
             function () {
-                return $this->getAttribute('atom:type') ?: 'text';
+                return $this->getAttribute('type') ?: 'text';
             }
         );
     }
@@ -100,7 +100,7 @@ trait Text
      */
     public function setType($type)
     {
-        $this->setAttribute('atom:type', $type);
+        $this->setAttribute('type', $type);
         $this->setCachedProperty('type', $type);
 
         return $this;

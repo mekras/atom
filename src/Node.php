@@ -121,7 +121,7 @@ abstract class Node
      * Extension\NamespaceExtension}. This library registers only "atom:" prefix, but this list
      * can be expanded by extensions.
      *
-     * @param string $prefixedName Prefixed attribute name.
+     * @param string $attrName Attribute name (e. g. "type", "atom:foo").
      *
      * @return string|null
      *
@@ -129,23 +129,18 @@ abstract class Node
      *
      * @since 1.0
      */
-    public function getAttribute($prefixedName)
+    public function getAttribute($attrName)
     {
-        list($prefix, $name) = explode(':', $prefixedName);
-        $namespace = $this->getNamespace($prefix);
-
         $element = $this->getDomElement();
-        $prefix = $element->lookupPrefix($namespace);
-        if (null === $prefix) {
-            if (!$element->hasAttribute($name)) {
-                return null;
-            }
-            return $element->getAttribute($name);
+        if (strpos($attrName, ':') === false) {
+            return $element->hasAttribute($attrName) ? $element->getAttribute($attrName) : null;
         } else {
-            if (!$element->hasAttributeNS($namespace, $name)) {
-                return null;
-            }
-            return $element->getAttributeNS($namespace, $name);
+            list($prefix, $name) = explode(':', $attrName);
+            $namespace = $this->getNamespace($prefix);
+
+            return $element->hasAttributeNS($namespace, $name)
+                ? $element->getAttributeNS($namespace, $name)
+                : null;
         }
     }
 
@@ -156,23 +151,23 @@ abstract class Node
      * Extension\NamespaceExtension}. This library registers only "atom:" prefix, but this list
      * can be expanded by extensions.
      *
-     * @param string $prefixedName Prefixed attribute name.
+     * @param string $attrName Attribute name (e. g. "type", "atom:foo").
      * @param string $value
      *
      * @throws \InvalidArgumentException
      *
      * @since 1.0
      */
-    public function setAttribute($prefixedName, $value)
+    public function setAttribute($attrName, $value)
     {
-        list($prefix, $name) = explode(':', $prefixedName);
-        $namespace = $this->getNamespace($prefix);
         $element = $this->getDomElement();
-        $prefix = $element->lookupPrefix($namespace);
-        if (null === $prefix) {
-            $element->setAttribute($name, $value);
+        if (strpos($attrName, ':') === false) {
+            $element->setAttribute($attrName, $value);
         } else {
-            $element->setAttributeNS($namespace, $prefix . ':' . $name, $value);
+            list($prefix, $name) = explode(':', $attrName);
+            $namespace = $this->getNamespace($prefix);
+
+            $element->setAttributeNS($namespace, $name, $value);
         }
     }
 

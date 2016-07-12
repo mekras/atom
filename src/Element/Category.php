@@ -50,7 +50,7 @@ class Category extends Element
         return $this->getCachedProperty(
             'term',
             function () {
-                $value = $this->getAttribute('atom:term');
+                $value = $this->getAttribute('term');
                 if (null === $value) {
                     throw new MalformedNodeException('There is no attribute "term"');
                 }
@@ -74,7 +74,7 @@ class Category extends Element
      */
     public function setTerm($value)
     {
-        $this->setAttribute('atom:term', $value);
+        $this->setAttribute('term', $value);
         $this->setCachedProperty('term', $value);
 
         return $this;
@@ -95,7 +95,7 @@ class Category extends Element
         return $this->getCachedProperty(
             'label',
             function () {
-                return $this->getAttribute('atom:label');
+                return $this->getAttribute('label');
             }
         );
     }
@@ -114,7 +114,7 @@ class Category extends Element
      */
     public function setLabel($value)
     {
-        $this->setAttribute('atom:label', $value);
+        $this->setAttribute('label', $value);
         $this->setCachedProperty('label', $value);
 
         return $this;
@@ -135,7 +135,7 @@ class Category extends Element
         return $this->getCachedProperty(
             'scheme',
             function () {
-                return $this->getAttribute('atom:scheme');
+                return $this->getAttribute('scheme');
             }
         );
     }
@@ -154,7 +154,7 @@ class Category extends Element
      */
     public function setScheme($value)
     {
-        $this->setAttribute('atom:scheme', $value);
+        $this->setAttribute('scheme', $value);
         $this->setCachedProperty('scheme', $value);
 
         return $this;
