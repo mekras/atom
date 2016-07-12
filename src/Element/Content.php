@@ -96,7 +96,7 @@ class Content extends Element
     public function setContent($content, $type = 'text')
     {
         $type = (string) $type;
-        $this->setAttribute('atom:type', $type);
+        $this->setType($type);
         $document = $this->getDomElement()->ownerDocument;
 
         if ('text' === $type || 'html' === $type) {
@@ -127,8 +127,6 @@ class Content extends Element
      * @throws \InvalidArgumentException
      *
      * @since 1.0
-     *
-     * @link  setContent()
      * @link  https://tools.ietf.org/html/rfc4287#section-4.1.3.1
      */
     public function getType()
@@ -139,6 +137,26 @@ class Content extends Element
                 return $this->getAttribute('atom:type') ?: 'text';
             }
         );
+    }
+
+    /**
+     * Set content type.
+     *
+     * @param string $type "text", "html", "xhtml" or MIME type.
+     *
+     * @return $this
+     *
+     * @throws \InvalidArgumentException
+     *
+     * @since 1.0
+     * @link  https://tools.ietf.org/html/rfc4287#section-4.1.3.1
+     */
+    public function setType($type)
+    {
+        $this->setAttribute('atom:type', $type);
+        $this->setCachedProperty('type', $type);
+
+        return $this;
     }
 
     /**

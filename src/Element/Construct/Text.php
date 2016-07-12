@@ -63,7 +63,7 @@ trait Text
      */
     public function setContent($text, $type = 'text')
     {
-        $this->setAttribute('atom:type', $type);
+        $this->setType($type);
         $this->getDomElement()->nodeValue = $text;
         $this->setCachedProperty('content', $this->parseContent());
     }
@@ -75,7 +75,6 @@ trait Text
      *
      * @throws \InvalidArgumentException
      *
-     * @link  setContent()
      * @since 1.0
      */
     public function getType()
@@ -86,6 +85,25 @@ trait Text
                 return $this->getAttribute('atom:type') ?: 'text';
             }
         );
+    }
+
+    /**
+     * Return text type.
+     *
+     * @param string $type "text", "html", or "xhtml"
+     *
+     * @return $this
+     *
+     * @throws \InvalidArgumentException
+     *
+     * @since 1.0
+     */
+    public function setType($type)
+    {
+        $this->setAttribute('atom:type', $type);
+        $this->setCachedProperty('type', $type);
+
+        return $this;
     }
 
     /**
