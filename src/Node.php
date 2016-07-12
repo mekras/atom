@@ -151,8 +151,8 @@ abstract class Node
      * Extension\NamespaceExtension}. This library registers only "atom:" prefix, but this list
      * can be expanded by extensions.
      *
-     * @param string $attrName Attribute name (e. g. "type", "atom:foo").
-     * @param string $value
+     * @param string      $attrName Attribute name (e. g. "type", "atom:foo").
+     * @param string|null $value    New value or null to remove attribute.
      *
      * @throws \InvalidArgumentException
      *
@@ -162,12 +162,19 @@ abstract class Node
     {
         $element = $this->getDomElement();
         if (strpos($attrName, ':') === false) {
-            $element->setAttribute($attrName, $value);
+            if (null === $value) {
+                $element->removeAttribute($attrName);
+            } else {
+                $element->setAttribute($attrName, $value);
+            }
         } else {
             list($prefix, $name) = explode(':', $attrName);
             $namespace = $this->getNamespace($prefix);
-
-            $element->setAttributeNS($namespace, $name, $value);
+            if (null === $value) {
+                $element->removeAttributeNS($namespace, $name);
+            } else {
+                $element->setAttributeNS($namespace, $name, $value);
+            }
         }
     }
 
