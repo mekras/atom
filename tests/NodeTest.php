@@ -118,6 +118,74 @@ class NodeTest extends TestCase
     }
 
     /**
+     *
+     */
+    public function testGetAttribute()
+    {
+        $document = $this->createDocument('<foo bar="baz"/>');
+        $parent = $this->createFakeNode($document);
+        $node = $this->getMockForAbstractClass(
+            Node::class,
+            [$document->documentElement->firstChild, $parent]
+        );
+        $node->expects(static::any())->method('getExtensions')
+            ->willReturn($parent->getExtensions());
+        /** @var Node $node */
+
+        static::assertEquals('baz', $node->getAttribute('atom:bar'));
+        static::assertNull($node->getAttribute('atom:foo'));
+    }
+
+    /**
+     *
+     */
+    public function testGetAttributeCustomPrefix()
+    {
+        $document = $this->createDocument('<a:foo a:bar="baz"/>', 'a:doc');
+        $parent = $this->createFakeNode($document);
+        $node = $this->getMockForAbstractClass(
+            Node::class,
+            [$document->documentElement->firstChild, $parent]
+        );
+        $node->expects(static::any())->method('getExtensions')
+            ->willReturn($parent->getExtensions());
+        /** @var Node $node */
+
+        static::assertEquals('baz', $node->getAttribute('atom:bar'));
+        static::assertNull($node->getAttribute('atom:foo'));
+    }
+
+    /**
+     *
+     */
+    public function testSetAttribute()
+    {
+        $document = $this->createDocument();
+        $node = $this->createInstance($document);
+        $node->setAttribute('atom:bar', 'baz');
+        static::assertEquals(
+            '<doc xmlns="http://www.w3.org/2005/Atom" xmlns:xhtml="http://www.w3.org/1999/xhtml" ' .
+            'bar="baz"/>',
+            $this->getXML($node)
+        );
+    }
+
+    /**
+     *
+     */
+    public function testSetAttributeCustomPrefix()
+    {
+        $document = $this->createDocument('', 'a:doc');
+        $node = $this->createInstance($document);
+        $node->setAttribute('atom:bar', 'baz');
+        static::assertEquals(
+            '<a:doc xmlns:a="http://www.w3.org/2005/Atom" ' .
+            'xmlns:xhtml="http://www.w3.org/1999/xhtml" a:bar="baz"/>',
+            $this->getXML($node)
+        );
+    }
+
+    /**
      * Create new test Node instance.
      *
      * @param \DOMDocument $document
@@ -126,7 +194,7 @@ class NodeTest extends TestCase
      */
     private function createInstance($document)
     {
-        $parent = $this->createFakeNode();
+        $parent = $this->createFakeNode($document);
         $node = $this->getMockForAbstractClass(Node::class, [$document->documentElement, $parent]);
         $node->expects(static::any())->method('getExtensions')
             ->willReturn($parent->getExtensions());

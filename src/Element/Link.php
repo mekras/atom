@@ -29,7 +29,7 @@ class Link extends Element
     {
         try {
             return $this->getUri();
-        } catch (MalformedNodeException $e) {
+        } catch (\Exception $e) {
             return '(empty link)';
         }
     }
@@ -39,6 +39,7 @@ class Link extends Element
      *
      * @return string
      *
+     * @throws \InvalidArgumentException
      * @throws \Mekras\Atom\Exception\MalformedNodeException
      *
      * @since 1.0
@@ -49,11 +50,12 @@ class Link extends Element
         return $this->getCachedProperty(
             'href',
             function () {
-                if (!$this->getDomElement()->hasAttribute('href')) {
+                $value = $this->getAttribute('atom:href');
+                if (null === $value) {
                     throw new MalformedNodeException('There is no attribute "href"');
                 }
 
-                return $this->getDomElement()->getAttribute('href');
+                return $value;
             }
         );
     }
@@ -65,12 +67,14 @@ class Link extends Element
      *
      * @return $this
      *
+     * @throws \InvalidArgumentException
+     *
      * @since 1.0
      * @link  https://tools.ietf.org/html/rfc4287#section-4.2.7.1
      */
     public function setUri($uri)
     {
-        $this->getDomElement()->setAttribute('href', $uri);
+        $this->setAttribute('atom:href', $uri);
         $this->setCachedProperty('href', $uri);
 
         return $this;
@@ -81,6 +85,8 @@ class Link extends Element
      *
      * @return string
      *
+     * @throws \InvalidArgumentException
+     *
      * @since 1.0
      * @link  https://tools.ietf.org/html/rfc4287#section-4.2.7.2
      */
@@ -89,7 +95,7 @@ class Link extends Element
         return $this->getCachedProperty(
             'rel',
             function () {
-                return $this->getDomElement()->getAttribute('rel') ?: 'alternate';
+                return $this->getAttribute('atom:rel') ?: 'alternate';
             }
         );
     }
@@ -101,12 +107,14 @@ class Link extends Element
      *
      * @return $this
      *
+     * @throws \InvalidArgumentException
+     *
      * @since 1.0
      * @link  https://tools.ietf.org/html/rfc4287#section-4.2.7.2
      */
     public function setRelation($type)
     {
-        $this->getDomElement()->setAttribute('rel', $type);
+        $this->setAttribute('atom:rel', $type);
         $this->setCachedProperty('rel', $type);
 
         return $this;
@@ -117,6 +125,8 @@ class Link extends Element
      *
      * @return string|null
      *
+     * @throws \InvalidArgumentException
+     *
      * @since 1.0
      * @link  https://tools.ietf.org/html/rfc4287#section-4.2.7.3
      */
@@ -125,7 +135,7 @@ class Link extends Element
         return $this->getCachedProperty(
             'type',
             function () {
-                return $this->getDomElement()->getAttribute('type') ?: null;
+                return $this->getAttribute('atom:type');
             }
         );
     }
@@ -137,12 +147,14 @@ class Link extends Element
      *
      * @return $this
      *
+     * @throws \InvalidArgumentException
+     *
      * @since 1.0
      * @link  https://tools.ietf.org/html/rfc4287#section-4.2.7.3
      */
     public function setType($type)
     {
-        $this->getDomElement()->setAttribute('type', $type);
+        $this->setAttribute('atom:type', $type);
         $this->setCachedProperty('type', $type);
 
         return $this;
@@ -153,6 +165,8 @@ class Link extends Element
      *
      * @return string|null
      *
+     * @throws \InvalidArgumentException
+     *
      * @since 1.0
      * @link  https://tools.ietf.org/html/rfc4287#section-4.2.7.4
      */
@@ -161,7 +175,7 @@ class Link extends Element
         return $this->getCachedProperty(
             'hreflang',
             function () {
-                return $this->getDomElement()->getAttribute('hreflang') ?: null;
+                return $this->getAttribute('atom:hreflang');
             }
         );
     }
@@ -173,12 +187,14 @@ class Link extends Element
      *
      * @return $this
      *
+     * @throws \InvalidArgumentException
+     *
      * @since 1.0
      * @link  https://tools.ietf.org/html/rfc4287#section-4.2.7.4
      */
     public function setLanguage($language)
     {
-        $this->getDomElement()->setAttribute('hreflang', $language);
+        $this->setAttribute('atom:hreflang', $language);
         $this->setCachedProperty('hreflang', $language);
 
         return $this;
@@ -189,6 +205,8 @@ class Link extends Element
      *
      * @return string|null
      *
+     * @throws \InvalidArgumentException
+     *
      * @since 1.0
      * @link  https://tools.ietf.org/html/rfc4287#section-4.2.7.5
      */
@@ -197,7 +215,7 @@ class Link extends Element
         return $this->getCachedProperty(
             'title',
             function () {
-                return $this->getDomElement()->getAttribute('title') ?: null;
+                return $this->getAttribute('atom:title');
             }
         );
     }
@@ -209,12 +227,14 @@ class Link extends Element
      *
      * @return $this
      *
+     * @throws \InvalidArgumentException
+     *
      * @since 1.0
      * @link  https://tools.ietf.org/html/rfc4287#section-4.2.7.5
      */
     public function setTitle($title)
     {
-        $this->getDomElement()->setAttribute('title', $title);
+        $this->setAttribute('atom:title', $title);
         $this->setCachedProperty('title', $title);
 
         return $this;
@@ -225,6 +245,8 @@ class Link extends Element
      *
      * @return int|null
      *
+     * @throws \InvalidArgumentException
+     *
      * @since 1.0
      * @link  https://tools.ietf.org/html/rfc4287#section-4.2.7.6
      */
@@ -233,7 +255,7 @@ class Link extends Element
         return $this->getCachedProperty(
             'length',
             function () {
-                return ((int) $this->getDomElement()->getAttribute('length')) ?: null;
+                return ((int) $this->getAttribute('atom:length')) ?: null;
             }
         );
     }
@@ -245,12 +267,14 @@ class Link extends Element
      *
      * @return $this
      *
+     * @throws \InvalidArgumentException
+     *
      * @since 1.0
      * @link  https://tools.ietf.org/html/rfc4287#section-4.2.7.6
      */
     public function setLength($length)
     {
-        $this->getDomElement()->setAttribute('length', $length);
+        $this->setAttribute('atom:length', $length);
         $this->setCachedProperty('length', $length);
 
         return $this;

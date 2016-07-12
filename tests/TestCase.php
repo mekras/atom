@@ -20,16 +20,20 @@ abstract class TestCase extends \PHPUnit_Framework_TestCase
     /**
      * Return new fake Node instance.
      *
+     * @param \DOMDocument|null $document
+     *
      * @return \PHPUnit_Framework_MockObject_MockObject|Node
      */
-    protected function createFakeNode()
+    protected function createFakeNode(\DOMDocument $document = null)
     {
-        $doc = $this->createDocument();
+        if (null === $document) {
+            $document = $this->createDocument();
+        }
 
         $node = $this->getMockBuilder(Node::class)->disableOriginalConstructor()
             ->setMethods(['getDomElement', 'getExtensions'])->getMock();
         $node->expects(static::any())->method('getDomElement')
-            ->willReturn($doc->documentElement);
+            ->willReturn($document->documentElement);
         $node->expects(static::any())->method('getExtensions')
             ->willReturn($this->createExtensions());
 
@@ -81,15 +85,15 @@ abstract class TestCase extends \PHPUnit_Framework_TestCase
         $document = new \DOMDocument();
 
         $prefix = explode(':', $rootNodeName);
-        $prefix = count($prefix) === 2 ? $prefix[0] . ':' : '';
+        $prefix = count($prefix) === 2 ? ':' . $prefix[0] : '';
 
-        $document->loadXML(
-            '<?xml version="1.0" encoding="utf-8"?>' .
-            '<' . $rootNodeName . ' xmlns="' . $prefix . Atom::NS . '" ' .
+        $xml = '<?xml version="1.0" encoding="utf-8"?>' .
+            '<' . $rootNodeName . ' xmlns' . $prefix . '="' . Atom::NS . '" ' .
             'xmlns:xhtml="' . Atom::XHTML . '">' .
             $contents .
-            '</' . $rootNodeName . '>'
-        );
+            '</' . $rootNodeName . '>';
+
+        $document->loadXML($xml);
 
         return $document;
     }
@@ -124,5 +128,17 @@ abstract class TestCase extends \PHPUnit_Framework_TestCase
         $extensions->register(new AtomExtension());
 
         return $extensions;
+    }
+
+    /**
+     * Return node XML.
+     *
+     * @param Node $node
+     *
+     * @return string
+     */
+    protected function getXML(Node $node)
+    {
+        return $node->getDomElement()->ownerDocument->saveXML($node->getDomElement());
     }
 }

@@ -61,7 +61,9 @@ class Generator extends Element
     /**
      * Return generating agent IRI.
      *
-     * @return string
+     * @return string|null
+     *
+     * @throws \InvalidArgumentException
      *
      * @since 1.0
      */
@@ -70,7 +72,7 @@ class Generator extends Element
         return $this->getCachedProperty(
             'href',
             function () {
-                return $this->getDomElement()->getAttribute('href');
+                return $this->getAttribute('atom:href');
             }
         );
     }
@@ -82,11 +84,13 @@ class Generator extends Element
      *
      * @return $this
      *
+     * @throws \InvalidArgumentException
+     *
      * @since 1.0
      */
     public function setUri($iri)
     {
-        $this->getDomElement()->setAttribute('href', $iri);
+        $this->setAttribute('atom:href', $iri);
         $this->setCachedProperty('href', $iri);
 
         return $this;
@@ -95,7 +99,9 @@ class Generator extends Element
     /**
      * Return agent version.
      *
-     * @return string
+     * @return string|null
+     *
+     * @throws \InvalidArgumentException
      *
      * @since 1.0
      */
@@ -104,7 +110,7 @@ class Generator extends Element
         return $this->getCachedProperty(
             'version',
             function () {
-                return $this->getDomElement()->getAttribute('version');
+                return $this->getAttribute('atom:version');
             }
         );
     }
@@ -116,11 +122,13 @@ class Generator extends Element
      *
      * @return $this
      *
+     * @throws \InvalidArgumentException
+     *
      * @since 1.0
      */
     public function setVersion($version)
     {
-        $this->getDomElement()->setAttribute('version', $version);
+        $this->setAttribute('atom:version', $version);
         $this->setCachedProperty('version', $version);
 
         return $this;

@@ -96,7 +96,7 @@ class Content extends Element
     public function setContent($content, $type = 'text')
     {
         $type = (string) $type;
-        $this->getDomElement()->setAttribute('type', $type);
+        $this->setAttribute('atom:type', $type);
         $document = $this->getDomElement()->ownerDocument;
 
         if ('text' === $type || 'html' === $type) {
@@ -124,6 +124,8 @@ class Content extends Element
      *
      * @return string "text", "html", "xhtml" or MIME type.
      *
+     * @throws \InvalidArgumentException
+     *
      * @since 1.0
      *
      * @link  setContent()
@@ -134,7 +136,7 @@ class Content extends Element
         return $this->getCachedProperty(
             'type',
             function () {
-                return $this->getDomElement()->getAttribute('type') ?: 'text';
+                return $this->getAttribute('atom:type') ?: 'text';
             }
         );
     }
@@ -144,6 +146,8 @@ class Content extends Element
      *
      * @return string|null
      *
+     * @throws \InvalidArgumentException
+     *
      * @since 1.0
      * @link  https://tools.ietf.org/html/rfc4287#section-4.1.3.2
      */
@@ -152,7 +156,7 @@ class Content extends Element
         return $this->getCachedProperty(
             'src',
             function () {
-                return $this->getDomElement()->getAttribute('src') ?: null;
+                return $this->getAttribute('atom:src');
             }
         );
     }
@@ -162,12 +166,14 @@ class Content extends Element
      *
      * @param string|null $iri
      *
+     * @throws \InvalidArgumentException
+     *
      * @since 1.0
      * @link  https://tools.ietf.org/html/rfc4287#section-4.1.3.2
      */
     public function setSrc($iri)
     {
-        $this->getDomElement()->setAttribute('src', $iri);
+        $this->setAttribute('atom:src', $iri);
         $this->setCachedProperty('src', $iri);
     }
 

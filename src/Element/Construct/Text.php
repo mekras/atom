@@ -57,11 +57,13 @@ trait Text
      * @param string $text Text.
      * @param string $type Content type: "text", "html", or "xhtml"
      *
+     * @throws \InvalidArgumentException
+     *
      * @since 1.0
      */
     public function setContent($text, $type = 'text')
     {
-        $this->getDomElement()->setAttribute('type', $type);
+        $this->setAttribute('atom:type', $type);
         $this->getDomElement()->nodeValue = $text;
         $this->setCachedProperty('content', $this->parseContent());
     }
@@ -71,7 +73,9 @@ trait Text
      *
      * @return string "text", "html", or "xhtml"
      *
-     * @link setContent()
+     * @throws \InvalidArgumentException
+     *
+     * @link  setContent()
      * @since 1.0
      */
     public function getType()
@@ -79,7 +83,7 @@ trait Text
         return $this->getCachedProperty(
             'type',
             function () {
-                return $this->getDomElement()->getAttribute('type') ?: 'text';
+                return $this->getAttribute('atom:type') ?: 'text';
             }
         );
     }

@@ -92,7 +92,7 @@ abstract class Node
     {
         $nodes = $this->getXPath()->query($xpath, $this->getDomElement());
         if (0 === $nodes->length && $flags & self::REQUIRED) {
-            throw new MalformedNodeException(sprintf('Required node(s) (%s) missing', $xpath));
+            throw new MalformedNodeException(sprintf('Required node (%s) not found', $xpath));
         }
 
         if ($flags & self::SINGLE) {
@@ -112,6 +112,68 @@ abstract class Node
         }
 
         return $nodes;
+    }
+
+    /**
+     * Get attribute value.
+     *
+     * Important! This method uses document independent prefixes registered via @{link
+     * Extension\NamespaceExtension}. This library registers only "atom:" prefix, but this list
+     * can be expanded by extensions.
+     *
+     * @param string $prefixedName Prefixed attribute name.
+     *
+     * @return string|null
+     *
+     * @throws \InvalidArgumentException
+     *
+     * @since 1.0
+     */
+    public function getAttribute($prefixedName)
+    {
+        list($prefix, $name) = explode(':', $prefixedName);
+        $namespace = $this->getNamespace($prefix);
+
+        $element = $this->getDomElement();
+        $prefix = $element->lookupPrefix($namespace);
+        if (null === $prefix) {
+            if (!$element->hasAttribute($name)) {
+                return null;
+            }
+            return $element->getAttribute($name);
+        } else {
+            if (!$element->hasAttributeNS($namespace, $name)) {
+                return null;
+            }
+            return $element->getAttributeNS($namespace, $name);
+        }
+    }
+
+    /**
+     * Set attribute value.
+     *
+     * Important! This method uses document independent prefixes registered via @{link
+     * Extension\NamespaceExtension}. This library registers only "atom:" prefix, but this list
+     * can be expanded by extensions.
+     *
+     * @param string $prefixedName Prefixed attribute name.
+     * @param string $value
+     *
+     * @throws \InvalidArgumentException
+     *
+     * @since 1.0
+     */
+    public function setAttribute($prefixedName, $value)
+    {
+        list($prefix, $name) = explode(':', $prefixedName);
+        $namespace = $this->getNamespace($prefix);
+        $element = $this->getDomElement();
+        $prefix = $element->lookupPrefix($namespace);
+        if (null === $prefix) {
+            $element->setAttribute($name, $value);
+        } else {
+            $element->setAttributeNS($namespace, $prefix . ':' . $name, $value);
+        }
     }
 
     /**
@@ -195,5 +257,24 @@ abstract class Node
         }
 
         return $this->xpath;
+    }
+
+    /**
+     * Return namespace by registered prefix.
+     *
+     * @param string $prefix
+     *
+     * @return string
+     *
+     * @throws \InvalidArgumentException
+     */
+    private function getNamespace($prefix)
+    {
+        $namespaces = $this->getExtensions()->getNamespaces();
+        if (!array_key_exists($prefix, $namespaces)) {
+            throw new \InvalidArgumentException(sprintf('Unknown NS prefix "%s"', $prefix));
+        }
+
+        return $namespaces[$prefix];
     }
 }

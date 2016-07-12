@@ -28,8 +28,8 @@ class Category extends Element
     public function __toString()
     {
         try {
-            return $this->getTerm();
-        } catch (MalformedNodeException $e) {
+            return (string) $this->getTerm();
+        } catch (\Exception $e) {
             return '(empty)';
         }
     }
@@ -39,6 +39,7 @@ class Category extends Element
      *
      * @return string
      *
+     * @throws \InvalidArgumentException
      * @throws \Mekras\Atom\Exception\MalformedNodeException
      *
      * @since 1.0
@@ -49,11 +50,12 @@ class Category extends Element
         return $this->getCachedProperty(
             'term',
             function () {
-                if (!$this->getDomElement()->hasAttribute('term')) {
+                $value = $this->getAttribute('atom:term');
+                if (null === $value) {
                     throw new MalformedNodeException('There is no attribute "term"');
                 }
 
-                return $this->getDomElement()->getAttribute('term');
+                return $value;
             }
         );
     }
@@ -65,12 +67,14 @@ class Category extends Element
      *
      * @return $this
      *
+     * @throws \InvalidArgumentException
+     *
      * @since 1.0
      * @link  https://tools.ietf.org/html/rfc4287#section-4.2.2.1
      */
     public function setTerm($value)
     {
-        $this->getDomElement()->setAttribute('term', $value);
+        $this->setAttribute('atom:term', $value);
         $this->setCachedProperty('term', $value);
 
         return $this;
@@ -81,6 +85,8 @@ class Category extends Element
      *
      * @return string|null
      *
+     * @throws \InvalidArgumentException
+     *
      * @since 1.0
      * @link  https://tools.ietf.org/html/rfc4287#section-4.2.2.3
      */
@@ -89,11 +95,7 @@ class Category extends Element
         return $this->getCachedProperty(
             'label',
             function () {
-                if (!$this->getDomElement()->hasAttribute('label')) {
-                    return null;
-                }
-
-                return $this->getDomElement()->getAttribute('label');
+                return $this->getAttribute('atom:label');
             }
         );
     }
@@ -105,12 +107,14 @@ class Category extends Element
      *
      * @return $this
      *
+     * @throws \InvalidArgumentException
+     *
      * @since 1.0
      * @link  https://tools.ietf.org/html/rfc4287#section-4.2.2.3
      */
     public function setLabel($value)
     {
-        $this->getDomElement()->setAttribute('label', $value);
+        $this->setAttribute('atom:label', $value);
         $this->setCachedProperty('label', $value);
 
         return $this;
@@ -121,6 +125,8 @@ class Category extends Element
      *
      * @return string IRI
      *
+     * @throws \InvalidArgumentException
+     *
      * @since 1.0
      * @link  https://tools.ietf.org/html/rfc4287#section-4.2.2.2
      */
@@ -129,11 +135,7 @@ class Category extends Element
         return $this->getCachedProperty(
             'scheme',
             function () {
-                if (!$this->getDomElement()->hasAttribute('scheme')) {
-                    return null;
-                }
-
-                return $this->getDomElement()->getAttribute('scheme');
+                return $this->getAttribute('atom:scheme');
             }
         );
     }
@@ -145,12 +147,14 @@ class Category extends Element
      *
      * @return $this
      *
+     * @throws \InvalidArgumentException
+     *
      * @since 1.0
      * @link  https://tools.ietf.org/html/rfc4287#section-4.2.2.2
      */
     public function setScheme($value)
     {
-        $this->getDomElement()->setAttribute('scheme', $value);
+        $this->setAttribute('atom:scheme', $value);
         $this->setCachedProperty('scheme', $value);
 
         return $this;
