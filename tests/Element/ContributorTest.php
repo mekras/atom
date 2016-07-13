@@ -20,7 +20,7 @@ class ContributorTest extends TestCase
      */
     public function testBasics()
     {
-        $doc = $this->createDocument(
+        $doc = $this->createDomDocument(
             '<name>Foo</name><email> foo@example.com</email><uri>http://example.com/ </uri>'
         );
 
@@ -36,7 +36,7 @@ class ContributorTest extends TestCase
      */
     public function testRenderError()
     {
-        $doc = $this->createDocument();
+        $doc = $this->createDomDocument();
         $contributor = new Contributor($this->createFakeNode(), $doc->documentElement);
         static::assertEquals('', (string) $contributor);
     }

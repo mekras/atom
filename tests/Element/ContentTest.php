@@ -21,7 +21,7 @@ class ContentTest extends TestCase
      */
     public function testGetText()
     {
-        $doc = $this->createDocument('<content>Less: &lt;</content>');
+        $doc = $this->createDomDocument('<content>Less: &lt;</content>');
         $content = new Content($this->createFakeNode(), $doc->documentElement->firstChild);
         static::assertEquals('text', $content->getType());
         static::assertEquals('Less: <', (string) $content);
@@ -32,7 +32,7 @@ class ContentTest extends TestCase
      */
     public function testSetText()
     {
-        $document = $this->createDocument();
+        $document = $this->createDomDocument();
         $element = $document->createElementNS(Atom::NS, 'content');
         $document->documentElement->appendChild($element);
         $content = new Content($this->createFakeNode(), $element);
@@ -48,7 +48,7 @@ class ContentTest extends TestCase
      */
     public function testGetHtml()
     {
-        $doc = $this->createDocument('<content type="html">&lt;em> &amp;lt; &lt;/em></content>');
+        $doc = $this->createDomDocument('<content type="html">&lt;em> &amp;lt; &lt;/em></content>');
         $content = new Content($this->createFakeNode(), $doc->documentElement->firstChild);
         static::assertEquals('html', $content->getType());
         static::assertEquals('<em> &lt; </em>', (string) $content);
@@ -59,7 +59,7 @@ class ContentTest extends TestCase
      */
     public function testSetHtml()
     {
-        $document = $this->createDocument();
+        $document = $this->createDomDocument();
         $element = $document->createElementNS(Atom::NS, 'content');
         $document->documentElement->appendChild($element);
         $content = new Content($this->createFakeNode(), $element);
@@ -75,7 +75,7 @@ class ContentTest extends TestCase
      */
     public function testGetXhtml()
     {
-        $doc = $this->createDocument(
+        $doc = $this->createDomDocument(
             '<content type="xhtml"><xhtml:div><xhtml:em> &lt; </xhtml:em></xhtml:div></content>'
         );
 
@@ -89,10 +89,10 @@ class ContentTest extends TestCase
      */
     public function testSetXhtml()
     {
-        $document = $this->createDocument('<content/>');
+        $document = $this->createDomDocument('<content/>');
         $content = new Content($this->createFakeNode(), $document->documentElement->firstChild);
 
-        $xhtml = $this->createElement('foo');
+        $xhtml = $this->createDomElement('foo');
         $element = $xhtml->ownerDocument->createElement('bar', 'BAR');
         $element->setAttribute('a', 'b');
         $xhtml->appendChild($element);
@@ -112,7 +112,7 @@ class ContentTest extends TestCase
      */
     public function testGetSvg()
     {
-        $doc = $this->createDocument(
+        $doc = $this->createDomDocument(
             '<content type="image/svg+xml">' .
             '<svg xmlns="http://www.w3.org/2000/svg"><circle r="20"/></svg>' .
             '</content>'
@@ -131,7 +131,7 @@ class ContentTest extends TestCase
      */
     public function testSetSvg()
     {
-        $document = $this->createDocument();
+        $document = $this->createDomDocument();
         $element = $document->createElementNS(Atom::NS, 'content');
         $document->documentElement->appendChild($element);
         $content = new Content($this->createFakeNode(), $element);
@@ -153,7 +153,7 @@ class ContentTest extends TestCase
      */
     public function testGetTextFoo()
     {
-        $doc = $this->createDocument('<content type="text/foo">Foo</content>');
+        $doc = $this->createDomDocument('<content type="text/foo">Foo</content>');
 
         $content = new Content($this->createFakeNode(), $doc->documentElement->firstChild);
         static::assertEquals('text/foo', $content->getType());
@@ -165,7 +165,7 @@ class ContentTest extends TestCase
      */
     public function testSetTextFoo()
     {
-        $document = $this->createDocument();
+        $document = $this->createDomDocument();
         $element = $document->createElementNS(Atom::NS, 'content');
         $document->documentElement->appendChild($element);
         $content = new Content($this->createFakeNode(), $element);
@@ -181,7 +181,7 @@ class ContentTest extends TestCase
      */
     public function testGetBinary()
     {
-        $doc = $this->createDocument('<content type="foo/bar">Rm9v</content>');
+        $doc = $this->createDomDocument('<content type="foo/bar">Rm9v</content>');
         $content = new Content($this->createFakeNode(), $doc->documentElement->firstChild);
         static::assertEquals('foo/bar', $content->getType());
         static::assertEquals('Foo', (string) $content);
@@ -192,7 +192,7 @@ class ContentTest extends TestCase
      */
     public function testSetBinary()
     {
-        $document = $this->createDocument();
+        $document = $this->createDomDocument();
         $element = $document->createElementNS(Atom::NS, 'content');
         $document->documentElement->appendChild($element);
         $content = new Content($this->createFakeNode(), $element);
@@ -208,7 +208,7 @@ class ContentTest extends TestCase
      */
     public function testSrc()
     {
-        $doc = $this->createDocument('<content src="http://example.com/"/>');
+        $doc = $this->createDomDocument('<content src="http://example.com/"/>');
         $content = new Content($this->createFakeNode(), $doc->documentElement->firstChild);
         static::assertEquals('http://example.com/', $content->getSrc());
         $content->setSrc('http://example.org/');

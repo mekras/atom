@@ -21,6 +21,7 @@ use Mekras\Atom\Element\Generator;
 use Mekras\Atom\Element\Icon;
 use Mekras\Atom\Element\Id;
 use Mekras\Atom\Element\Link;
+use Mekras\Atom\Element\Logo;
 use Mekras\Atom\Element\Title;
 use Mekras\Atom\Extension\DocumentExtension;
 use Mekras\Atom\Extension\ElementExtension;
@@ -138,6 +139,9 @@ class AtomExtension implements DocumentExtension, ElementExtension, NamespaceExt
             case 'link':
                 return new Link($parent, $element);
                 break;
+            case 'logo':
+                return new Logo($parent, $element);
+                break;
             case 'title':
                 return new Title($parent, $element);
                 break;
@@ -190,6 +194,9 @@ class AtomExtension implements DocumentExtension, ElementExtension, NamespaceExt
                 break;
             case 'atom:link':
                 return new Link($parent);
+                break;
+            case 'atom:logo':
+                return new Logo($parent);
                 break;
             case 'atom:title':
                 return new Title($parent);

@@ -34,6 +34,7 @@ class FeedTest extends TestCase
         static::assertEquals('text', $value->getType());
         static::assertEquals('Feed Title', $value);
         static::assertEquals('http://example.com/feed.png', (string) $feed->getIcon());
+        static::assertEquals('http://example.com/feed-logo.png', (string) $feed->getLogo());
 
         $value = $feed->getGenerator();
         static::assertInstanceOf(Generator::class, $value);

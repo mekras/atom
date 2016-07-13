@@ -20,7 +20,7 @@ class AuthorTest extends TestCase
      */
     public function testBasics()
     {
-        $doc = $this->createDocument(
+        $doc = $this->createDomDocument(
             '<name>Foo</name><email> foo@example.com</email><uri>http://example.com/ </uri>'
         );
 
@@ -36,7 +36,7 @@ class AuthorTest extends TestCase
      */
     public function testRenderError()
     {
-        $doc = $this->createDocument();
+        $doc = $this->createDomDocument();
         $person = new Author($this->createFakeNode(), $doc->documentElement);
         static::assertEquals('', (string) $person);
     }

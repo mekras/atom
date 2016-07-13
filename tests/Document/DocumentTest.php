@@ -22,7 +22,7 @@ class DocumentTest extends TestCase
      */
     public function testInvalidRootTag()
     {
-        $doc = $this->createDocument('', 'foo');
+        $doc = $this->createDomDocument('', 'foo');
 
         $document = $this->getMockBuilder(Document::class)->setMethods(['getRootNodeName'])
             ->disableOriginalConstructor()->getMock();

@@ -9,6 +9,7 @@ namespace Mekras\Atom\Tests;
 
 use Mekras\Atom\Atom;
 use Mekras\Atom\AtomExtension;
+use Mekras\Atom\DocumentFactory;
 use Mekras\Atom\Extensions;
 use Mekras\Atom\Node;
 
@@ -17,6 +18,21 @@ use Mekras\Atom\Node;
  */
 abstract class TestCase extends \PHPUnit_Framework_TestCase
 {
+    /**
+     * Create new Atom element.
+     *
+     * @param string $name Element name.
+     *
+     * @return \Mekras\Atom\Element\Element|null
+     */
+    protected function createElement($name)
+    {
+        $factory = new DocumentFactory();
+        $document = $factory->createDocument('atom:entry');
+
+        return $document->getExtensions()->createElement($document, $name);
+    }
+
     /**
      * Return new fake Node instance.
      *
@@ -27,7 +43,7 @@ abstract class TestCase extends \PHPUnit_Framework_TestCase
     protected function createFakeNode(\DOMDocument $document = null)
     {
         if (null === $document) {
-            $document = $this->createDocument();
+            $document = $this->createDomDocument();
         }
 
         $node = $this->getMockBuilder(Node::class)->disableOriginalConstructor()
@@ -80,7 +96,7 @@ abstract class TestCase extends \PHPUnit_Framework_TestCase
      *
      * @return \DOMDocument
      */
-    protected function createDocument($contents = '', $rootNodeName = 'doc')
+    protected function createDomDocument($contents = '', $rootNodeName = 'doc')
     {
         $document = new \DOMDocument();
 
@@ -107,9 +123,9 @@ abstract class TestCase extends \PHPUnit_Framework_TestCase
      *
      * @return \DOMElement
      */
-    protected function createElement($name, $ns = null, $content = null)
+    protected function createDomElement($name, $ns = null, $content = null)
     {
-        $document = $this->createDocument();
+        $document = $this->createDomDocument();
         if ($ns) {
             return $document->createElementNS($ns, $name, $content);
         }

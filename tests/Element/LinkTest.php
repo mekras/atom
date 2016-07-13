@@ -21,7 +21,7 @@ class LinkTest extends TestCase
      */
     public function testBasics()
     {
-        $element = $this->createElement('link', Atom::NS);
+        $element = $this->createDomElement('link', Atom::NS);
         $element->setAttribute('href', 'http://example.com/');
         $element->setAttribute('type', 'text/html');
         $element->setAttribute('hreflang', 'ru');
@@ -42,7 +42,7 @@ class LinkTest extends TestCase
      */
     public function testRenderError()
     {
-        $element = $this->createElement('link', Atom::NS);
+        $element = $this->createDomElement('link', Atom::NS);
         $link = new Link($this->createFakeNode(), $element);
         static::assertEquals('(empty link)', (string) $link);
     }

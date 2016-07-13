@@ -107,7 +107,7 @@ class DocumentFactoryTest extends TestCase
     public function testParseInvalidDocument()
     {
         $factory = new DocumentFactory();
-        $document = $this->createDocument();
+        $document = $this->createDomDocument();
         $factory->parseDocument($document);
     }
 }

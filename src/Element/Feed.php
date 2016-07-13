@@ -22,6 +22,7 @@ class Feed extends Element
     use Meta\HasIcon;
     use Meta\HasId;
     use Meta\HasLinks;
+    use Meta\HasLogo;
     use Meta\HasTitle;
     use Meta\HasUpdated;
 

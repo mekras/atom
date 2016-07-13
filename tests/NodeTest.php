@@ -20,7 +20,7 @@ class NodeTest extends TestCase
      */
     public function testBasics()
     {
-        $document = $this->createDocument();
+        $document = $this->createDomDocument();
         $parent = $this->createFakeNode();
         /** @var Node $node */
         $node = $this->getMockForAbstractClass(Node::class, [$document->documentElement, $parent]);
@@ -47,7 +47,7 @@ class NodeTest extends TestCase
      */
     public function testQueryMultiple()
     {
-        $document = $this->createDocument('<a/><b/><a/>');
+        $document = $this->createDomDocument('<a/><b/><a/>');
         $node = $this->createInstance($document);
         $nodes = $node->query('atom:a');
         static::assertEquals(2, $nodes->length);
@@ -58,7 +58,7 @@ class NodeTest extends TestCase
      */
     public function testQueryMultipleNone()
     {
-        $document = $this->createDocument('<a/><b/><a/>');
+        $document = $this->createDomDocument('<a/><b/><a/>');
         $node = $this->createInstance($document);
         $nodes = $node->query('atom:c');
         static::assertEquals(0, $nodes->length);
@@ -69,7 +69,7 @@ class NodeTest extends TestCase
      */
     public function testQueryMultipleRequired()
     {
-        $document = $this->createDocument('<a/><b/><a/>');
+        $document = $this->createDomDocument('<a/><b/><a/>');
         $node = $this->createInstance($document);
         $node->query('atom:c', Node::REQUIRED);
     }
@@ -79,7 +79,7 @@ class NodeTest extends TestCase
      */
     public function testQuerySingle()
     {
-        $document = $this->createDocument('<a/><b/><a/>');
+        $document = $this->createDomDocument('<a/><b/><a/>');
         $node = $this->createInstance($document);
         $element = $node->query('atom:b', Node::SINGLE);
         static::assertInstanceOf(\DOMElement::class, $element);
@@ -90,7 +90,7 @@ class NodeTest extends TestCase
      */
     public function testQuerySingleNone()
     {
-        $document = $this->createDocument('<a/><b/><a/>');
+        $document = $this->createDomDocument('<a/><b/><a/>');
         $node = $this->createInstance($document);
         $element = $node->query('atom:c', Node::SINGLE);
         static::assertNull($element);
@@ -101,7 +101,7 @@ class NodeTest extends TestCase
      */
     public function testQuerySingleMultiple()
     {
-        $document = $this->createDocument('<a/><b/><a/>');
+        $document = $this->createDomDocument('<a/><b/><a/>');
         $node = $this->createInstance($document);
         $element = $node->query('atom:a', Node::SINGLE);
         static::assertNull($element);
@@ -112,7 +112,7 @@ class NodeTest extends TestCase
      */
     public function testQuerySingleRequired()
     {
-        $document = $this->createDocument('<a/><b/><a/>');
+        $document = $this->createDomDocument('<a/><b/><a/>');
         $node = $this->createInstance($document);
         $node->query('atom:c', Node::SINGLE | Node::REQUIRED);
     }
@@ -122,7 +122,7 @@ class NodeTest extends TestCase
      */
     public function testGetAttribute()
     {
-        $document = $this->createDocument('<foo bar="baz"/>');
+        $document = $this->createDomDocument('<foo bar="baz"/>');
         $parent = $this->createFakeNode($document);
         $node = $this->getMockForAbstractClass(
             Node::class,
@@ -142,7 +142,7 @@ class NodeTest extends TestCase
      */
     public function testGetAttributeCustomPrefix()
     {
-        $document = $this->createDocument('<a:foo a:a1="bar" a2="baz"/>', 'a:doc');
+        $document = $this->createDomDocument('<a:foo a:a1="bar" a2="baz"/>', 'a:doc');
         $parent = $this->createFakeNode($document);
         $node = $this->getMockForAbstractClass(
             Node::class,
@@ -162,7 +162,7 @@ class NodeTest extends TestCase
      */
     public function testSetAttribute()
     {
-        $document = $this->createDocument();
+        $document = $this->createDomDocument();
         $node = $this->createInstance($document);
         $node->setAttribute('bar', 'baz');
         static::assertEquals(
@@ -177,7 +177,7 @@ class NodeTest extends TestCase
      */
     public function testSetAttributeCustomPrefix()
     {
-        $document = $this->createDocument('', 'a:doc');
+        $document = $this->createDomDocument('', 'a:doc');
         $node = $this->createInstance($document);
         $node->setAttribute('atom:bar', 'baz');
         static::assertEquals(

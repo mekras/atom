@@ -40,6 +40,7 @@ class FeedDocumentTest extends TestCase
         $feed->addAuthor('Feed Author')->setEmail('foo@example.com')->setUri('http://example.com/');
         $feed->addCategory('tag1')->setScheme('http://example.com/scheme')->setLabel('TAG 1');
         $feed->addIcon('http://example.com/feed.png');
+        $feed->addLogo('http://example.com/feed-logo.png');
         $feed->addGenerator('Generator')->setUri('http://example.com/generator')->setVersion('1.0');
 
         $entry = $feed->addEntry();

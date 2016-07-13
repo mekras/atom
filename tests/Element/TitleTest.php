@@ -20,7 +20,7 @@ class TitleTest extends TestCase
      */
     public function testText()
     {
-        $doc = $this->createDocument('Less: &lt;');
+        $doc = $this->createDomDocument('Less: &lt;');
         $title = new Title($this->createFakeNode(), $doc->documentElement);
         static::assertEquals('text', $title->getType());
         static::assertEquals('Less: <', (string) $title);
@@ -31,7 +31,7 @@ class TitleTest extends TestCase
      */
     public function testHtml()
     {
-        $doc = $this->createDocument('<title type="html">&lt;em> &amp;lt; &lt;/em></title>');
+        $doc = $this->createDomDocument('<title type="html">&lt;em> &amp;lt; &lt;/em></title>');
 
         $title = new Title($this->createFakeNode(), $doc->documentElement->firstChild);
         static::assertEquals('html', $title->getType());
@@ -43,7 +43,7 @@ class TitleTest extends TestCase
      */
     public function testXhtml()
     {
-        $doc = $this->createDocument(
+        $doc = $this->createDomDocument(
             '<title type="xhtml" xmlns:xhtml="http://www.w3.org/1999/xhtml">' .
             '<xhtml:div><xhtml:em> &lt; </xhtml:em></xhtml:div>' .
             '</title>'
@@ -59,7 +59,7 @@ class TitleTest extends TestCase
      */
     public function testRenderError()
     {
-        $doc = $this->createDocument(
+        $doc = $this->createDomDocument(
             '<title type="xhtml" xmlns:xhtml="http://www.w3.org/1999/xhtml"></title>'
         );
 
@@ -72,7 +72,7 @@ class TitleTest extends TestCase
      */
     public function testSetGet()
     {
-        $doc = $this->createDocument('foo');
+        $doc = $this->createDomDocument('foo');
         $title = new Title($this->createFakeNode(), $doc->documentElement);
         static::assertEquals('foo', (string) $title);
         $title->setContent('bar');
