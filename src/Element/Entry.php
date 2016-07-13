@@ -21,6 +21,9 @@ class Entry extends Element
     use Meta\HasContributors;
     use Meta\HasId;
     use Meta\HasLinks;
+    use Meta\HasPublished;
+    use Meta\HasRights;
+    use Meta\HasSummary;
     use Meta\HasTitle;
     use Meta\HasUpdated;
 
@@ -48,16 +51,6 @@ class Entry extends Element
             }
         );
     }
-
-    /*
-      & atomContributor*
-      & atomLink*
-      & atomPublished?
-      & atomRights?
-      & atomSource?
-      & atomSummary?
-      & extensionElement
-     */
 
     /**
      * Return node name.

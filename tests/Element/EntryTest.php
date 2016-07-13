@@ -9,7 +9,6 @@ namespace Mekras\Atom\Tests\Element;
 
 use Mekras\Atom\Element\Content;
 use Mekras\Atom\Element\Entry;
-use Mekras\Atom\Element\Title;
 use Mekras\Atom\Tests\TestCase;
 
 /**
@@ -40,11 +39,23 @@ class EntryTest extends TestCase
         static::assertEquals('http://example.com/0001.html', (string) $alternates[0]);
         static::assertNull($entry->getLink('foo'));
 
+        static::assertEquals(
+            '2016-01-23 11:22:33',
+            $entry->getPublished()->getDate()->format('Y-m-d H:i:s')
+        );
+        $value = $entry->getRights();
+        static::assertEquals('text', $value->getType());
+        static::assertEquals('Copyright', (string) $value);
+        $value = $entry->getSummary();
+        static::assertEquals('text', $value->getType());
+        static::assertEquals('Summary', (string) $value);
         $value = $entry->getTitle();
-        static::assertInstanceOf(Title::class, $value);
         static::assertEquals('text', $value->getType());
         static::assertEquals('Entry 1 Title', (string) $value);
-        static::assertEquals('2016-01-23 11:22:33', $entry->getUpdated()->format('Y-m-d H:i:s'));
+        static::assertEquals(
+            '2016-01-23 11:22:33',
+            $entry->getUpdated()->getDate()->format('Y-m-d H:i:s')
+        );
 
         $categories = $entry->getCategories();
         static::assertCount(2, $categories);

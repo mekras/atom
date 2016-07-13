@@ -22,7 +22,12 @@ use Mekras\Atom\Element\Icon;
 use Mekras\Atom\Element\Id;
 use Mekras\Atom\Element\Link;
 use Mekras\Atom\Element\Logo;
+use Mekras\Atom\Element\Published;
+use Mekras\Atom\Element\Rights;
+use Mekras\Atom\Element\Subtitle;
+use Mekras\Atom\Element\Summary;
 use Mekras\Atom\Element\Title;
+use Mekras\Atom\Element\Updated;
 use Mekras\Atom\Extension\DocumentExtension;
 use Mekras\Atom\Extension\ElementExtension;
 use Mekras\Atom\Extension\NamespaceExtension;
@@ -34,6 +39,41 @@ use Mekras\Atom\Extension\NamespaceExtension;
  */
 class AtomExtension implements DocumentExtension, ElementExtension, NamespaceExtension
 {
+    /**
+     * Element name to class map.
+     *
+     * @var string[]
+     */
+    private $elementMap;
+
+    /**
+     * AtomExtension constructor.
+     *
+     * @since 1.0
+     */
+    public function __construct()
+    {
+        $this->elementMap = [
+            'atom:author' => Author::class,
+            'atom:category' => Category::class,
+            'atom:content' => Content::class,
+            'atom:contributor' => Contributor::class,
+            'atom:entry' => Entry::class,
+            'atom:feed' => Feed::class,
+            'atom:generator' => Generator::class,
+            'atom:icon' => Icon::class,
+            'atom:id' => Id::class,
+            'atom:link' => Link::class,
+            'atom:logo' => Logo::class,
+            'atom:published' => Published::class,
+            'atom:rights' => Rights::class,
+            'atom:subtitle' => Subtitle::class,
+            'atom:summary' => Summary::class,
+            'atom:title' => Title::class,
+            'atom:updated' => Updated::class
+        ];
+    }
+
     /**
      * Create Atom document from XML DOM document.
      *
@@ -108,43 +148,11 @@ class AtomExtension implements DocumentExtension, ElementExtension, NamespaceExt
             return null;
         }
 
-        switch ($element->localName) {
-            case 'author':
-                return new Author($parent, $element);
-                break;
-            case 'category':
-                return new Category($parent, $element);
-                break;
-            case 'content':
-                return new Content($parent, $element);
-                break;
-            case 'contributor':
-                return new Contributor($parent, $element);
-                break;
-            case 'entry':
-                return new Entry($parent, $element);
-                break;
-            case 'feed':
-                return new Feed($parent, $element);
-                break;
-            case 'generator':
-                return new Generator($parent, $element);
-                break;
-            case 'icon':
-                return new Icon($parent, $element);
-                break;
-            case 'id':
-                return new Id($parent, $element);
-                break;
-            case 'link':
-                return new Link($parent, $element);
-                break;
-            case 'logo':
-                return new Logo($parent, $element);
-                break;
-            case 'title':
-                return new Title($parent, $element);
-                break;
+        $name = 'atom:' . $element->localName;
+        if (array_key_exists($name, $this->elementMap)) {
+            $class = $this->elementMap[$name];
+
+            return new $class($parent, $element);
         }
 
         return null;
@@ -164,43 +172,10 @@ class AtomExtension implements DocumentExtension, ElementExtension, NamespaceExt
      */
     public function createElement(Node $parent, $name)
     {
-        switch ($name) {
-            case 'atom:author':
-                return new Author($parent);
-                break;
-            case 'atom:category':
-                return new Category($parent);
-                break;
-            case 'atom:content':
-                return new Content($parent);
-                break;
-            case 'atom:contributor':
-                return new Contributor($parent);
-                break;
-            case 'atom:entry':
-                return new Entry($parent);
-                break;
-            case 'atom:feed':
-                return new Feed($parent);
-                break;
-            case 'atom:generator':
-                return new Generator($parent);
-                break;
-            case 'atom:icon':
-                return new Icon($parent);
-                break;
-            case 'atom:id':
-                return new Id($parent);
-                break;
-            case 'atom:link':
-                return new Link($parent);
-                break;
-            case 'atom:logo':
-                return new Logo($parent);
-                break;
-            case 'atom:title':
-                return new Title($parent);
-                break;
+        if (array_key_exists($name, $this->elementMap)) {
+            $class = $this->elementMap[$name];
+
+            return new $class($parent);
         }
 
         return null;

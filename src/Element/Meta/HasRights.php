@@ -8,60 +8,59 @@
 namespace Mekras\Atom\Element\Meta;
 
 use Mekras\Atom\Element\Element;
-use Mekras\Atom\Element\Title;
+use Mekras\Atom\Element\Rights;
 use Mekras\Atom\Node;
 use Mekras\Atom\NodeInterfaceTrait;
 
 /**
- * Element has a title.
+ * Element has a rights info.
  *
  * @since 1.0
  *
- * @link  https://tools.ietf.org/html/rfc4287#section-4.2.14
+ * @link  https://tools.ietf.org/html/rfc4287#section-4.2.10
  */
-trait HasTitle
+trait HasRights
 {
     use NodeInterfaceTrait;
 
     /**
-     * Return title.
+     * Return rights.
      *
-     * @return Title
+     * @return Rights|null
      *
      * @throws \InvalidArgumentException
-     * @throws \Mekras\Atom\Exception\MalformedNodeException
      *
      * @since 1.0
      */
-    public function getTitle()
+    public function getRights()
     {
         return $this->getCachedProperty(
-            'title',
+            'rights',
             function () {
-                $element = $this->query('atom:title', Node::SINGLE | Node::REQUIRED);
+                $element = $this->query('atom:rights', Node::SINGLE);
 
                 /** @var Element $this */
-                return $this->getExtensions()->parseElement($this, $element);
+                return $element ? $this->getExtensions()->parseElement($this, $element) : null;
             }
         );
     }
 
     /**
-     * Add title.
+     * Add rights.
      *
      * @param string $value
      * @param string $type
      *
-     * @return Title
+     * @return Rights
      *
      * @throws \InvalidArgumentException
      *
      * @since 1.0
      */
-    public function addTitle($value, $type = 'text')
+    public function addRights($value, $type = 'text')
     {
-        /** @var Title $element */
-        $element = $this->addChild('atom:title', 'title');
+        /** @var Rights $element */
+        $element = $this->addChild('atom:rights', 'rights');
         $element->setContent($value, $type);
 
         return $element;

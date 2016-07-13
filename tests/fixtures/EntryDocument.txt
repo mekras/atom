@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <entry xmlns="http://www.w3.org/2005/Atom" xmlns:xhtml="http://www.w3.org/1999/xhtml">
-  <id>urn:foo:entry:0001</id>
-  <title type="text">Entry Title</title>
   <author>
     <name>Author 1</name>
     <email>foo@example.com</email>
-  </author>
-  <author>
-    <name>Author 2</name>
     <uri>http://example.com/</uri>
   </author>
+  <category term="tag1" scheme="http://example.com/scheme"/>
+  <category term="tag2" label="TAG 2"/>
   <contributor>
     <name>Author 3</name>
   </contributor>
+  <id>urn:foo:entry:0001</id>
   <link href="http://example.com/0001.html" rel="alternate" type="text/html" hreflang="ru" title="Foo" length="1024"/>
+  <published>2003-12-13T18:30:03+01:00</published>
+  <summary type="text">Summary</summary>
+  <title type="text">Entry Title</title>
+  <updated>2003-12-13T18:30:03+01:00</updated>
   <content type="html">&lt;h1&gt;Entry content&lt;/h1&gt;</content>
-  <category term="tag1" scheme="http://example.com/scheme"/>
-  <category term="tag2" label="TAG 2"/>
 </entry>

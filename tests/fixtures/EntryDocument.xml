@@ -16,6 +16,8 @@
     <link rel="self" type="text/xml" href="http://example.com/atom/atom/?id=0001"/>
     <title>Entry 1 Title</title>
     <published>2016-01-23T11:22:33Z</published>
+    <rights type="text">Copyright</rights>
+    <summary type="text">Summary</summary>
     <updated>2016-01-23T11:22:33Z</updated>
     <category term="tag1" scheme="http://example.com/scheme"/>
     <category term="tag2" label="TAG 2"/>

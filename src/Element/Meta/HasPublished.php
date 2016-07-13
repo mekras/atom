@@ -8,37 +8,37 @@
 namespace Mekras\Atom\Element\Meta;
 
 use Mekras\Atom\Element\Element;
-use Mekras\Atom\Element\Updated;
+use Mekras\Atom\Element\Published;
 use Mekras\Atom\Node;
 use Mekras\Atom\NodeInterfaceTrait;
 
 /**
- * Element has "atom:updated" child element.
+ * Element has "atom:published" child element.
  *
  * @since 1.0
  *
- * @link  https://tools.ietf.org/html/rfc4287#section-4.2.15
+ * @link  https://tools.ietf.org/html/rfc4287#section-4.2.9
  */
-trait HasUpdated
+trait HasPublished
 {
     use NodeInterfaceTrait;
 
     /**
-     * Return date updated.
+     * Return date published.
      *
-     * @return Updated
+     * @return Published
      *
      * @throws \InvalidArgumentException
      * @throws \Mekras\Atom\Exception\MalformedNodeException
      *
      * @since 1.0
      */
-    public function getUpdated()
+    public function getPublished()
     {
         return $this->getCachedProperty(
-            'updated',
+            'published',
             function () {
-                $element = $this->query('atom:updated', Node::SINGLE | Node::REQUIRED);
+                $element = $this->query('atom:published', Node::SINGLE | Node::REQUIRED);
 
                 /** @var Element $this */
                 return $this->getExtensions()->parseElement($this, $element);
@@ -47,18 +47,18 @@ trait HasUpdated
     }
 
     /**
-     * Add date updated.
+     * Add date published.
      *
      * @param \DateTimeInterface $time
      *
-     * @return Updated
+     * @return Published
      *
      * @since 1.0
      */
-    public function addUpdated(\DateTimeInterface $time)
+    public function addPublished(\DateTimeInterface $time)
     {
-        /** @var Updated $element */
-        $element = $this->addChild('atom:updated', 'updated');
+        /** @var Published $element */
+        $element = $this->addChild('atom:published', 'published');
         $element->setDate($time);
 
         return $element;

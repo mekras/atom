@@ -8,7 +8,7 @@
 namespace Mekras\Atom\Element\Meta;
 
 use Mekras\Atom\Element\Element;
-use Mekras\Atom\Element\Title;
+use Mekras\Atom\Element\Subtitle;
 use Mekras\Atom\Node;
 use Mekras\Atom\NodeInterfaceTrait;
 
@@ -17,51 +17,50 @@ use Mekras\Atom\NodeInterfaceTrait;
  *
  * @since 1.0
  *
- * @link  https://tools.ietf.org/html/rfc4287#section-4.2.14
+ * @link  https://tools.ietf.org/html/rfc4287#section-4.2.12
  */
-trait HasTitle
+trait HasSubtitle
 {
     use NodeInterfaceTrait;
 
     /**
      * Return title.
      *
-     * @return Title
+     * @return Subtitle|null
      *
      * @throws \InvalidArgumentException
-     * @throws \Mekras\Atom\Exception\MalformedNodeException
      *
      * @since 1.0
      */
-    public function getTitle()
+    public function getSubtitle()
     {
         return $this->getCachedProperty(
-            'title',
+            'subtitle',
             function () {
-                $element = $this->query('atom:title', Node::SINGLE | Node::REQUIRED);
+                $element = $this->query('atom:subtitle', Node::SINGLE);
 
                 /** @var Element $this */
-                return $this->getExtensions()->parseElement($this, $element);
+                return $element ? $this->getExtensions()->parseElement($this, $element) : null;
             }
         );
     }
 
     /**
-     * Add title.
+     * Add subtitle.
      *
      * @param string $value
      * @param string $type
      *
-     * @return Title
+     * @return Subtitle
      *
      * @throws \InvalidArgumentException
      *
      * @since 1.0
      */
-    public function addTitle($value, $type = 'text')
+    public function addSubtitle($value, $type = 'text')
     {
-        /** @var Title $element */
-        $element = $this->addChild('atom:title', 'title');
+        /** @var Subtitle $element */
+        $element = $this->addChild('atom:subtitle', 'subtitle');
         $element->setContent($value, $type);
 
         return $element;

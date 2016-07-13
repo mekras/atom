@@ -117,6 +117,10 @@ class Link extends Element
         $this->setAttribute('rel', $type);
         $this->setCachedProperty('rel', $type);
 
+        if ('self' === $type) {
+            $this->setType('application/atom+xml');
+        }
+
         return $this;
     }
 

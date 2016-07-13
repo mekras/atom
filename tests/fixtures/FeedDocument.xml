@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
-    <id>urn:foo:atom1:feed:id</id>
-    <title>Feed Title</title>
-    <subtitle>Feed SubTitle</subtitle>
     <author>
         <name>Author 1</name>
         <email>foo@example.com</email>
@@ -11,26 +8,31 @@
         <name>Author 2</name>
         <uri>http://example.com</uri>
     </author>
-    <link rel="alternate" type="text/html" href="http://example.com/"/>
-    <link rel="self" type="text/xml" href="http://example.com/atom/feed"/>
-    <icon>http://example.com/feed.png</icon>
+    <category term="tag1" scheme="http://example.com/scheme1" label="TAG 1"/>
+    <category term="tag2" scheme="http://example.com/scheme2" label="TAG 2"/>
+    <contributor>
+        <name>Contributor</name>
+        <email>bar@example.com</email>
+        <uri>http://example.com/bar</uri>
+    </contributor>
+    <generator uri="http://example.com/generator" version="1.0">Generator</generator>
+    <icon>http://example.com/feed-icon.png</icon>
+    <id>urn:feed:1</id>
+    <link rel="alternate" type="text/html" href="http://example.com/feed/"/>
+    <link rel="self" type="application/atom+xml" href="http://example.com/atom/feed"/>
     <logo>http://example.com/feed-logo.png</logo>
-    <generator href="http://example.com/generator" version="1.0">Generator</generator>
+    <rights/>
+    <subtitle>Feed Subtitle</subtitle>
+    <title>Feed Title</title>
     <updated>2016-01-23T11:22:33Z</updated>
-    <category term="tag1"/>
-    <category term="tag2"/>
     <entry>
         <author>
-            <name>Author 1</name>
+            <name>Author 3</name>
             <email>foo@example.com</email>
         </author>
-        <author>
-            <name>Author 2</name>
-            <uri>http://example.com</uri>
-        </author>
-        <id>urn:foo:atom1:entry:0003</id>
-        <link rel="alternate" type="text/html" href="http://example.com/0003.html"/>
-        <link rel="self" type="text/xml" href="http://example.com/atom/atom/?id=0003"/>
+        <id>urn:entry:3</id>
+        <link rel="alternate" type="text/html" href="http://example.com/3.html"/>
+        <link rel="self" type="text/xml" href="http://example.com/atom/atom/3"/>
         <title>Entry 3 Title</title>
         <published>2016-06-29T11:33:34Z</published>
         <updated>2016-06-29T11:33:34Z</updated>

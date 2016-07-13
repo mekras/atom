@@ -35,18 +35,38 @@ class FeedDocumentTest extends TestCase
     {
         $document = new FeedDocument($this->createExtensions());
         $feed = $document->getFeed();
-        $feed->addId('urn:foo:feed:0001');
-        $feed->addTitle('Feed Title');
-        $feed->addAuthor('Feed Author')->setEmail('foo@example.com')->setUri('http://example.com/');
-        $feed->addCategory('tag1')->setScheme('http://example.com/scheme')->setLabel('TAG 1');
-        $feed->addIcon('http://example.com/feed.png');
+        $feed->addAuthor('Feed Author')
+            ->setEmail('foo@example.com')
+            ->setUri('http://example.com/foo');
+        $feed->addCategory('tag1')
+            ->setScheme('http://example.com/scheme')
+            ->setLabel('TAG 1');
+        $feed->addContributor('Contributor')
+            ->setEmail('bar@example.com')
+            ->setUri('http://example.com/bar');
+        $feed->addGenerator('Generator')
+            ->setUri('http://example.com/generator')
+            ->setVersion('1.0');
+        $feed->addIcon('http://example.com/feed-icon.png');
+        $feed->addId('urn:feed:1');
+        $feed->addLink('http://example.com/feed', 'self');
+        $feed->addLink('http://example.com/feed/')->setType('text/html');
         $feed->addLogo('http://example.com/feed-logo.png');
-        $feed->addGenerator('Generator')->setUri('http://example.com/generator')->setVersion('1.0');
+        $feed->addRights('© Copyright by Foo');
+        $feed->addSubtitle('Sub title');
+        $feed->addTitle('Feed Title');
+        $feed->addUpdated(new \DateTime('2003-12-13 18:30:03', new \DateTimeZone('+1:00')));
 
-        $entry = $feed->addEntry();
-        $entry->addId('urn:foo:entry:0001');
-        $entry->addTitle('Entry Title');
-
+        for ($i = 3; $i > 0; $i--) {
+            $entry = $feed->addEntry();
+            $entry->addId('urn:entry:' . $i);
+            $entry->addLink('http://example.com/' . $i . '.html')->setType('text/html');
+            $entry->addTitle('Entry ' . $i);
+            $entry->addUpdated(
+                new \DateTime('2003-12-13 18:30:0' . $i, new \DateTimeZone('+1:00'))
+            );
+            $entry->getContent()->setContent('Entry ' . $i . ' text');
+        }
         $document->getDomDocument()->formatOutput = true;
         static::assertEquals(
             file_get_contents($this->locateFixture('FeedDocument.txt')),

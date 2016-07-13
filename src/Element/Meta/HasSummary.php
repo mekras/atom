@@ -8,7 +8,7 @@
 namespace Mekras\Atom\Element\Meta;
 
 use Mekras\Atom\Element\Element;
-use Mekras\Atom\Element\Title;
+use Mekras\Atom\Element\Summary;
 use Mekras\Atom\Node;
 use Mekras\Atom\NodeInterfaceTrait;
 
@@ -17,51 +17,50 @@ use Mekras\Atom\NodeInterfaceTrait;
  *
  * @since 1.0
  *
- * @link  https://tools.ietf.org/html/rfc4287#section-4.2.14
+ * @link  https://tools.ietf.org/html/rfc4287#section-4.2.12
  */
-trait HasTitle
+trait HasSummary
 {
     use NodeInterfaceTrait;
 
     /**
      * Return title.
      *
-     * @return Title
+     * @return Summary|null
      *
      * @throws \InvalidArgumentException
-     * @throws \Mekras\Atom\Exception\MalformedNodeException
      *
      * @since 1.0
      */
-    public function getTitle()
+    public function getSummary()
     {
         return $this->getCachedProperty(
-            'title',
+            'summary',
             function () {
-                $element = $this->query('atom:title', Node::SINGLE | Node::REQUIRED);
+                $element = $this->query('atom:summary', Node::SINGLE);
 
                 /** @var Element $this */
-                return $this->getExtensions()->parseElement($this, $element);
+                return $element ? $this->getExtensions()->parseElement($this, $element) : null;
             }
         );
     }
 
     /**
-     * Add title.
+     * Add summary.
      *
      * @param string $value
      * @param string $type
      *
-     * @return Title
+     * @return Summary
      *
      * @throws \InvalidArgumentException
      *
      * @since 1.0
      */
-    public function addTitle($value, $type = 'text')
+    public function addSummary($value, $type = 'text')
     {
-        /** @var Title $element */
-        $element = $this->addChild('atom:title', 'title');
+        /** @var Summary $element */
+        $element = $this->addChild('atom:summary', 'summary');
         $element->setContent($value, $type);
 
         return $element;

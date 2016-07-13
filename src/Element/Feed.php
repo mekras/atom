@@ -18,11 +18,14 @@ class Feed extends Element
 {
     use Meta\HasAuthors;
     use Meta\HasCategories;
+    use Meta\HasContributors;
     use Meta\HasGenerator;
     use Meta\HasIcon;
     use Meta\HasId;
     use Meta\HasLinks;
     use Meta\HasLogo;
+    use Meta\HasRights;
+    use Meta\HasSubtitle;
     use Meta\HasTitle;
     use Meta\HasUpdated;
 
