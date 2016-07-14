@@ -24,7 +24,7 @@ trait NodeInterfaceTrait
      *
      * @return \DOMNodeList|\DOMElement|null
      *
-     * @throws \Mekras\Atom\Exception\MalformedNodeException
+     * @throws \Mekras\Atom\Exception\MalformedNodeException If REQUIRED flag set but nothing found.
      *
      * @since 1.0
      */
