@@ -30,7 +30,7 @@ class Category extends Element
         try {
             return (string) $this->getTerm();
         } catch (\Exception $e) {
-            return '(empty)';
+            return '(empty category)';
         }
     }
 

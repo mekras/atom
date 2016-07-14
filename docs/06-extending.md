@@ -43,3 +43,7 @@ class FooDocumentExtension implements Extension
     }
 }
 ```
+
+## Internal API
+
+TODO

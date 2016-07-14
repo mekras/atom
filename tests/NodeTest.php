@@ -188,6 +188,47 @@ class NodeTest extends TestCase
     }
 
     /**
+     * If $value argument for setAttribute is null, attribute should be removed.
+     */
+    public function testRemoveAttribute()
+    {
+        $document = $this->createDomDocument();
+        $node = $this->createInstance($document);
+        $node->setAttribute('bar', 'baz');
+        static::assertEquals(
+            '<doc xmlns="http://www.w3.org/2005/Atom" xmlns:xhtml="http://www.w3.org/1999/xhtml" ' .
+            'bar="baz"/>',
+            $this->getXML($node)
+        );
+        $node->setAttribute('bar', null);
+        static::assertEquals(
+            '<doc xmlns="http://www.w3.org/2005/Atom" xmlns:xhtml="http://www.w3.org/1999/xhtml"/>',
+            $this->getXML($node)
+        );
+    }
+
+    /**
+     * If $value argument for setAttribute is null, attribute should be removed.
+     */
+    public function testRemoveAttributeCustomPrefix()
+    {
+        $document = $this->createDomDocument('', 'a:doc');
+        $node = $this->createInstance($document);
+        $node->setAttribute('atom:bar', 'baz');
+        static::assertEquals(
+            '<a:doc xmlns:a="http://www.w3.org/2005/Atom" ' .
+            'xmlns:xhtml="http://www.w3.org/1999/xhtml" a:bar="baz"/>',
+            $this->getXML($node)
+        );
+        $node->setAttribute('atom:bar', null);
+        static::assertEquals(
+            '<a:doc xmlns:a="http://www.w3.org/2005/Atom" ' .
+            'xmlns:xhtml="http://www.w3.org/1999/xhtml"/>',
+            $this->getXML($node)
+        );
+    }
+
+    /**
      * Create new test Node instance.
      *
      * @param \DOMDocument $document

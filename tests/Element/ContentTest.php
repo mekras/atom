@@ -214,4 +214,15 @@ class ContentTest extends TestCase
         $content->setSrc('http://example.org/');
         static::assertEquals('http://example.org/', $content->getSrc());
     }
+
+
+    /**
+     * __toString should not fail in case of error.
+     */
+    public function testRenderError()
+    {
+        $doc = $this->createDomDocument('<content type="xhtml">Foo</content>');
+        $content = new Content($this->createFakeNode(), $doc->documentElement->firstChild);
+        static::assertEquals('(Required node (xhtml:div) not found)', (string) $content);
+    }
 }
