@@ -28,8 +28,7 @@ trait HasTitle
      *
      * @return Title
      *
-     * @throws \InvalidArgumentException
-     * @throws \Mekras\Atom\Exception\MalformedNodeException
+     * @throws \Mekras\Atom\Exception\MalformedNodeException If there is no required element.
      *
      * @since 1.0
      */
@@ -53,8 +52,6 @@ trait HasTitle
      * @param string $type
      *
      * @return Title
-     *
-     * @throws \InvalidArgumentException
      *
      * @since 1.0
      */

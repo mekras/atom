@@ -23,8 +23,6 @@ class FeedDocument extends Document
      *
      * @return Feed
      *
-     * @throws \InvalidArgumentException
-     *
      * @since 1.0
      */
     public function getFeed()
@@ -32,10 +30,8 @@ class FeedDocument extends Document
         return $this->getCachedProperty(
             'feed',
             function () {
-                return $this->getExtensions()->parseElement(
-                    $this,
-                    $this->getDomDocument()->documentElement
-                );
+                return $this->getExtensions()
+                    ->parseElement($this, $this->getDomDocument()->documentElement);
             }
         );
     }

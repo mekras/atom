@@ -27,8 +27,6 @@ trait HasAuthors
      *
      * @return Author[]
      *
-     * @throws \InvalidArgumentException
-     *
      * @since 1.0
      */
     public function getAuthors()
@@ -37,6 +35,7 @@ trait HasAuthors
             'authors',
             function () {
                 $result = [];
+                // No REQUIRED — no exception.
                 $nodes = $this->query('atom:author');
                 foreach ($nodes as $node) {
                     /** @var Element $this */
@@ -54,8 +53,6 @@ trait HasAuthors
      * @param string $name
      *
      * @return Author
-     *
-     * @throws \InvalidArgumentException
      *
      * @since 1.0
      */

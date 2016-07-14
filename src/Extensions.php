@@ -71,7 +71,7 @@ class Extensions
      *
      * @return Document|null
      *
-     * @throws \InvalidArgumentException
+     * @ throws \InvalidArgumentException If $document root node has invalid name.
      *
      * @since 1.0
      */

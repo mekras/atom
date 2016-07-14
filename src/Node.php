@@ -59,7 +59,7 @@ abstract class Node
      *
      * @since 1.0
      *
-     * @throws \InvalidArgumentException
+     * @throws \InvalidArgumentException If $element has invalid namespace.
      */
     public function __construct(\DOMElement $element, Node $parent = null)
     {
@@ -125,7 +125,7 @@ abstract class Node
      *
      * @return string|null
      *
-     * @throws \InvalidArgumentException
+     * @throws \InvalidArgumentException If $attrName contains unregistered prefix.
      *
      * @since 1.0
      */
@@ -154,7 +154,7 @@ abstract class Node
      * @param string      $attrName Attribute name (e. g. "type", "atom:foo").
      * @param string|null $value    New value or null to remove attribute.
      *
-     * @throws \InvalidArgumentException
+     * @throws \InvalidArgumentException If $attrName contains unregistered prefix.
      *
      * @since 1.0
      */
@@ -268,7 +268,7 @@ abstract class Node
      *
      * @return string
      *
-     * @throws \InvalidArgumentException
+     * @throws \InvalidArgumentException If the given prefix is not registered.
      */
     private function getNamespace($prefix)
     {

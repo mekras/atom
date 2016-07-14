@@ -28,8 +28,6 @@ trait HasSummary
      *
      * @return Summary|null
      *
-     * @throws \InvalidArgumentException
-     *
      * @since 1.0
      */
     public function getSummary()
@@ -37,6 +35,7 @@ trait HasSummary
         return $this->getCachedProperty(
             'summary',
             function () {
+                // No REQUIRED — no exception.
                 $element = $this->query('atom:summary', Node::SINGLE);
 
                 /** @var Element $this */
@@ -52,8 +51,6 @@ trait HasSummary
      * @param string $type
      *
      * @return Summary
-     *
-     * @throws \InvalidArgumentException
      *
      * @since 1.0
      */

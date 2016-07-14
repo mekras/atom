@@ -18,7 +18,7 @@ class DocumentTest extends TestCase
 {
     /**
      * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage Unexpected node "foo", expecting "bar"
+     * @expectedExceptionMessage Unexpected root node "foo", expecting "bar"
      */
     public function testInvalidRootTag()
     {

@@ -27,9 +27,6 @@ trait HasCategories
      *
      * @return Category[]
      *
-     * @throws \InvalidArgumentException
-     * @throws \Mekras\Atom\Exception\MalformedNodeException
-     *
      * @since 1.0
      */
     public function getCategories()
@@ -38,6 +35,7 @@ trait HasCategories
             'categories',
             function () {
                 $result = [];
+                // No REQUIRED — no exception.
                 $nodes = $this->query('atom:category');
                 foreach ($nodes as $node) {
                     /** @var Element $this */

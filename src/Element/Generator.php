@@ -63,8 +63,6 @@ class Generator extends Element
      *
      * @return string|null
      *
-     * @throws \InvalidArgumentException
-     *
      * @since 1.0
      */
     public function getUri()
@@ -72,6 +70,7 @@ class Generator extends Element
         return $this->getCachedProperty(
             'uri',
             function () {
+                // No NS prefix — no exception.
                 return $this->getAttribute('uri');
             }
         );
@@ -84,12 +83,11 @@ class Generator extends Element
      *
      * @return $this
      *
-     * @throws \InvalidArgumentException
-     *
      * @since 1.0
      */
     public function setUri($iri)
     {
+        // No NS prefix — no exception.
         $this->setAttribute('uri', $iri);
         $this->setCachedProperty('uri', $iri);
 
@@ -101,8 +99,6 @@ class Generator extends Element
      *
      * @return string|null
      *
-     * @throws \InvalidArgumentException
-     *
      * @since 1.0
      */
     public function getVersion()
@@ -110,6 +106,7 @@ class Generator extends Element
         return $this->getCachedProperty(
             'version',
             function () {
+                // No NS prefix — no exception.
                 return $this->getAttribute('version');
             }
         );
@@ -122,12 +119,11 @@ class Generator extends Element
      *
      * @return $this
      *
-     * @throws \InvalidArgumentException
-     *
      * @since 1.0
      */
     public function setVersion($version)
     {
+        // No NS prefix — no exception.
         $this->setAttribute('version', $version);
         $this->setCachedProperty('version', $version);
 

@@ -42,7 +42,7 @@ class DocumentFactory
      *
      * @return Document
      *
-     * @throws \InvalidArgumentException
+     * @throws \InvalidArgumentException If given document is not supported.
      *
      * @since 1.0
      */
@@ -65,7 +65,7 @@ class DocumentFactory
      *
      * @return Document
      *
-     * @throws \InvalidArgumentException
+     * @throws \InvalidArgumentException If given document is not supported.
      * @throws \Mekras\Atom\Exception\RuntimeException In case of XML errors.
      *
      * @since 1.0
@@ -107,7 +107,7 @@ class DocumentFactory
      *
      * @return Document
      *
-     * @throws \InvalidArgumentException
+     * @throws \InvalidArgumentException In case of unsupported document name.
      *
      * @since 1.0
      */

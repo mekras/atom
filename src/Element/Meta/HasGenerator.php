@@ -35,6 +35,7 @@ trait HasGenerator
         return $this->getCachedProperty(
             'generator',
             function () {
+                // No REQUIRED — no exception.
                 $element = $this->query('atom:generator', Node::SINGLE);
 
                 /** @var Element $this */

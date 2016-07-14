@@ -82,8 +82,6 @@ class AtomExtension implements DocumentExtension, ElementExtension, NamespaceExt
      *
      * @return Document|null
      *
-     * @throws \InvalidArgumentException
-     *
      * @since 1.0
      */
     public function parseDocument(Extensions $extensions, \DOMDocument $document)
@@ -94,9 +92,11 @@ class AtomExtension implements DocumentExtension, ElementExtension, NamespaceExt
 
         switch ($document->documentElement->localName) {
             case 'entry':
+                // Node name already checked
                 return new EntryDocument($extensions, $document);
                 break;
             case 'feed':
+                // Node name already checked
                 return new FeedDocument($extensions, $document);
                 break;
         }
@@ -112,17 +112,17 @@ class AtomExtension implements DocumentExtension, ElementExtension, NamespaceExt
      *
      * @return Document|null
      *
-     * @throws \InvalidArgumentException
-     *
      * @since 1.0
      */
     public function createDocument(Extensions $extensions, $name)
     {
         switch ($name) {
             case 'atom:entry':
+                // No document — no exception.
                 return new EntryDocument($extensions);
                 break;
             case 'atom:feed':
+                // No document — no exception.
                 return new FeedDocument($extensions);
                 break;
         }
@@ -137,8 +137,6 @@ class AtomExtension implements DocumentExtension, ElementExtension, NamespaceExt
      * @param \DOMElement $element DOM element.
      *
      * @return Element|null
-     *
-     * @throws \InvalidArgumentException
      *
      * @since 1.0
      */
@@ -165,8 +163,6 @@ class AtomExtension implements DocumentExtension, ElementExtension, NamespaceExt
      * @param string $name   Element name.
      *
      * @return Element|null
-     *
-     * @throws \InvalidArgumentException
      *
      * @since 1.0
      */

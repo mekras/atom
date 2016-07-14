@@ -34,8 +34,6 @@ class Feed extends Element
      *
      * @return Entry[]
      *
-     * @throws \InvalidArgumentException
-     *
      * @since 1.0
      */
     public function getEntries()
@@ -45,6 +43,7 @@ class Feed extends Element
             function () {
                 $result = [];
                 /** @var \DOMNodeList $items */
+                // No REQUIRED — no exception.
                 $items = $this->query('atom:entry');
                 foreach ($items as $item) {
                     $result[] = $this->getExtensions()->parseElement($this, $item);
@@ -59,8 +58,6 @@ class Feed extends Element
      * Add new entry to feed.
      *
      * @return Entry
-     *
-     * @throws \InvalidArgumentException
      *
      * @since 1.0
      */

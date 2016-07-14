@@ -100,6 +100,7 @@ trait HasLinks
             'links',
             function () {
                 $result = [];
+                // No REQUIRED — no exception.
                 $nodes = $this->query('atom:link');
                 foreach ($nodes as $node) {
                     /** @var Element $this */

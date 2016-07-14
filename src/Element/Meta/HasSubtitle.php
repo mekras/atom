@@ -28,8 +28,6 @@ trait HasSubtitle
      *
      * @return Subtitle|null
      *
-     * @throws \InvalidArgumentException
-     *
      * @since 1.0
      */
     public function getSubtitle()
@@ -37,6 +35,7 @@ trait HasSubtitle
         return $this->getCachedProperty(
             'subtitle',
             function () {
+                // No REQUIRED — no exception.
                 $element = $this->query('atom:subtitle', Node::SINGLE);
 
                 /** @var Element $this */
@@ -52,8 +51,6 @@ trait HasSubtitle
      * @param string $type
      *
      * @return Subtitle
-     *
-     * @throws \InvalidArgumentException
      *
      * @since 1.0
      */

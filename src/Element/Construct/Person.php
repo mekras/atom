@@ -41,7 +41,7 @@ trait Person
      *
      * @return string
      *
-     * @throws \Mekras\Atom\Exception\MalformedNodeException
+     * @throws \Mekras\Atom\Exception\MalformedNodeException If there is no required element.
      *
      * @since 1.0
      * @link  https://tools.ietf.org/html/rfc4287#section-3.2.1

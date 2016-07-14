@@ -35,6 +35,7 @@ trait HasIcon
         return $this->getCachedProperty(
             'icon',
             function () {
+                // No REQUIRED — no exception.
                 $element = $this->query('atom:icon', Node::SINGLE);
 
                 /** @var Element $this */

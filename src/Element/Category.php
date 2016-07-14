@@ -39,8 +39,7 @@ class Category extends Element
      *
      * @return string
      *
-     * @throws \InvalidArgumentException
-     * @throws \Mekras\Atom\Exception\MalformedNodeException
+     * @throws \Mekras\Atom\Exception\MalformedNodeException If there is no required attribute.
      *
      * @since 1.0
      * @link  https://tools.ietf.org/html/rfc4287#section-4.2.2.1
@@ -50,9 +49,10 @@ class Category extends Element
         return $this->getCachedProperty(
             'term',
             function () {
+                // No NS prefix — no exception.
                 $value = $this->getAttribute('term');
                 if (null === $value) {
-                    throw new MalformedNodeException('There is no attribute "term"');
+                    throw new MalformedNodeException('There is no required attribute "term"');
                 }
 
                 return $value;
@@ -67,13 +67,12 @@ class Category extends Element
      *
      * @return $this
      *
-     * @throws \InvalidArgumentException
-     *
      * @since 1.0
      * @link  https://tools.ietf.org/html/rfc4287#section-4.2.2.1
      */
     public function setTerm($value)
     {
+        // No NS prefix — no exception.
         $this->setAttribute('term', $value);
         $this->setCachedProperty('term', $value);
 
@@ -85,8 +84,6 @@ class Category extends Element
      *
      * @return string|null
      *
-     * @throws \InvalidArgumentException
-     *
      * @since 1.0
      * @link  https://tools.ietf.org/html/rfc4287#section-4.2.2.3
      */
@@ -95,6 +92,7 @@ class Category extends Element
         return $this->getCachedProperty(
             'label',
             function () {
+                // No NS prefix — no exception.
                 return $this->getAttribute('label');
             }
         );
@@ -107,13 +105,12 @@ class Category extends Element
      *
      * @return $this
      *
-     * @throws \InvalidArgumentException
-     *
      * @since 1.0
      * @link  https://tools.ietf.org/html/rfc4287#section-4.2.2.3
      */
     public function setLabel($value)
     {
+        // No NS prefix — no exception.
         $this->setAttribute('label', $value);
         $this->setCachedProperty('label', $value);
 
@@ -125,8 +122,6 @@ class Category extends Element
      *
      * @return string IRI
      *
-     * @throws \InvalidArgumentException
-     *
      * @since 1.0
      * @link  https://tools.ietf.org/html/rfc4287#section-4.2.2.2
      */
@@ -135,6 +130,7 @@ class Category extends Element
         return $this->getCachedProperty(
             'scheme',
             function () {
+                // No NS prefix — no exception.
                 return $this->getAttribute('scheme');
             }
         );
@@ -147,13 +143,12 @@ class Category extends Element
      *
      * @return $this
      *
-     * @throws \InvalidArgumentException
-     *
      * @since 1.0
      * @link  https://tools.ietf.org/html/rfc4287#section-4.2.2.2
      */
     public function setScheme($value)
     {
+        // No NS prefix — no exception.
         $this->setAttribute('scheme', $value);
         $this->setCachedProperty('scheme', $value);
 

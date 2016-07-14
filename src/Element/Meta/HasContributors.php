@@ -27,8 +27,6 @@ trait HasContributors
      *
      * @return Contributor[]
      *
-     * @throws \InvalidArgumentException
-     *
      * @since 1.0
      */
     public function getContributors()
@@ -37,6 +35,7 @@ trait HasContributors
             'contributors',
             function () {
                 $result = [];
+                // No REQUIRED — no exception.
                 $nodes = $this->query('atom:contributor');
                 foreach ($nodes as $node) {
                     /** @var Element $this */
@@ -54,8 +53,6 @@ trait HasContributors
      * @param string $name
      *
      * @return Contributor
-     *
-     * @throws \InvalidArgumentException
      *
      * @since 1.0
      */

@@ -28,8 +28,6 @@ trait HasRights
      *
      * @return Rights|null
      *
-     * @throws \InvalidArgumentException
-     *
      * @since 1.0
      */
     public function getRights()
@@ -37,6 +35,7 @@ trait HasRights
         return $this->getCachedProperty(
             'rights',
             function () {
+                // No REQUIRED — no exception.
                 $element = $this->query('atom:rights', Node::SINGLE);
 
                 /** @var Element $this */
@@ -52,8 +51,6 @@ trait HasRights
      * @param string $type
      *
      * @return Rights
-     *
-     * @throws \InvalidArgumentException
      *
      * @since 1.0
      */

@@ -35,6 +35,7 @@ trait HasLogo
         return $this->getCachedProperty(
             'logo',
             function () {
+                // No REQUIRED — no exception.
                 $element = $this->query('atom:logo', Node::SINGLE);
 
                 /** @var Element $this */

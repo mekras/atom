@@ -39,8 +39,7 @@ class Link extends Element
      *
      * @return string
      *
-     * @throws \InvalidArgumentException
-     * @throws \Mekras\Atom\Exception\MalformedNodeException
+     * @throws \Mekras\Atom\Exception\MalformedNodeException If there is no required attribute.
      *
      * @since 1.0
      * @link  https://tools.ietf.org/html/rfc4287#section-4.2.7.1
@@ -50,9 +49,10 @@ class Link extends Element
         return $this->getCachedProperty(
             'href',
             function () {
+                // No NS prefix — no exception.
                 $value = $this->getAttribute('href');
                 if (null === $value) {
-                    throw new MalformedNodeException('There is no attribute "href"');
+                    throw new MalformedNodeException('There is no required attribute "href"');
                 }
 
                 return $value;
@@ -67,13 +67,12 @@ class Link extends Element
      *
      * @return $this
      *
-     * @throws \InvalidArgumentException
-     *
      * @since 1.0
      * @link  https://tools.ietf.org/html/rfc4287#section-4.2.7.1
      */
     public function setUri($uri)
     {
+        // No NS prefix — no exception.
         $this->setAttribute('href', $uri);
         $this->setCachedProperty('href', $uri);
 
@@ -85,8 +84,6 @@ class Link extends Element
      *
      * @return string
      *
-     * @throws \InvalidArgumentException
-     *
      * @since 1.0
      * @link  https://tools.ietf.org/html/rfc4287#section-4.2.7.2
      */
@@ -95,6 +92,7 @@ class Link extends Element
         return $this->getCachedProperty(
             'rel',
             function () {
+                // No NS prefix — no exception.
                 return $this->getAttribute('rel') ?: 'alternate';
             }
         );
@@ -107,13 +105,12 @@ class Link extends Element
      *
      * @return $this
      *
-     * @throws \InvalidArgumentException
-     *
      * @since 1.0
      * @link  https://tools.ietf.org/html/rfc4287#section-4.2.7.2
      */
     public function setRelation($type)
     {
+        // No NS prefix — no exception.
         $this->setAttribute('rel', $type);
         $this->setCachedProperty('rel', $type);
 
@@ -129,8 +126,6 @@ class Link extends Element
      *
      * @return string|null
      *
-     * @throws \InvalidArgumentException
-     *
      * @since 1.0
      * @link  https://tools.ietf.org/html/rfc4287#section-4.2.7.3
      */
@@ -139,6 +134,7 @@ class Link extends Element
         return $this->getCachedProperty(
             'type',
             function () {
+                // No NS prefix — no exception.
                 return $this->getAttribute('type');
             }
         );
@@ -151,13 +147,12 @@ class Link extends Element
      *
      * @return $this
      *
-     * @throws \InvalidArgumentException
-     *
      * @since 1.0
      * @link  https://tools.ietf.org/html/rfc4287#section-4.2.7.3
      */
     public function setType($type)
     {
+        // No NS prefix — no exception.
         $this->setAttribute('type', $type);
         $this->setCachedProperty('type', $type);
 
@@ -169,8 +164,6 @@ class Link extends Element
      *
      * @return string|null
      *
-     * @throws \InvalidArgumentException
-     *
      * @since 1.0
      * @link  https://tools.ietf.org/html/rfc4287#section-4.2.7.4
      */
@@ -179,6 +172,7 @@ class Link extends Element
         return $this->getCachedProperty(
             'hreflang',
             function () {
+                // No NS prefix — no exception.
                 return $this->getAttribute('hreflang');
             }
         );
@@ -191,13 +185,12 @@ class Link extends Element
      *
      * @return $this
      *
-     * @throws \InvalidArgumentException
-     *
      * @since 1.0
      * @link  https://tools.ietf.org/html/rfc4287#section-4.2.7.4
      */
     public function setLanguage($language)
     {
+        // No NS prefix — no exception.
         $this->setAttribute('hreflang', $language);
         $this->setCachedProperty('hreflang', $language);
 
@@ -209,8 +202,6 @@ class Link extends Element
      *
      * @return string|null
      *
-     * @throws \InvalidArgumentException
-     *
      * @since 1.0
      * @link  https://tools.ietf.org/html/rfc4287#section-4.2.7.5
      */
@@ -219,6 +210,7 @@ class Link extends Element
         return $this->getCachedProperty(
             'title',
             function () {
+                // No NS prefix — no exception.
                 return $this->getAttribute('title');
             }
         );
@@ -231,13 +223,12 @@ class Link extends Element
      *
      * @return $this
      *
-     * @throws \InvalidArgumentException
-     *
      * @since 1.0
      * @link  https://tools.ietf.org/html/rfc4287#section-4.2.7.5
      */
     public function setTitle($title)
     {
+        // No NS prefix — no exception.
         $this->setAttribute('title', $title);
         $this->setCachedProperty('title', $title);
 
@@ -249,8 +240,6 @@ class Link extends Element
      *
      * @return int|null
      *
-     * @throws \InvalidArgumentException
-     *
      * @since 1.0
      * @link  https://tools.ietf.org/html/rfc4287#section-4.2.7.6
      */
@@ -259,6 +248,7 @@ class Link extends Element
         return $this->getCachedProperty(
             'length',
             function () {
+                // No NS prefix — no exception.
                 return ((int) $this->getAttribute('length')) ?: null;
             }
         );
@@ -271,13 +261,12 @@ class Link extends Element
      *
      * @return $this
      *
-     * @throws \InvalidArgumentException
-     *
      * @since 1.0
      * @link  https://tools.ietf.org/html/rfc4287#section-4.2.7.6
      */
     public function setLength($length)
     {
+        // No NS prefix — no exception.
         $this->setAttribute('length', $length);
         $this->setCachedProperty('length', $length);
 

@@ -57,8 +57,6 @@ trait Text
      * @param string $text Text.
      * @param string $type Content type: "text", "html", or "xhtml"
      *
-     * @throws \InvalidArgumentException
-     *
      * @since 1.0
      */
     public function setContent($text, $type = 'text')
@@ -73,8 +71,6 @@ trait Text
      *
      * @return string "text", "html", or "xhtml"
      *
-     * @throws \InvalidArgumentException
-     *
      * @since 1.0
      */
     public function getType()
@@ -82,6 +78,7 @@ trait Text
         return $this->getCachedProperty(
             'type',
             function () {
+                // No NS prefix — no exception.
                 return $this->getAttribute('type') ?: 'text';
             }
         );
@@ -94,12 +91,11 @@ trait Text
      *
      * @return $this
      *
-     * @throws \InvalidArgumentException
-     *
      * @since 1.0
      */
     public function setType($type)
     {
+        // No NS prefix — no exception.
         $this->setAttribute('type', $type);
         $this->setCachedProperty('type', $type);
 

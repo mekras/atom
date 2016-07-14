@@ -28,8 +28,6 @@ trait HasContent
      *
      * @return Content|null
      *
-     * @throws \InvalidArgumentException
-     *
      * @since 1.0
      */
     public function getContent()
@@ -37,6 +35,7 @@ trait HasContent
         return $this->getCachedProperty(
             'content',
             function () {
+                // No REQUIRED — no exception.
                 $element = $this->query('atom:content', Node::SINGLE);
 
                 /** @var Element $this */
@@ -48,20 +47,29 @@ trait HasContent
     /**
      * Add content.
      *
-     * @param string $value
-     * @param string $type
+     * For "text" and "html" $type values $content should be a string.
+     *
+     * For "xhtml" and all XML-based $type values $content should be an instance of
+     * @{link DOMElement}.
+     *
+     * In all other cases $content should be a binary string and it will be base64 encoded.
+     *
+     * When $type is "xhtml" child nodes of $content will be moved to "xhtml:div" container.
+     *
+     * @param string|\DOMElement $content
+     * @param string             $type
      *
      * @return Content
      *
-     * @throws \InvalidArgumentException
+     * @throws \InvalidArgumentException If $content type does not match given $type.
      *
      * @since 1.0
      */
-    public function addContent($value, $type = 'text')
+    public function addContent($content, $type = 'text')
     {
         /** @var Content $element */
         $element = $this->addChild('atom:content', 'content');
-        $element->setContent($value, $type);
+        $element->setContent($content, $type);
 
         return $element;
     }

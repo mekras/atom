@@ -28,7 +28,7 @@ trait HasId
      *
      * @return Id
      *
-     * @throws \Mekras\Atom\Exception\MalformedNodeException
+     * @throws \Mekras\Atom\Exception\MalformedNodeException If there is no required element.
      *
      * @since 1.0
      */

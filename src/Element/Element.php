@@ -25,7 +25,7 @@ abstract class Element extends Node
      *
      * @since 1.0
      *
-     * @throws \InvalidArgumentException
+     * @throws \InvalidArgumentException If $element has invalid namespace.
      */
     public function __construct(Node $parent, \DOMElement $element = null)
     {

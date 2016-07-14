@@ -41,7 +41,7 @@ class Content extends Element
      *
      * @return string
      *
-     * @throws \Mekras\Atom\Exception\MalformedNodeException
+     * @throws \Mekras\Atom\Exception\MalformedNodeException If there is no required element.
      *
      * @since 1.0
      *
@@ -89,7 +89,7 @@ class Content extends Element
      * @param string|\DOMElement $content
      * @param string             $type
      *
-     * @throws \InvalidArgumentException
+     * @throws \InvalidArgumentException If $content type does not match given $type.
      *
      * @since 1.0
      */
@@ -124,8 +124,6 @@ class Content extends Element
      *
      * @return string "text", "html", "xhtml" or MIME type.
      *
-     * @throws \InvalidArgumentException
-     *
      * @since 1.0
      * @link  https://tools.ietf.org/html/rfc4287#section-4.1.3.1
      */
@@ -134,6 +132,7 @@ class Content extends Element
         return $this->getCachedProperty(
             'type',
             function () {
+                // No NS prefix — no exception.
                 return $this->getAttribute('type') ?: 'text';
             }
         );
@@ -146,13 +145,12 @@ class Content extends Element
      *
      * @return $this
      *
-     * @throws \InvalidArgumentException
-     *
      * @since 1.0
      * @link  https://tools.ietf.org/html/rfc4287#section-4.1.3.1
      */
     public function setType($type)
     {
+        // No NS prefix — no exception.
         $this->setAttribute('type', $type);
         $this->setCachedProperty('type', $type);
 
@@ -164,8 +162,6 @@ class Content extends Element
      *
      * @return string|null
      *
-     * @throws \InvalidArgumentException
-     *
      * @since 1.0
      * @link  https://tools.ietf.org/html/rfc4287#section-4.1.3.2
      */
@@ -174,6 +170,7 @@ class Content extends Element
         return $this->getCachedProperty(
             'src',
             function () {
+                // No NS prefix — no exception.
                 return $this->getAttribute('src');
             }
         );
@@ -184,13 +181,12 @@ class Content extends Element
      *
      * @param string|null $iri
      *
-     * @throws \InvalidArgumentException
-     *
      * @since 1.0
      * @link  https://tools.ietf.org/html/rfc4287#section-4.1.3.2
      */
     public function setSrc($iri)
     {
+        // No NS prefix — no exception.
         $this->setAttribute('src', $iri);
         $this->setCachedProperty('src', $iri);
     }

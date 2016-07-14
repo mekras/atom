@@ -33,7 +33,7 @@ abstract class Document extends Node
      * @param Extensions        $extensions Extension registry.
      * @param \DOMDocument|null $document   Source document.
      *
-     * @throws \InvalidArgumentException
+     * @throws \InvalidArgumentException If $document root node has invalid name.
      *
      * @since 1.0
      */
@@ -54,7 +54,7 @@ abstract class Document extends Node
         } elseif ($this->getRootNodeName() !== $document->documentElement->localName) {
             throw new \InvalidArgumentException(
                 sprintf(
-                    'Unexpected node "%s", expecting "%s"',
+                    'Unexpected root node "%s", expecting "%s"',
                     $document->documentElement->localName,
                     $this->getRootNodeName()
                 )

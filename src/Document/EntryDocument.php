@@ -23,8 +23,6 @@ class EntryDocument extends Document
      *
      * @return Entry
      *
-     * @throws \InvalidArgumentException
-     *
      * @since 1.0
      */
     public function getEntry()
@@ -32,10 +30,8 @@ class EntryDocument extends Document
         return $this->getCachedProperty(
             'entry',
             function () {
-                return $this->getExtensions()->parseElement(
-                    $this,
-                    $this->getDomDocument()->documentElement
-                );
+                return $this->getExtensions()
+                    ->parseElement($this, $this->getDomDocument()->documentElement);
             }
         );
     }
