@@ -51,7 +51,7 @@ class EntryDocumentTest extends TestCase
         $entry->addSummary('Summary');
         $entry->addTitle('Entry Title');
         $entry->addUpdated(new \DateTime('2003-12-13 18:30:03', new \DateTimeZone('+1:00')));
-        $entry->getContent()->setContent('<h1>Entry content</h1>', 'html');
+        $entry->addContent('<h1>Entry content</h1>', 'html');
 
         $document->getDomDocument()->formatOutput = true;
         static::assertEquals(

@@ -65,7 +65,7 @@ class FeedDocumentTest extends TestCase
             $entry->addUpdated(
                 new \DateTime('2003-12-13 18:30:0' . $i, new \DateTimeZone('+1:00'))
             );
-            $entry->getContent()->setContent('Entry ' . $i . ' text');
+            $entry->addContent('Entry ' . $i . ' text');
         }
         $document->getDomDocument()->formatOutput = true;
         static::assertEquals(

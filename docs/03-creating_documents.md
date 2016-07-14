@@ -7,7 +7,7 @@ document types are:
 - `atom:feed` — feed document.
 
 **Please note**, that there is no document validation.
- 
+
 Common steps are:
 
 1. Create document factory.
@@ -16,8 +16,6 @@ Common steps are:
 4. Add necessary elements via `add...` methods.
 
 ## Creating Entry documents
-
-**Note**, that you not need to add `content` node. Use `$entry->getContent()->setContent(...)`.
 
 ```php
 use Mekras\Atom\DocumentFactory;
@@ -28,20 +26,20 @@ $factory = new DocumentFactory;
 $document = $factory->createDocument('atom::entry');
 
 $entry = $document->getEntry();
-$entry = $document->getEntry();
-$entry->addId('urn:foo:entry:0001');
-$entry->addTitle('Entry Title');
-$entry->addAuthor('Author 1')->setEmail('foo@example.com');
-$entry->addAuthor('Author 2')->setUri('http://example.com/');
-$entry->addContributor('Author 3');
-$entry->addLink('http://example.com/0001.html', 'alternate')
+$entry->addId('urn:entry:0001');
+$entry->addAuthor('Author ')
+    ->setEmail('foo@example.com')
+    ->setUri('http://example.com/');
+$entry->addCategory('tag')
+    ->setLabel('Tag label')
+    ->setScheme('http://example.com/scheme');
+$entry->addLink('http://example.com/1.html', 'alternate')
     ->setType('text/html')
-    ->setLanguage('ru')
-    ->setTitle('Foo')
-    ->setLength(1024);
-$entry->getContent()->setContent('<h1>Entry content</h1>', 'html');
-$entry->addCategory('tag1')->setScheme('http://example.com/scheme');
-$entry->addCategory('tag2')->setLabel('TAG 2');
+    ->setLanguage('ru');
+$entry->addPublished(new \DateTime('2003-12-13 18:30:03'));
+$entry->addUpdated(new \DateTime('2003-12-13 18:30:03'));
+$entry->addTitle('Entry Title');
+$entry->addContent('<h1>Entry content</h1>', 'html');
 
 echo (string) $document;
 ```
@@ -90,7 +88,7 @@ echo (string) $document;
 ### link[rel=self]
 
 You not need to manually set type for links with "self" relation. Following lines are equivalent:
- 
+
 ```php
 $feed->addLink('http://example.com/atom', 'self')->setType('application/atom+xml');
 $feed->addLink('http://example.com/atom', 'self');
