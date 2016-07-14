@@ -46,18 +46,13 @@ class Link extends Element
      */
     public function getUri()
     {
-        return $this->getCachedProperty(
-            'href',
-            function () {
-                // No NS prefix — no exception.
-                $value = $this->getAttribute('href');
-                if (null === $value) {
-                    throw new MalformedNodeException('There is no required attribute "href"');
-                }
+        // No NS prefix — no exception.
+        $value = $this->getAttribute('href');
+        if (null === $value) {
+            throw new MalformedNodeException('There is no required attribute "href"');
+        }
 
-                return $value;
-            }
-        );
+        return $value;
     }
 
     /**
@@ -74,7 +69,6 @@ class Link extends Element
     {
         // No NS prefix — no exception.
         $this->setAttribute('href', $uri);
-        $this->setCachedProperty('href', $uri);
 
         return $this;
     }
@@ -89,13 +83,8 @@ class Link extends Element
      */
     public function getRelation()
     {
-        return $this->getCachedProperty(
-            'rel',
-            function () {
-                // No NS prefix — no exception.
-                return $this->getAttribute('rel') ?: 'alternate';
-            }
-        );
+        // No NS prefix — no exception.
+        return $this->getAttribute('rel') ?: 'alternate';
     }
 
     /**
@@ -112,7 +101,6 @@ class Link extends Element
     {
         // No NS prefix — no exception.
         $this->setAttribute('rel', $type);
-        $this->setCachedProperty('rel', $type);
 
         if ('self' === $type) {
             $this->setType('application/atom+xml');
@@ -131,13 +119,8 @@ class Link extends Element
      */
     public function getType()
     {
-        return $this->getCachedProperty(
-            'type',
-            function () {
-                // No NS prefix — no exception.
-                return $this->getAttribute('type');
-            }
-        );
+        // No NS prefix — no exception.
+        return $this->getAttribute('type');
     }
 
     /**
@@ -154,7 +137,6 @@ class Link extends Element
     {
         // No NS prefix — no exception.
         $this->setAttribute('type', $type);
-        $this->setCachedProperty('type', $type);
 
         return $this;
     }
@@ -169,13 +151,8 @@ class Link extends Element
      */
     public function getLanguage()
     {
-        return $this->getCachedProperty(
-            'hreflang',
-            function () {
-                // No NS prefix — no exception.
-                return $this->getAttribute('hreflang');
-            }
-        );
+        // No NS prefix — no exception.
+        return $this->getAttribute('hreflang');
     }
 
     /**
@@ -192,7 +169,6 @@ class Link extends Element
     {
         // No NS prefix — no exception.
         $this->setAttribute('hreflang', $language);
-        $this->setCachedProperty('hreflang', $language);
 
         return $this;
     }
@@ -207,13 +183,8 @@ class Link extends Element
      */
     public function getTitle()
     {
-        return $this->getCachedProperty(
-            'title',
-            function () {
-                // No NS prefix — no exception.
-                return $this->getAttribute('title');
-            }
-        );
+        // No NS prefix — no exception.
+        return $this->getAttribute('title');
     }
 
     /**
@@ -230,7 +201,6 @@ class Link extends Element
     {
         // No NS prefix — no exception.
         $this->setAttribute('title', $title);
-        $this->setCachedProperty('title', $title);
 
         return $this;
     }
@@ -245,13 +215,8 @@ class Link extends Element
      */
     public function getLength()
     {
-        return $this->getCachedProperty(
-            'length',
-            function () {
-                // No NS prefix — no exception.
-                return ((int) $this->getAttribute('length')) ?: null;
-            }
-        );
+        // No NS prefix — no exception.
+        return ((int) $this->getAttribute('length')) ?: null;
     }
 
     /**
@@ -268,7 +233,6 @@ class Link extends Element
     {
         // No NS prefix — no exception.
         $this->setAttribute('length', $length);
-        $this->setCachedProperty('length', $length);
 
         return $this;
     }

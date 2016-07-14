@@ -37,12 +37,7 @@ class Logo extends Element
      */
     public function getUri()
     {
-        return $this->getCachedProperty(
-            'content',
-            function () {
-                return trim($this->getDomElement()->textContent);
-            }
-        );
+        return trim($this->getDomElement()->textContent);
     }
 
     /**
@@ -55,7 +50,6 @@ class Logo extends Element
     public function setUri($content)
     {
         $this->getDomElement()->nodeValue = $content;
-        $this->setCachedProperty('content', $content);
     }
 
     /**

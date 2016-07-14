@@ -75,13 +75,8 @@ trait Text
      */
     public function getType()
     {
-        return $this->getCachedProperty(
-            'type',
-            function () {
-                // No NS prefix — no exception.
-                return $this->getAttribute('type') ?: 'text';
-            }
-        );
+        // No NS prefix — no exception.
+        return $this->getAttribute('type') ?: 'text';
     }
 
     /**
@@ -97,7 +92,6 @@ trait Text
     {
         // No NS prefix — no exception.
         $this->setAttribute('type', $type);
-        $this->setCachedProperty('type', $type);
 
         return $this;
     }

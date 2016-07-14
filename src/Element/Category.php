@@ -46,18 +46,13 @@ class Category extends Element
      */
     public function getTerm()
     {
-        return $this->getCachedProperty(
-            'term',
-            function () {
-                // No NS prefix — no exception.
-                $value = $this->getAttribute('term');
-                if (null === $value) {
-                    throw new MalformedNodeException('There is no required attribute "term"');
-                }
+        // No NS prefix — no exception.
+        $value = $this->getAttribute('term');
+        if (null === $value) {
+            throw new MalformedNodeException('There is no required attribute "term"');
+        }
 
-                return $value;
-            }
-        );
+        return $value;
     }
 
     /**
@@ -74,7 +69,6 @@ class Category extends Element
     {
         // No NS prefix — no exception.
         $this->setAttribute('term', $value);
-        $this->setCachedProperty('term', $value);
 
         return $this;
     }
@@ -89,13 +83,8 @@ class Category extends Element
      */
     public function getLabel()
     {
-        return $this->getCachedProperty(
-            'label',
-            function () {
-                // No NS prefix — no exception.
-                return $this->getAttribute('label');
-            }
-        );
+        // No NS prefix — no exception.
+        return $this->getAttribute('label');
     }
 
     /**
@@ -112,7 +101,6 @@ class Category extends Element
     {
         // No NS prefix — no exception.
         $this->setAttribute('label', $value);
-        $this->setCachedProperty('label', $value);
 
         return $this;
     }
@@ -127,13 +115,8 @@ class Category extends Element
      */
     public function getScheme()
     {
-        return $this->getCachedProperty(
-            'scheme',
-            function () {
-                // No NS prefix — no exception.
-                return $this->getAttribute('scheme');
-            }
-        );
+        // No NS prefix — no exception.
+        return $this->getAttribute('scheme');
     }
 
     /**
@@ -150,7 +133,6 @@ class Category extends Element
     {
         // No NS prefix — no exception.
         $this->setAttribute('scheme', $value);
-        $this->setCachedProperty('scheme', $value);
 
         return $this;
     }

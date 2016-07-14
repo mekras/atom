@@ -37,12 +37,7 @@ class Id extends Element
      */
     public function getContent()
     {
-        return $this->getCachedProperty(
-            'content',
-            function () {
-                return trim($this->getDomElement()->textContent);
-            }
-        );
+        return trim($this->getDomElement()->textContent);
     }
 
     /**
@@ -55,7 +50,6 @@ class Id extends Element
     public function setContent($content)
     {
         $this->getDomElement()->nodeValue = $content;
-        $this->setCachedProperty('content', $content);
     }
 
     /**

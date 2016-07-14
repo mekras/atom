@@ -37,12 +37,7 @@ class Generator extends Element
      */
     public function getContent()
     {
-        return $this->getCachedProperty(
-            'content',
-            function () {
-                return trim($this->getDomElement()->textContent);
-            }
-        );
+        return trim($this->getDomElement()->textContent);
     }
 
     /**
@@ -55,7 +50,6 @@ class Generator extends Element
     public function setContent($content)
     {
         $this->getDomElement()->nodeValue = $content;
-        $this->setCachedProperty('content', $content);
     }
 
     /**
@@ -67,13 +61,8 @@ class Generator extends Element
      */
     public function getUri()
     {
-        return $this->getCachedProperty(
-            'uri',
-            function () {
-                // No NS prefix — no exception.
-                return $this->getAttribute('uri');
-            }
-        );
+        // No NS prefix — no exception.
+        return $this->getAttribute('uri');
     }
 
     /**
@@ -89,7 +78,6 @@ class Generator extends Element
     {
         // No NS prefix — no exception.
         $this->setAttribute('uri', $iri);
-        $this->setCachedProperty('uri', $iri);
 
         return $this;
     }
@@ -103,13 +91,8 @@ class Generator extends Element
      */
     public function getVersion()
     {
-        return $this->getCachedProperty(
-            'version',
-            function () {
-                // No NS prefix — no exception.
-                return $this->getAttribute('version');
-            }
-        );
+        // No NS prefix — no exception.
+        return $this->getAttribute('version');
     }
 
     /**
@@ -125,7 +108,6 @@ class Generator extends Element
     {
         // No NS prefix — no exception.
         $this->setAttribute('version', $version);
-        $this->setCachedProperty('version', $version);
 
         return $this;
     }

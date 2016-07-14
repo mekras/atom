@@ -129,13 +129,8 @@ class Content extends Element
      */
     public function getType()
     {
-        return $this->getCachedProperty(
-            'type',
-            function () {
-                // No NS prefix — no exception.
-                return $this->getAttribute('type') ?: 'text';
-            }
-        );
+        // No NS prefix — no exception.
+        return $this->getAttribute('type') ?: 'text';
     }
 
     /**
@@ -152,7 +147,6 @@ class Content extends Element
     {
         // No NS prefix — no exception.
         $this->setAttribute('type', $type);
-        $this->setCachedProperty('type', $type);
 
         return $this;
     }
@@ -167,13 +161,8 @@ class Content extends Element
      */
     public function getSrc()
     {
-        return $this->getCachedProperty(
-            'src',
-            function () {
-                // No NS prefix — no exception.
-                return $this->getAttribute('src');
-            }
-        );
+        // No NS prefix — no exception.
+        return $this->getAttribute('src');
     }
 
     /**
@@ -188,7 +177,6 @@ class Content extends Element
     {
         // No NS prefix — no exception.
         $this->setAttribute('src', $iri);
-        $this->setCachedProperty('src', $iri);
     }
 
     /**
