@@ -19,7 +19,6 @@ Common steps are:
 
 ```php
 use Mekras\Atom\DocumentFactory;
-use Mekras\Atom\Document\EntryDocument;
 
 $factory = new DocumentFactory;
 
@@ -47,7 +46,6 @@ echo (string) $document;
 
 ```php
 use Mekras\Atom\DocumentFactory;
-use Mekras\Atom\Document\FeedDocument;
 
 $factory = new DocumentFactory;
 
